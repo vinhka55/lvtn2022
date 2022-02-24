@@ -1,0 +1,29 @@
+body{
+    background-color: rgb(201, 206, 205);
+}
+.body-content{
+    margin-top: 5px;
+}
+.product{
+    background-color: white;
+}
+.title-hot-product{
+    color: #9c3;
+    text-align: center;
+}
+
+/* product */
+.name-product{
+    color: #9c3;
+}
+.price-product{
+    color: red;
+}
+.footer{
+    margin-top: 10px;
+}
+
+.title-category-product{
+    background-color: #9c3;
+    color: azure;
+}
