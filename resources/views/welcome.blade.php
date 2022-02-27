@@ -5,10 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="{{url('/')}}/public/frontend/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/public/frontend/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/public/frontend/css/prettyPhoto.css" rel="stylesheet">
+    <link href="{{url('/')}}/public/frontend/css/price-range.css" rel="stylesheet">
+    <link href="{{url('/')}}/public/frontend/css/animate.css" rel="stylesheet">
+    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
+    <link href="{{url('/')}}/public/frontend/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="{{url('/')}}/public/frontend/css/app.css">
     <title>THỰC PHẨM HỮU NGHỊ| Cung Cấp Thực Phẩm Sỉ Lẻ Uy Tín</title>
 </head>
 <body>
+  
     <div class="header">
         <nav class="navbar navbar-expand-lg navbar-light bg-success">
             <div class="container-fluid">
@@ -34,23 +42,52 @@
                     <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
                   </li>
                 </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>
-                </form>
+                <form class="d-flex" action="{{route('search_product')}}" method="post">
+                    @csrf
+                    <input class="form-control me-2" name="search" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
+                    <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>
+                  
+                </form>             
               </div>
+
+              <?php 
+              if(Session::get('user_id')){
+                ?>
+                <a href="{{route('get_mothod_shopping_cart')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>               
+              <?php }
+              else { ?>
+                <a href="{{route('login')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
+              <?php } ?>
+
+              <?php 
+              if(Session::get('user_id')){
+                ?>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{Session::get('name_user')}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <a href="{{route('info_user')}}"><button class="dropdown-item" type="button">Thông tin tài khoản</button></a>
+                        <a href="{{route('logout')}}"><button class="dropdown-item" type="button">Đăng xuất</button></a>
+                    </div>
+                </div>               
+              <?php }
+              else { ?>
+              <a href="{{route('login')}}" class="btn btn-info">Đăng nhập</a>
+              <?php } ?>
             </div>
         </nav>
+  
     </div>
-    <div class="slider-top">
-            SẼ BỔ SUNG SAU
+        <div class="slider-top mt-3">
+            <img width="100%" src="https://thucphamhuunghi.com/plugins/hinh-anh/banner/horizontal-404x-768-768-q1.webp" alt="top banner">
         </div>
-        <div class="top-content row">
+        <div class="top-content row mt-3">
             <div class="col-3">
                 <h3>DANH MỤC SẢN PHẨM</h3>
                 <ul>
                     @foreach ($category as $cate)
-                      <a href="{{route('danh_muc_san_pham',$category->name)}}"><li>{{$cate->name}}</li></a>
+                      <a href="{{route('danh_muc_san_pham',$cate->id)}}"><li>{{$cate->name}}</li></a>
                     @endforeach
                 </ul>
             </div>
@@ -61,6 +98,7 @@
                 <a href=""><img src="{{url('/')}}/public/frontend/images/rLE2AAo.gif" alt="gif image"></a>
             </div>
         </div>
+  
     @yield("content")
     <div class="footer">
         <div class="container-fluid bg-dark text-white border-top pt-3">
@@ -104,3 +142,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="{{url('/')}}/public/frontend/js/jquery.js"></script>
+<script src="{{url('/')}}/public/frontend/js/bootstrap.min.js"></script>
+<script src="{{url('/')}}/public/frontend/js/jquery.scrollUp.min.js"></script>
+<script src="{{url('/')}}/public/frontend/js/price-range.js"></script>
+<script src="{{url('/')}}/public/frontend/js/jquery.prettyPhoto.js"></script>
+<script src="{{url('/')}}/public/frontend/js/main.js"></script>
