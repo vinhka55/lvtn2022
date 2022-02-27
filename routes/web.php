@@ -40,6 +40,13 @@ Route::get('dang-xuat','App\Http\Controllers\CheckoutController@logout')->name('
 Route::post('dang-ki-tai-khoan','App\Http\Controllers\CheckoutController@register')->name('register');
 Route::post('xu-ly-dang-nhap','App\Http\Controllers\CheckoutController@handle_login')->name('handle_login');
 Route::get('thanh-toan','App\Http\Controllers\CheckoutController@pay')->name('pay_product');
+Route::post('phuong-thuc-thanh-toan','App\Http\Controllers\CheckoutController@payment_method')->name('payment_method');
+
+//order
+Route::post('dat-hang','App\Http\Controllers\CheckoutController@order_place')->name('order_place');
+Route::get('danh-sach-don-hang','App\Http\Controllers\CheckoutController@list_order')->name('list_order');
+Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\CheckoutController@detail_order')->name('detail_order');
+Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\CheckoutController@delete_order')->name('delete_order');
 
 //user
 Route::get('thong-tin-tai-khoan','App\Http\Controllers\InfoUserController@show_info')->name('info_user');

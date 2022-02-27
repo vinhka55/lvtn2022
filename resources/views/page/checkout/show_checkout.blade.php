@@ -60,7 +60,8 @@
                 
 				<div class="col-sm-6">
 					<div class="total_area">
-                        <form action="" method="post">
+                        <form action="{{route('payment_method')}}" method="post">
+							@csrf
                             @foreach($info as $item)
                             <ul>
                                 <label for="name">Tên khách hàng</label>
@@ -69,7 +70,7 @@
                                 <input type="text" name="phone" id="phone" value="{{$item->phone}}"><br><br>
                                 <label for="email">Email</label>
                                 <input type="text" name="email" id="email" value="{{$item->email}}"><br><br>
-                                <textarea name="address" form="usrform">Địa chỉ...</textarea><br><br>
+                                <textarea name="address">Địa chỉ...</textarea><br><br>
                                 <textarea name="notes" rows="11">Lưu ý khác...</textarea><br><br>
                                 <p>Tổng tiền: 
                                     <?php
