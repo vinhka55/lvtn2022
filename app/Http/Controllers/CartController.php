@@ -5,13 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Cart;
+use Session;
+use App\Models\Coupon;
 //use Munna\ShoppingCart\Cart;
 
 class CartController extends Controller
 {
     public function get_mothod_shopping_cart()
     {
-        return view('page.cart.show_cart');
+
+        if(Session::has('id_coupon')){
+
+            $id_coupon=Session::get('id_coupon');
+            $coupon=DB::table('coupon')->where('id',$id_coupon)->get();
+            return view('page.cart.show_cart',['coupon'=>$coupon]);
+        }
+        else{
+            $coupon=array();
+            return view('page.cart.show_cart',['coupon'=>$coupon]);
+        }
     }
 
     public function shopping_cart(Request $req)
@@ -23,10 +35,15 @@ class CartController extends Controller
         $product_price = $req->price; // Required
         $product_image=$req->image;
         Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
-        //$product=$cart->items();
-        // Cart::remove("mrk6out9usge7zzwtwbxemglvnci1exv");
-        //return Cart::items();
-        return view('page.cart.show_cart');
+        if(Session::has('id_coupon')){
+            Session::forget('id_coupon');
+        }
+        if(Session::has('incorrect_coupon')){
+            Session::forget('incorrect_coupon');
+        }
+        $coupon=array();
+        return view('page.cart.show_cart',['coupon'=>$coupon]);
+        
     }
     public function delete_product($uid)
     {       

@@ -17,9 +17,6 @@
 					<tbody>
 						<?php 
 							$content=Cart::items()->original;
-							// echo "<pre>";
-							// var_dump($content);
-							// echo "</pre>";
 						?>
 						@foreach($content as $item)	
 																					
@@ -62,9 +59,25 @@
 		</div>
 	</section> <!--/#cart_items-->
 
+	<!-- form coupon -->
+	<section id="coupon">
+	<div class="container">
+		<form action="{{route('discount')}}" method="post">
+			{{ csrf_field() }}
+			<p class="text-danger">{{Session::get('error')}}</p>
+			@if(Session::has('incorrect_coupon'))
+				<p class="text-danger">{{Session::get('incorrect_coupon')}}</p> 
+			@endif
+			<input type="text" name="code_coupon" placeholder="Mã giảm giá">
+			<input type="submit" value="Mã giảm giá" class="btn btn-primary">
+		</form>
+	</div>
+	
+	</section>
+	<!-- end form coupom -->
+
     <section id="do_action">
-		<div class="container">
-			
+		<div class="container">	
 			<div class="row">				
 				<div class="col-sm-6">
 					<div class="total_area">
@@ -77,11 +90,34 @@
 								?>
 							</span></li>
 							<li>Phí vận chuyển <span>Free</span></li>
+							<!--  -->
+							@if($coupon)
+							<li>Giảm giá <span>
+							@foreach($coupon as $item)								
+								@if($item->condition=='percent')
+								<?php 
+								$discount= $item->rate*(Cart::total()+$tax)/100;
+								echo number_format($discount);
+								
+								?>
+								@else
+								<?php 
+								$discount= $item->rate;
+								echo number_format($discount);								
+								?>
+								@endif
+							@endforeach
+							</span></li>
+							@else
+								<?php $discount=0; ?>
+								
+							@endif
 							<li>Tổng tiền <span>
 								<?php
-									$total=Cart::total()+$tax;
+									$total=Cart::total()+$tax-$discount;
 									echo number_format($total);
-							 	?></span></li>
+							 	?></span>
+							</li>
 						</ul>
 						<?php 
 							if(Session::get('user_id')){
@@ -96,5 +132,5 @@
 				</div>
 			</div>
 		</div>
-	</section><!--/#do_action-->
+	</section>
 @stop

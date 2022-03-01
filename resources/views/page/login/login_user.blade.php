@@ -8,7 +8,7 @@
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
 						<form action="{{route('handle_login')}}" method="post">
-							@csrf;
+							@csrf
 							<input type="email" name="email" placeholder="Email Address" />
                             <input type="password" name="password" placeholder="Password" />
 							<span>

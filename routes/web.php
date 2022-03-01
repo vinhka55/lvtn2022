@@ -53,3 +53,11 @@ Route::get('thong-tin-tai-khoan','App\Http\Controllers\InfoUserController@show_i
 
 //search product
 Route::post('tim-kiem-san-pham','App\Http\Controllers\HomeController@search')->name('search_product');
+
+//coupon
+Route::get('them-ma-giam-gia','App\Http\Controllers\CouponController@insert')->name('insert_coupon');
+Route::post('xu-ly-them-ma-giam-gia','App\Http\Controllers\CouponController@handle_insert')->name('handle_insert_coupon');
+Route::get('danh-sach-ma-giam-gia','App\Http\Controllers\CouponController@list')->name('list_coupon');
+Route::post('giam-gia','App\Http\Controllers\CouponController@discount')->name('discount');
+Route::get('xoa-ma-giam-gia/{id}','App\Http\Controllers\CouponController@delete')->name('delete_coupon');
+

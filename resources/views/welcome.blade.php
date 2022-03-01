@@ -53,7 +53,7 @@
               <?php 
               if(Session::get('user_id')){
                 ?>
-                <a href="{{route('get_mothod_shopping_cart')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>               
+                <a href="{{route('shopping_cart')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>               
               <?php }
               else { ?>
                 <a href="{{route('login')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
