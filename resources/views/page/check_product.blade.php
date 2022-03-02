@@ -30,10 +30,17 @@
                             <button type="submit" class="btn btn-info">										
                                 Mua ngay
                             </button>
-                            <button type="submit" class="btn btn-warning">
-                                <i class="fa fa-shopping-cart"></i>
-                                Thêm vào giỏ hàng
-                            </button>	
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$item->id}}" class="cart_product_id_{{$item->id}}">
+                                <input type="hidden" value="{{$item->name}}" class="cart_product_name_{{$item->id}}">
+                                <input type="hidden" value="{{$item->image}}" class="cart_product_image_{{$item->id}}">
+                                <input type="hidden" value="{{$item->price}}" class="cart_product_price_{{$item->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$item->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$item->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->	
                         </form>			
                     </span>			
             </div><!--/product-information-->

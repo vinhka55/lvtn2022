@@ -29,6 +29,17 @@
                             <h3 class="card-text name-product">{{$ga1->name}}</h3>
                             <p class="price-product">Giá: {{number_format($ga1->price)}}</p>
                             <a href="{{route('detail_product',$ga1->id)}}">Chi tiết</a>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$ga1->id}}" class="cart_product_id_{{$ga1->id}}">
+                                <input type="hidden" value="{{$ga1->name}}" class="cart_product_name_{{$ga1->id}}">
+                                <input type="hidden" value="{{$ga1->image}}" class="cart_product_image_{{$ga1->id}}">
+                                <input type="hidden" value="{{$ga1->price}}" class="cart_product_price_{{$ga1->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$ga1->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$ga1->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                             </div>
                         </div>
                     </div>
@@ -95,6 +106,17 @@
                             <h3 class="card-text name-product">{{$trau->name}}</h3>
                             <p class="price-product">Giá: {{number_format($trau->price)}}</p>
                             <a href="{{route('detail_product',$trau->id)}}">Chi tiết</a>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$trau->id}}" class="cart_product_id_{{$trau->id}}">
+                                <input type="hidden" value="{{$trau->name}}" class="cart_product_name_{{$trau->id}}">
+                                <input type="hidden" value="{{$trau->image}}" class="cart_product_image_{{$trau->id}}">
+                                <input type="hidden" value="{{$trau->price}}" class="cart_product_price_{{$trau->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$trau->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$trau->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                             </div>
                         </div>
                     </div>
@@ -145,6 +167,7 @@
                             <h3 class="card-text name-product">{{$gv->name}}</h3>
                             <p class="price-product">Giá: {{number_format($gv->price)}}</p>
                             <a href="{{route('detail_product',$gv->id)}}">Chi tiết</a>
+                            <button class="btn btn-primary" value="Thêm giỏ hàng"></button>
                             </div>
                         </div>
                     </div>
@@ -153,4 +176,4 @@
         </div>
     </div>
 </div>
-    @endsection
+@endsection

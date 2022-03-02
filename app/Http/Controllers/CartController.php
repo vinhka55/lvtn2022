@@ -61,4 +61,16 @@ class CartController extends Controller
     {
         echo 'ok';
     }
+    public function add_cart_ajax(Request $req)
+    {
+        $data= $req->all();
+        //$session_id = substr(md5(microtime()),rand(0,26),5);
+        //$cart = Session::get('cart');
+        $product_name = $data['cart_product_name'];
+        $product_id = $data['cart_product_id'];
+        $product_image = $data['cart_product_image'];
+        $product_qty = $data['cart_product_qty'];
+        $product_price = $data['cart_product_price'];
+        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
+    }
 }
