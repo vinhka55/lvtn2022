@@ -31,7 +31,7 @@ Route::get('san-pham/{id}','App\Http\Controllers\ProductController@detail')->nam
 //cart 
 Route::get('gio-hang','App\Http\Controllers\CartController@get_mothod_shopping_cart')->name('get_mothod_shopping_cart');
 Route::post('gio-hang','App\Http\Controllers\CartController@shopping_cart')->name('shopping_cart');
-Route::post('cap-nhat-gio-hang/{uid}','App\Http\Controllers\CartController@update')->name('update_cart');
+Route::post('cap-nhat-gio-hang','App\Http\Controllers\CartController@update')->name('update_cart');
 Route::get('xoa-san-pham-trong-gio-hang/{uid}','App\Http\Controllers\CartController@delete_product')->name('delete_product_in_cart');
 Route::post('add-cart-ajax','App\Http\Controllers\CartController@add_cart_ajax')->name('add-cart-by-ajax');
 Route::get('xoa-tat-ca-san-pham-trong-gio-hang','App\Http\Controllers\CartController@delete_all')->name('delete-all-product-in-cart');

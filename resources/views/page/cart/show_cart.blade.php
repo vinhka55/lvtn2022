@@ -3,62 +3,64 @@
 <section id="cart_items">
 		<div class="container mt-5">			
 			<div class="table-responsive cart_info">
-				<?php 
-					$content=Cart::items()->original;
-				?>
-				@if(count($content)>0)
-				<table class="table table-condensed">
-					<thead>
-						<tr class="cart_menu">
-							<td class="image text-center">Ảnh</td>
-							<td class="name">Tên sản phẩm</td>
-							<td class="price">Giá</td>
-							<td class="quantity">Số lượng</td>
-							<td class="total">Thành tiền</td>
-							<td>Action</td>
-						</tr>
-					</thead>				
-					<tbody>
-						@foreach($content as $item)																						
-						<tr>
-							<td class="image" width="20%">
-								<a href=""><img width="80%" src="{{url('/')}}/public/uploads/product/{{$item['thumb']}}" alt="ảnh lỗi"></a>
-							</td>
-							<td class="name">
-								<h4><a href="">{{$item['name']}}</a></h4>								
-							</td>
-							<td class="price">
-								<p>{{number_format($item['price'])}}</p>
-							</td>
-							<td class="quantity">
-								<div class="cart_quantity_button">
-									<form action="{{route('update_cart',$item['uid'])}}" method="post">
-										@csrf
-										<input class="cart_quantity_input" type="number" name="quantity" value="{{$item['qty']}}" autocomplete="off" size="2">
-										<input type="submit" value="update" class="btn btn-default">
-										<input type="hidden" value="{{$item['uid']}}" name='uid'>
-									</form>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">
-									<?php
-										$subtotal=$item['qty']*$item['price'];
-										echo number_format($subtotal).' '.'VND';
-									?>
-								</p>
-							</td>
-							<td class="delete">
-								<a class="cart_quantity_delete" href="{{route('delete_product_in_cart',$item['uid'])}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
-							</td>
-						</tr> 						
-						@endforeach					                     
-					</tbody>
-				</table>
-				<div class="flex m-2">
-				<a href="" class="btn btn-primary">Cập nhật giỏ hàng</a>
-				<a href="{{route('delete-all-product-in-cart')}}" class="btn btn-primary">Xóa tất cả</a>
-				</div>				
+				<form action="{{route('update_cart')}}" method="post">
+					@csrf
+					<?php 
+						$content=Cart::items()->original;
+					?>
+					@if(count($content)>0)
+					<table class="table table-condensed">
+						<thead>
+							<tr class="cart_menu">
+								<td class="image text-center">Ảnh</td>
+								<td class="name text-center">Tên sản phẩm</td>
+								<td class="price text-center">Giá</td>
+								<td class="quantity text-center">Số lượng</td>
+								<td class="total text-center">Thành tiền</td>
+								<td class="text-center">Action</td>
+							</tr>
+						</thead>				
+						<tbody>
+							
+							@foreach($content as $item)																						
+							<tr>
+								<td class="image text-center" width="20%">
+									<a href=""><img width="80%" src="{{url('/')}}/public/uploads/product/{{$item['thumb']}}" alt="ảnh lỗi"></a>
+								</td>
+								<td class="name text-center">
+									<h4><a href="">{{$item['name']}}</a></h4>								
+								</td>
+								<td class="price text-center">
+									<p>{{number_format($item['price'])}}</p>
+								</td>
+								<td class="quantity ">
+									<div class="cart_quantity_button">
+										
+											
+											<input class="cart_quantity_input" type="number" name="quantity[{{$item['uid']}}]" value="{{$item['qty']}}" autocomplete="off" size="2">
+											<input type="hidden" name="uid[{{$item['uid']}}]" value="{{$item['uid']}}">
+									</div>
+								</td>
+								<td class="cart_total text-center">
+									<p class="cart_total_price">
+										<?php
+											$subtotal=$item['qty']*$item['price'];
+											echo number_format($subtotal).' '.'VND';
+										?>
+									</p>
+								</td>
+								<td class="delete text-center">
+									<a class="cart_quantity_delete" href="{{route('delete_product_in_cart',$item['uid'])}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+								</td>
+							</tr> 						
+							@endforeach					                     
+						</tbody>
+					</table>
+					<div class="flex m-2">
+						<button type='submit' class='btn btn-primary'>Cập nhật giỏ hàng</button>
+						<a href="{{route('delete-all-product-in-cart')}}" class="btn btn-primary">Xóa tất cả</a>
+					</div>	
+				</form>			
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
@@ -137,5 +139,6 @@
 	</section>
 	@else
 		<?php echo "<h3 class='text-center'>Không có sản phẩm nào trong giỏ hàng</h3>"; ?>
+		<?php Session::forget('id_coupon'); ?>
 	@endif
 @stop

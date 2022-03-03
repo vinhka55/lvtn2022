@@ -51,11 +51,16 @@ class CartController extends Controller
             return redirect('/gio-hang');
         }
     }
-    public function update($uid, Request $req)
+    public function update(Request $req)
     {
-        if(Cart::update($uid,$req->quantity)){
-            return redirect('/gio-hang');
+        $data=$req->all();
+        echo "<pre>";
+        var_dump($data['quantity']);
+        echo "</pre>";
+        foreach($data['quantity'] as $key=>$val){
+            Cart::update($key, $val);
         }
+        return redirect()->back();
     }
     public function pay()
     {
