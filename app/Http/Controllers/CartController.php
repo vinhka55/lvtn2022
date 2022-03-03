@@ -73,4 +73,9 @@ class CartController extends Controller
         $product_price = $data['cart_product_price'];
         Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
     }
+    public function delete_all()
+    {
+        Cart::clear();
+        return redirect()->back();
+    }
 }

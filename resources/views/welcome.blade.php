@@ -14,6 +14,7 @@
     <link href="{{url('/')}}/public/frontend/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="{{url('/')}}/public/frontend/css/app.css">
     <link href="{{url('/')}}/public/frontend/css/sweetalert.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <title>THỰC PHẨM HỮU NGHỊ| Cung Cấp Thực Phẩm Sỉ Lẻ Uy Tín</title>
 </head>
 <body>
