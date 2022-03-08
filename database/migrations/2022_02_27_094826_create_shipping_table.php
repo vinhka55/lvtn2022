@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('address');
             $table->string('notes');
+            $table->string('pay_method');
             $table->timestamps();
         });
     }

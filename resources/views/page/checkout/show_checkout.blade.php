@@ -60,7 +60,7 @@
                 
 				<div class="col-sm-6">
 					<div class="total_area">
-                        <form action="{{route('payment_method')}}" method="post">
+                        <form action="{{route('order_place')}}" method="post">
 							@csrf
                             @foreach($info as $item)
                             <ul>
@@ -70,14 +70,21 @@
                                 <input type="text" name="phone" id="phone" value="{{$item->phone}}"><br><br>
                                 <label for="email">Email</label>
                                 <input type="text" name="email" id="email" value="{{$item->email}}"><br><br>
-                                <textarea name="address">Địa chỉ...</textarea><br><br>
-                                <textarea name="notes" rows="11">Lưu ý khác...</textarea><br><br>
+                                <textarea name="address" placeholder="Địa chỉ..."></textarea><br><br>
+                                <textarea name="notes" rows="11" placeholder="Lưu ý khác..."></textarea><br><br>
                                 <p>Tổng tiền: 
                                     <?php
                                         $total=Cart::total()+0.1*Cart::total();
                                         echo number_format($total).' '.'VND (Đã bao gồm 10% thuế VAT)';
                                     ?>
                                 </p>
+								<p>Chọn phương thức thanh toán</p>
+								<input type="radio" id="atm" name="pay" value="atm">
+								<label for="atm"> ATM</label><br>
+								<input type="radio" id="cash" name="pay" value="cash">
+								<label for="cash"> Tiền mặt</label><br>
+								<input type="radio" id="momo" name="pay" value="momo">
+								<label for="momo"> Momo QR</label><br>
                             </ul>  
                             @endforeach
                             <input type="submit" value="Thanh toán ngay" class="btn btn-primary">

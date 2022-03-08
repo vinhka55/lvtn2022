@@ -63,4 +63,5 @@ Route::post('xu-ly-them-ma-giam-gia','App\Http\Controllers\CouponController@hand
 Route::get('danh-sach-ma-giam-gia','App\Http\Controllers\CouponController@list')->name('list_coupon');
 Route::post('giam-gia','App\Http\Controllers\CouponController@discount')->name('discount');
 Route::get('xoa-ma-giam-gia/{id}','App\Http\Controllers\CouponController@delete')->name('delete_coupon');
-
+Route::get('sua-ma-giam-gia/{id}','App\Http\Controllers\CouponController@edit')->name('edit_coupon');
+Route::post('xu-ly-sua-ma-giam-gia','App\Http\Controllers\CouponController@handle_edit')->name('handle_edit_coupon');

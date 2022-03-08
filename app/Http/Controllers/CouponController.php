@@ -58,4 +58,22 @@ class CouponController extends Controller
         $coupon->delete();
         return redirect('danh-sach-ma-giam-gia');
     }
+    public function edit($id)
+    {
+        $coupon=Coupon::find($id)->get();
+        return view('admin.coupon.edit')->with(compact('coupon'));
+    }
+    public function handle_edit(Request $req)
+    {
+        $data=$req->all();
+        $id=$data['id'];
+        $coupon= Coupon::find($id);
+        $coupon->name=$data['name'];
+        $coupon->code=$data['code'];
+        $coupon->amount=$data['amount'];
+        $coupon->condition=$data['condition'];
+        $coupon->rate=$data['rate'];
+        $coupon->save();
+        return redirect('/danh-sach-ma-giam-gia');
+    }
 }

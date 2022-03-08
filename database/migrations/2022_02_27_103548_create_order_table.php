@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id');
             $table->integer('shipping_id');
-            $table->integer('payment_id');
+            $table->string('payment');
             $table->string('total_money');
             $table->string('status');
             $table->timestamps();

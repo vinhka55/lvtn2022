@@ -34,7 +34,7 @@
                     <input type="checkbox"><i></i>
                 </label>
                 </th>
-                <th>Tên khách hàng</td>
+                <th>Mã đơn hàng</td>
                 <th>Tổng giá tiền</th>
                 <th>Tình trạng</th>           
                 <th>Hiển thị</th>
@@ -46,7 +46,7 @@
                         @foreach($data as $item)
                         <tr>
                             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-                            <td><p class="text-ellipsis name">{{$item->name}}</p></td>
+                            <td><p class="text-ellipsis name"><?php echo 'ORDER'.$item->id ?></p></td>
                             <td><p class="text-ellipsis name">{{number_format($item->total_money)}}</p></td>                       
                             <td>{{$item->status}}</td>                       
                             <td>

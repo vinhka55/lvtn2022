@@ -1,5 +1,6 @@
 @extends("admin.admin_layout")
 @section("admin_page")
+
 <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -53,11 +54,11 @@
                           @if($item->condition=='percent')
                           {{$item->rate.' '.'%'}}
                           @else
-                          {{number_format($item->rate)}}
+                          {{number_format((int)$item->rate)}}
                           @endif
                         </p></td>   
                         <td>
-                            <a title="click to edit" href="{{route('edit_category',$item->id)}}" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a title="click to edit" href="{{route('edit_coupon',$item->id)}}" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             <a title="click to delete" onclick="return confirm('Bạn chắc chắn muốn xóa?')" href="{{route('delete_coupon',$item->id)}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </td>
                     </tr>

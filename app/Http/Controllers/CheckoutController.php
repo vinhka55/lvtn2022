@@ -43,7 +43,7 @@ class CheckoutController extends Controller
         $user_id=DB::table('user')->insertGetId($data);
         Session::put('user_id',$user_id);
         Session::put('name_user',$req->name);
-        echo Session::get('name_user');
+        return redirect('/');
     }
     public function pay()
     {
@@ -65,16 +65,27 @@ class CheckoutController extends Controller
     }
     public function order_place(Request $req)
     {
+        //insert thông tin nhận hàng
         $data=[];
-        $data['method']=$req->pay;
-        $data['status']="Đang chờ xử lý";
-        $payment_id=DB::table('payment')->insertGetId($data);
+        $data['name']=$req->name;
+        $data['email']=$req->email;
+        $data['phone']=$req->phone;
+        $data['address']=$req->address;
+        $data['notes']=$req->notes;
+        $data['pay_method']=$req->pay;
+        $shipping_id=DB::table('shipping')->insertGetId($data);
+        Session::put('shipping_id',$shipping_id);
+
+        // $data=[];
+        // $data['method']=$req->pay;
+        // $data['status']="Đang chờ xử lý";
+        // $payment_id=DB::table('payment')->insertGetId($data);
 
         //insert đơn hàng
         $data=[];
         $data['customer_id']=Session::get('user_id');
         $data['shipping_id']=Session::get('shipping_id');
-        $data['payment_id']=$payment_id;
+        $data['payment']=$req->pay;
         $data['total_money']=Cart::total();
         $data['status']="Đang chờ xử lý";
         $order_id=DB::table('order')->insertGetId($data);

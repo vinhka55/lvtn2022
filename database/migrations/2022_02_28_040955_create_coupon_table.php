@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('code');
             $table->integer('amount');
             $table->string('condition');
+            $table->string('rate');
             $table->timestamps();
         });
     }

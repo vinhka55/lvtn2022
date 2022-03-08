@@ -58,6 +58,17 @@
                             <h3 class="card-text name-product">{{$ga2->name}}</h3>
                             <p class="price-product">Giá: {{number_format($ga2->price)}}</p>
                             <a href="{{route('detail_product',$ga2->id)}}">Chi tiết</a>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$ga2->id}}" class="cart_product_id_{{$ga2->id}}">
+                                <input type="hidden" value="{{$ga2->name}}" class="cart_product_name_{{$ga2->id}}">
+                                <input type="hidden" value="{{$ga2->image}}" class="cart_product_image_{{$ga2->id}}">
+                                <input type="hidden" value="{{$ga2->price}}" class="cart_product_price_{{$ga2->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$ga2->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$ga2->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                             </div>
                         </div>
                     </div>
@@ -74,6 +85,17 @@
                             <h3 class="card-text name-product">{{$bo_u_m->name}}</h3>
                             <p class="price-product">Giá: {{number_format($bo_u_m->price)}}</p>
                             <a href="{{route('detail_product',$bo_u_m->id)}}">Chi tiết</a>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$bo_u_m->id}}" class="cart_product_id_{{$bo_u_m->id}}">
+                                <input type="hidden" value="{{$bo_u_m->name}}" class="cart_product_name_{{$bo_u_m->id}}">
+                                <input type="hidden" value="{{$bo_u_m->image}}" class="cart_product_image_{{$bo_u_m->id}}">
+                                <input type="hidden" value="{{$bo_u_m->price}}" class="cart_product_price_{{$bo_u_m->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$bo_u_m->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$bo_u_m->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                             </div>
                         </div>
                     </div>
@@ -90,6 +112,17 @@
                             <h3 class="card-text name-product">{{$heo->name}}</h3>
                             <p class="price-product">Giá: {{number_format($heo->price)}}</p>
                             <a href="{{route('detail_product',$heo->id)}}">Chi tiết</a>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$heo->id}}" class="cart_product_id_{{$heo->id}}">
+                                <input type="hidden" value="{{$heo->name}}" class="cart_product_name_{{$heo->id}}">
+                                <input type="hidden" value="{{$heo->image}}" class="cart_product_image_{{$heo->id}}">
+                                <input type="hidden" value="{{$heo->price}}" class="cart_product_price_{{$heo->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$heo->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$heo->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                             </div>
                         </div>
                     </div>
@@ -133,6 +166,17 @@
                             <h3 class="card-text name-product">{{$seafood->name}}</h3>
                             <p class="price-product">Giá: {{number_format($seafood->price)}}</p>
                             <a href="{{route('detail_product',$seafood->id)}}">Chi tiết</a>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$seafood->id}}" class="cart_product_id_{{$seafood->id}}">
+                                <input type="hidden" value="{{$seafood->name}}" class="cart_product_name_{{$seafood->id}}">
+                                <input type="hidden" value="{{$seafood->image}}" class="cart_product_image_{{$seafood->id}}">
+                                <input type="hidden" value="{{$seafood->price}}" class="cart_product_price_{{$seafood->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$seafood->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$seafood->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                             </div>
                         </div>
                     </div>
@@ -150,6 +194,17 @@
                             <h3 class="card-text name-product">{{$gs->name}}</h3>
                             <p class="price-product">Giá: {{number_format($gs->price)}}</p>
                             <a href="{{route('detail_product',$gs->id)}}">Chi tiết</a>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$gs->id}}" class="cart_product_id_{{$gs->id}}">
+                                <input type="hidden" value="{{$gs->name}}" class="cart_product_name_{{$gs->id}}">
+                                <input type="hidden" value="{{$gs->image}}" class="cart_product_image_{{$gs->id}}">
+                                <input type="hidden" value="{{$gs->price}}" class="cart_product_price_{{$gs->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$gs->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$gs->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                             </div>
                         </div>
                     </div>
@@ -168,6 +223,17 @@
                             <p class="price-product">Giá: {{number_format($gv->price)}}</p>
                             <a href="{{route('detail_product',$gv->id)}}">Chi tiết</a>
                             <button class="btn btn-primary" value="Thêm giỏ hàng"></button>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$gv->id}}" class="cart_product_id_{{$gv->id}}">
+                                <input type="hidden" value="{{$gv->name}}" class="cart_product_name_{{$gv->id}}">
+                                <input type="hidden" value="{{$gv->image}}" class="cart_product_image_{{$gv->id}}">
+                                <input type="hidden" value="{{$gv->price}}" class="cart_product_price_{{$gv->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$gv->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$gv->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                             </div>
                         </div>
                     </div>

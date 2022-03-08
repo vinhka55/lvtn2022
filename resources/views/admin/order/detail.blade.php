@@ -95,7 +95,8 @@
                 <th>Tên khách hàng</td>
                 <th>Số điện thoại</th>
                 <th>Email</th>      
-                <th>Địa chỉ</th>      
+                <th>Địa chỉ</th>
+                <th>Cách thanh toán</th>      
                 <th>Ghi chú</th>           
             </tr>
             </thead>
@@ -107,6 +108,7 @@
                             <td><p class="text-ellipsis name">{{$item->phone}}</p></td>
                             <td><p class="text-ellipsis name">{{$item->email}}</p></td> 
                             <td><p class="text-ellipsis name">{{$item->address}}</p></td>
+                            <td><p class="text-ellipsis name">{{$item->pay_method}}</p></td>
                             <td><p class="text-ellipsis name">{{$item->notes}}</p></td>                                              
                         </tr>
                         @endforeach    
@@ -157,18 +159,24 @@
                 <th>Số lượng</th>                
             </tr>
             </thead>
-            <tbody>                    
+            <tbody>     
+                        <?php $total_money=0; ?>            
                         @foreach($info_product as $item)
                         <tr>
                             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                             <td><p class="text-ellipsis name">{{$item->product_name}}</p></td>
                             <td><p class="text-ellipsis name">{{number_format($item->product_price)}}</p></td>
-                            <td><p class="text-ellipsis name">{{$item->product_quantyti}}</p></td>                                                 
+                            <td><p class="text-ellipsis name">{{$item->product_quantyti}}</p></td>        
+                           <?php $total_money=$total_money+$item->product_price*$item->product_quantyti;     ?>                
                         </tr>
-                        @endforeach    
+                        @endforeach
+                        
             </tbody>
+            
         </table>
+        
         </div>
+        <?php echo "Tổng tiền: ".number_format($total_money).' VND' ; ?>
     </div>
     </div>
 </div>
