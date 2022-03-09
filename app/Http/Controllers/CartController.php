@@ -13,7 +13,7 @@ class CartController extends Controller
 {
     public function get_mothod_shopping_cart()
     {
-
+        //Session::forget('incorrect_coupon');
         if(Session::has('id_coupon')){
 
             $id_coupon=Session::get('id_coupon');

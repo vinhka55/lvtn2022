@@ -50,6 +50,10 @@ Route::post('dat-hang','App\Http\Controllers\CheckoutController@order_place')->n
 Route::get('danh-sach-don-hang','App\Http\Controllers\CheckoutController@list_order')->name('list_order');
 Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\CheckoutController@detail_order')->name('detail_order');
 Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\CheckoutController@delete_order')->name('delete_order');
+Route::post('cap-nhat-trang-thai-san-pham-cua-don-hang','App\Http\Controllers\CheckoutController@update_status_of_product')->name('update_status_of_product_in_order');
+Route::get('xoa-san-pham-trong-don-hang/{id}','App\Http\Controllers\CheckoutController@delete_product_in_order')->name('delete_product_in_order');
+Route::post('cap-nhat-so-luong-san-pham-trong-don-hang','App\Http\Controllers\CheckoutController@update_qty_product_in_order')->name('update_qty_product_in_order');
+
 
 //user
 Route::get('thong-tin-tai-khoan','App\Http\Controllers\InfoUserController@show_info')->name('info_user');
@@ -65,3 +69,7 @@ Route::post('giam-gia','App\Http\Controllers\CouponController@discount')->name('
 Route::get('xoa-ma-giam-gia/{id}','App\Http\Controllers\CouponController@delete')->name('delete_coupon');
 Route::get('sua-ma-giam-gia/{id}','App\Http\Controllers\CouponController@edit')->name('edit_coupon');
 Route::post('xu-ly-sua-ma-giam-gia','App\Http\Controllers\CouponController@handle_edit')->name('handle_edit_coupon');
+
+//admin login, register
+Route::get('admin/register-auth','App\Http\Controllers\AdminController@register_auth')->name('register');
+Route::post('admin/handle-register-auth','App\Http\Controllers\AdminController@handle_register')->name('handle_register_admin');

@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use Cart;
+use App\Models\Order;
+use App\Models\Coupon;
+use App\Models\OrderDetails;
+use App\Models\Product;
 session_start();
 
 class CheckoutController extends Controller
@@ -65,6 +69,18 @@ class CheckoutController extends Controller
     }
     public function order_place(Request $req)
     {
+
+        //Cập nhật lại số lượng coupon nếu có áp mã
+        if(Session::has('id_coupon')){        
+            $amount_coupon=Coupon::where('id',Session::get('id_coupon'))->value('amount');
+            if($amount_coupon>0){
+                $amount_coupon=$amount_coupon-1;
+                $coupon=Coupon::find(Session::get('id_coupon'));
+                $coupon->amount=$amount_coupon;
+                $coupon->save();
+            }
+        }
+
         //insert thông tin nhận hàng
         $data=[];
         $data['name']=$req->name;
@@ -101,6 +117,7 @@ class CheckoutController extends Controller
             $data['product_quantyti']=$item['qty'];
             DB::table('order_detail')->insert($data);
         }
+         
         return view('page.checkout.payment_done');
     }
     public function list_order()
@@ -110,6 +127,12 @@ class CheckoutController extends Controller
     }
     public function detail_order($orderId)
     {
+        
+        $order=Order::where('id',$orderId)->get();
+
+        foreach ($order as $item) {
+            $order_status=$item->status;
+        }
 
         $user_id=DB::table('order')->where('id',$orderId)->value('customer_id');
         $info_user=DB::table('user')->where('id',$user_id)->get();
@@ -117,8 +140,9 @@ class CheckoutController extends Controller
         $shipping_id=DB::table('order')->where('id',$orderId)->value('shipping_id');
         $info_shipping=DB::table('shipping')->where('id',$shipping_id)->get();
 
-        $info_product=DB::table('order_detail')->where('order_id',$orderId)->get();
-        return view('admin.order.detail',['info_user'=>$info_user,'info_shipping'=>$info_shipping,'info_product'=>$info_product]);
+        $info_product=OrderDetails::with('product')->where('order_id',$orderId)->get();
+        //return view('admin.order.detail',['info_user'=>$info_user,'info_shipping'=>$info_shipping,'info_product'=>$info_product,'order'=>$order]);
+        return view('admin.order.detail')->with(compact('info_user','info_shipping','info_product','order','order_status'));
     }
     public function delete_order($orderId)
     {
@@ -128,5 +152,55 @@ class CheckoutController extends Controller
         else{
             echo 'Xóa không thành công, vui lòng thử lại';
         }
+    }
+    public function update_status_of_product(Request $req)
+    {
+        //cập nhật trạng thái đơn hàng
+        $data=$req->all();
+        $order=Order::find($data['order_id']);
+        $order->status=$data['order_status'];
+        $order->save();
+        if($data['order_status']=="Đã xử lý"){
+            for($i=0;$i<count($data['order_product_id']);$i++){
+                $product=Product::find($data['order_product_id'][$i]);
+                //$product->count=$product->count-$data['quantity'][$i];
+                $product->count_sold=$product->count_sold+$data['quantity'][$i];
+                $product->save();
+            }
+        }
+        elseif ($data['order_status']=="Hủy đơn") {
+            for($i=0;$i<count($data['order_product_id']);$i++){
+                $product=Product::find($data['order_product_id'][$i]);
+                $product->count=$product->count+$data['quantity'][$i];
+                //$product->count_sold=$product->count_sold-$data['quantity'][$i];
+                $product->save();
+            }
+            if(Session::has('id_coupon')){
+                $coupon=Coupon::find(Session::get('id_coupon'));
+                $coupon->amount=$coupon->amount+1;
+                $coupon->save();
+            }
+        }
+        else{
+            for($i=0;$i<count($data['order_product_id']);$i++){
+                $product=Product::find($data['order_product_id'][$i]);
+                $product->count=$product->count-$data['quantity'][$i];
+                //$product->count_sold=$product->count_sold+$data['quantity'][$i];
+                $product->save();
+            }
+        }
+    }
+    public function delete_product_in_order($id)
+    {
+        $product = OrderDetails::find($id);
+        $product->delete();
+        return redirect()->back();
+    }
+    public function update_qty_product_in_order(Request $req)
+    {
+        $data=$req->all();
+        $product_in_order=OrderDetails::find($data['id_detail']);
+        $product_in_order->product_quantyti=$data['order_product_qty'];
+        $product_in_order->save();
     }
 }

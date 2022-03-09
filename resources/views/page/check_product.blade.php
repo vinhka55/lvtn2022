@@ -21,7 +21,7 @@
                             <p>Giá: {{number_format($item->price)}}VND</p>
                             
                             <label>Số lượng:</label>
-                            <input type="number" name="quantity" value="1" min="1" />
+                            <input width="50%" type="number" name="quantity" value="1" min="1" max="{{$item->count}}"  size="2"/>
                             <input type="hidden" name="id" value="{{$item->id}}"/>
                             <input type="hidden" name="name" value="{{$item->name}}"/>
                             <input type="hidden" name="price" value="{{$item->price}}"/>

@@ -31,9 +31,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!-- //calendar -->
 <!-- //font-awesome icons -->
-<script src="public/backend/js/jquery2.0.3.min.js"></script>
-<script src="public/backend/js/raphael-min.js"></script>
-<script src="public/backend/js/morris.js"></script>
+<script src="{{url('/')}}/public/backend/js/jquery2.0.3.min.js"></script>
+<script src="{{url('/')}}/public/backend/js/raphael-min.js"></script>
+<script src="{{url('/')}}/public/backend/js/morris.js"></script>
 </head>
 <body>
 <section id="container">
@@ -153,14 +153,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </section>
 <!--main content end-->
 </section>
-<script src="public/backend/js/bootstrap.js"></script>
-<script src="public/backend/js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="public/backend/js/scripts.js"></script>
-<script src="public/backend/js/jquery.slimscroll.js"></script>
-<script src="public/backend/js/jquery.nicescroll.js"></script>
+<script src="{{url('/')}}/public/backend/js/bootstrap.js"></script>
+<script src="{{url('/')}}/public/backend/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="{{url('/')}}/public/backend/js/scripts.js"></script>
+<script src="{{url('/')}}/public/backend/js/jquery.slimscroll.js"></script>
+<script src="{{url('/')}}/public/backend/js/jquery.nicescroll.js"></script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
-<script src="public/backend/js/jquery.scrollTo.js"></script>
+<script src="{{url('/')}}/public/backend/js/jquery.scrollTo.js"></script>
 <!-- morris JavaScript -->	
+<script src="{{url('/')}}/public/backend/js/jquery.min.js"></script>	
 <script>
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE
@@ -217,7 +218,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	});
 	</script>
 <!-- calendar -->
-	<script type="text/javascript" src="public/backend/js/monthly.js"></script>
+	<script type="text/javascript" src="{{url('/')}}/public/backend/js/monthly.js"></script>
 	<script type="text/javascript">
 		$(window).load( function() {
 
@@ -248,5 +249,74 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		});
 	</script>
 	<!-- //calendar -->
+    <script type="text/javascript">
+    $('.order_details').change(function(){
+        var order_status = $(this).val();
+        var order_id = $(this).children(":selected").attr("id");
+        var _token = $('input[name="_token"]').val();
+        //lay ra so luong
+        quantity = [];
+        $("input[name='product_sales_quantity']").each(function(){
+            quantity.push($(this).val());
+        });
+        //lay ra product id
+        order_product_id = [];
+        $("input[name='order_product_id']").each(function(){
+            order_product_id.push($(this).val());
+        });
+        j = 0;
+        // for(i=0;i<order_product_id.length;i++){
+        //     //so luong khach dat
+        //     var order_qty = $('.order_qty_' + order_product_id[i]).val();
+        //     //so luong ton kho
+        //     var order_qty_storage = $('.order_qty_storage_' + order_product_id[i]).val();
+
+        //     if(parseInt(order_qty)>parseInt(order_qty_storage)){
+        //         j = j + 1;
+        //         if(j==1){
+        //             alert('Số lượng bán trong kho không đủ');
+        //         }
+        //         $('.color_qty_'+order_product_id[i]).css('background','#000');
+        //     }
+        // }
+        if(j==0){
+          
+                $.ajax({
+                        url : "{{route('update_status_of_product_in_order')}}",
+                            method: 'POST',
+                            data:{_token:_token, order_status:order_status ,order_id:order_id ,quantity:quantity, order_product_id:order_product_id},
+                            success:function(data){
+                                alert('Thay đổi tình trạng đơn hàng thành công');
+                                location.reload();
+                            },
+                            error: (error) => {
+                                console.log(JSON.stringify(error));
+                            }
+                });           
+        }
+    });
+</script>
+<script type="text/javascript">
+$('.update-amount-product-in-order').click(function(e) {
+    e.preventDefault()
+    var id_detail=$(this).data('id_detail')
+    var order_product_qty=$('.order_product_qty_'+id_detail).val()
+    var _token = $('input[name="_token"]').val();
+
+    $.ajax({
+        url : "{{route('update_qty_product_in_order')}}",
+            method: 'POST',
+            data:{_token:_token, id_detail:id_detail ,order_product_qty:order_product_qty},
+            success:function(data){
+                alert('Cập nhật số lượng thành công');
+                location.reload();
+            },
+            error: (error) => {
+                console.log(JSON.stringify(error)); 
+            }
+    });
+
+})
+</script>
 </body>
 </html>

@@ -11,7 +11,7 @@ class CategoryController extends Controller
     {   
         $name=DB::table('category')->where('id',$id)->value('name');
         $product=DB::table('product')->where('category_id',$id)->get();
-        return view('page.detail',['name'=>$name,'product'=>$product]);
+        return view('page.show_product_with_category',['name'=>$name,'product'=>$product]);
     }
     public function add_category()
     {

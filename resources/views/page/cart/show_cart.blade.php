@@ -37,7 +37,7 @@
 									<div class="cart_quantity_button">
 										
 											
-											<input class="cart_quantity_input" type="number" name="quantity[{{$item['uid']}}]" value="{{$item['qty']}}" autocomplete="off" size="2">
+											<input class="cart_quantity_input" type="number" name="quantity[{{$item['uid']}}]" value="{{$item['qty']}}" >
 											<input type="hidden" name="uid[{{$item['uid']}}]" value="{{$item['uid']}}">
 									</div>
 								</td>
@@ -102,18 +102,22 @@
 								@if($item->condition=='percent')
 								<?php 
 								$discount= $item->rate*(Cart::total()+$tax)/100;
-								echo number_format($discount);							
+								echo number_format($discount);
+								Session::put('discount',$discount);							
 								?>
 								@else
 								<?php 
 								$discount= $item->rate;
-								echo number_format($discount);								
+								echo number_format($discount);	
+								Session::put('discount',$discount);							
 								?>
 								@endif
 							@endforeach
 							</span></li>
 							@else
-								<?php $discount=0; ?>
+								<?php $discount=0;
+								Session::put('discount',0);
+								?>
 								
 							@endif
 							<li>Tổng tiền <span>

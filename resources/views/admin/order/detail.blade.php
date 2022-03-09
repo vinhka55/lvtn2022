@@ -155,8 +155,12 @@
                 </label>
                 </th>
                 <th>Tên sản phẩm</td>
+                <th>Còn trong kho</td>
                 <th>Giá</th>
-                <th>Số lượng</th>                
+                <th>Số lượng</th> 
+                @if($order_status=='Đang chờ xử lý')      
+                <th>Action</th>           
+                @endif     
             </tr>
             </thead>
             <tbody>     
@@ -165,18 +169,86 @@
                         <tr>
                             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                             <td><p class="text-ellipsis name">{{$item->product_name}}</p></td>
+                            <td><p class="text-ellipsis name">{{$item->product->count}} 
+                            </p></td>
                             <td><p class="text-ellipsis name">{{number_format($item->product_price)}}</p></td>
-                            <td><p class="text-ellipsis name">{{$item->product_quantyti}}</p></td>        
-                           <?php $total_money=$total_money+$item->product_price*$item->product_quantyti;     ?>                
+                            
+                            <td>
+                                <form action="">
+                                    <input type="number" <?php if($order_status!="Đang chờ xử lý") echo "disabled" ?> class="order_product_qty_{{$item->id}}" name="product_sales_quantity" value="{{$item->product_quantyti}}" min="1">
+                                    <input type="hidden" name="order_product_id" class="order_product_id" value="{{$item->product_id}}">
+                                    @if($order_status=='Đang chờ xử lý')
+                                    <button class="btn btn-default update-amount-product-in-order" data-id_detail="{{$item->id}}">Cập nhật số lượng</button>
+                                    @endif
+                                </form>
+                            </td>
+                            <td>
+                                @if($order_status=='Đang chờ xử lý')
+                                <p class="text-ellipsis name"><a href="{{route('delete_product_in_order',$item->id)}}"><i class="fa fa-trash" aria-hidden="true"></i></a></p>
+                                @endif
+                            </td>        
+                            <?php $total_money=$total_money+$item->product_price*$item->product_quantyti;?>                
                         </tr>
                         @endforeach
                         
             </tbody>
-            
+            <tr>
+            <td colspan="3">
+              @foreach($order as $key => $or)
+                @if($or->status=="Đang chờ xử lý")
+                <form>
+                   @csrf
+                  <select class="form-control order_details">
+                    
+                    <option id="{{$or->id}}" selected value="Đang chờ xử lý">Đang chờ xử lý</option>
+                    <option id="{{$or->id}}" value="Đã xử lý">Đã xử lý</option>
+                    <option id="{{$or->id}}" value="Hủy đơn">Hủy đơn</option>
+                  </select>
+                </form>
+                @elseif($or->status=="Đã xử lý")
+                <form>
+                  @csrf
+                  <select class="form-control order_details " disabled>                    
+                    <option id="{{$or->id}}" value="Đang chờ xử lý">Đang chờ xử lý</option>
+                    <option id="{{$or->id}}" selected value="Đã xử lý">Đã xử lý</option>
+                    <option id="{{$or->id}}" value="Hủy đơn">Hủy đơn</option>
+                  </select>
+                </form>
+                @else
+                <form>
+                   @csrf
+                  <select class="form-control order_details" disabled>
+                    
+                    <option id="{{$or->id}}" value="Đang chờ xử lý">Đang chờ xử lý</option>
+                    <option id="{{$or->id}}" value="Đã xử lý">Đã xử lý</option>
+                    <option id="{{$or->id}}" selected value="Hủy đơn">Hủy đơn</option>
+                  </select>
+                </form>
+                @endif
+                @endforeach
+            </td>
+          </tr>
         </table>
         
+        <br>
         </div>
         <?php echo "Tổng tiền: ".number_format($total_money).' VND' ; ?>
+        <br>
+        <?php echo "Thuế VAT 10%: ".number_format($total_money*10/100).' VND' ; ?>
+        <br>
+        <?php
+            if(Session::get('discount')){
+                $discount=Session::get('discount');
+                echo "Giảm giá: ".number_format(Session::get('discount')).' VND' ; 
+            }
+            else{
+                $discount=0;
+                echo "Giảm giá: 0 VND";
+            }
+        ?>
+        <br>
+        <?php echo "Số tiền cần thanh toán: ".number_format($total_money+$total_money*10/100-$discount).' VND' ;
+        ?>
     </div>
     </div>
 </div>
