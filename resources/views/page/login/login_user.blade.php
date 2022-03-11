@@ -7,7 +7,7 @@
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
-						<form action="{{route('handle_login')}}" method="post">
+						<form action="{{route('handle_login_customer')}}" method="post">
 							@csrf
 							<input type="email" name="email" placeholder="Email Address" />
                             <input type="password" name="password" placeholder="Password" />
@@ -25,7 +25,7 @@
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
 						<h2>New User Signup!</h2>
-						<form action="{{route('register')}}" method="post">
+						<form action="{{route('register_customer')}}" method="post">
                             @csrf
 							<input type="text" name='name' placeholder="Name"/>
 							<input type="email" name='email' placeholder="Email Address"/>

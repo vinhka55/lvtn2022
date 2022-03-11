@@ -83,4 +83,8 @@ class CartController extends Controller
         Cart::clear();
         return redirect()->back();
     }
+    public function show_cart_menu()
+    {
+        echo Cart::count();
+    }
 }

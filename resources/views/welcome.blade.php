@@ -10,10 +10,11 @@
     <link href="{{url('/')}}/public/frontend/css/prettyPhoto.css" rel="stylesheet">
     <link href="{{url('/')}}/public/frontend/css/price-range.css" rel="stylesheet">
     <link href="{{url('/')}}/public/frontend/css/animate.css" rel="stylesheet">
-    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
+
     <link href="{{url('/')}}/public/frontend/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="{{url('/')}}/public/frontend/css/app.css">
     <link href="{{url('/')}}/public/frontend/css/sweetalert.css" rel="stylesheet">
+    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <title>THỰC PHẨM HỮU NGHỊ| Cung Cấp Thực Phẩm Sỉ Lẻ Uy Tín</title>
 </head>
@@ -55,7 +56,8 @@
               <?php 
               if(Session::get('user_id')){
                 ?>
-                <a href="{{route('shopping_cart')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>               
+                <a href="{{route('shopping_cart')}}" class='btn btn-info me-2'><i class='fa fa-shopping-cart'></i>Giỏ hàng <span id="count-cart"></span></a>       
+                     
               <?php }
               else { ?>
                 <a href="{{route('login')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
@@ -154,8 +156,23 @@
 
 
 <script type="text/javascript">
+    function show_cart_menu() {
+          $.ajax({
+            url:"{{route('show_cart_menu')}}",
+            method:'get',
+            success:function(data){
+                //alert(data)
+              $('#count-cart').html(data)
+            }
+          })
+        }
+        show_cart_menu()
   $(document).ready(function(){
+    
     $('.add-to-cart').click(function(e){
+        
+        
+        
         var id = $(this).data('id_product');
         var cart_product_id = $('.cart_product_id_' + id).val();
         var cart_product_name = $('.cart_product_name_' + id).val();
@@ -176,6 +193,7 @@
                     button: false,
                     timer:2000
                 });
+                show_cart_menu()
             },
             error:function(xhr){
                 console.log(xhr.responseText);

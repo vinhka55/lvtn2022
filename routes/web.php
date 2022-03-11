@@ -42,13 +42,14 @@ Route::post('cap-nhat-gio-hang','App\Http\Controllers\CartController@update')->n
 Route::get('xoa-san-pham-trong-gio-hang/{uid}','App\Http\Controllers\CartController@delete_product')->name('delete_product_in_cart');
 Route::post('add-cart-ajax','App\Http\Controllers\CartController@add_cart_ajax')->name('add-cart-by-ajax');
 Route::get('xoa-tat-ca-san-pham-trong-gio-hang','App\Http\Controllers\CartController@delete_all')->name('delete-all-product-in-cart');
+Route::get('dem-san-pham-trong-cart-menu','App\Http\Controllers\CartController@show_cart_menu')->name('show_cart_menu');
 
 
 //checkout
 Route::get('dang-nhap','App\Http\Controllers\CheckoutController@login')->name('login');
 Route::get('dang-xuat','App\Http\Controllers\CheckoutController@logout')->name('logout');
-Route::post('dang-ki-tai-khoan','App\Http\Controllers\CheckoutController@register')->name('register');
-Route::post('xu-ly-dang-nhap','App\Http\Controllers\CheckoutController@handle_login')->name('handle_login');
+Route::post('dang-ki-tai-khoan','App\Http\Controllers\CheckoutController@register')->name('register_customer');
+Route::post('xu-ly-dang-nhap','App\Http\Controllers\CheckoutController@handle_login')->name('handle_login_customer');
 Route::get('thanh-toan','App\Http\Controllers\CheckoutController@pay')->name('pay_product');
 Route::post('phuong-thuc-thanh-toan','App\Http\Controllers\CheckoutController@payment_method')->name('payment_method');
 
