@@ -4,16 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 use App\Models\Product;
 
 class ProductController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return redirect('/admin');
+        }else{
+            return redirect('/admin/login');
+        }
+    }
     public function add(Request $req)
     {
         return view('admin.product.add_product');
     }
     public function handle_add(Request $req)
     {
+        $this->AuthLogin();
         $product=new Product;
         $product->name=$req->name;
         $product->origin=$req->origin;
@@ -39,6 +49,7 @@ class ProductController extends Controller
     }
     public function list() 
     {
+        $this->AuthLogin();
         $product=DB::table('product')->get();
         //return $product;
         return view('admin.product.list_product',['product'=>$product]);

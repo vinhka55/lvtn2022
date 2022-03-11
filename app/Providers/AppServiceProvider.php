@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
         $category=DB::table('category')->where('status',1)->get();
         view()->share('category', $category);
     }

@@ -62,8 +62,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <img alt="" src="">
                 <span class="username">
                     <?php
-                        $name_user=Session::get("name_user");
-                        echo $name_user;
+                        if(Auth::check()) echo Auth::user()->name;                       
                     ?>
                 </span>
                 <b class="caret"></b>
@@ -71,7 +70,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                <li><a href=""><i class="fa fa-key"></i> Log Out</a></li>
+                <li><a href="{{route('admin_logout')}}"><i class="fa fa-key"></i> Log Out</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -132,7 +131,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="{{route('list_order')}}">Danh sách đơn hàng</a></li>
 						
                     </ul>
-                </li>                 
+                </li>  
+                @hasrole('admin')
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fas fa-book-open"></i>
+                        <span>Quản lý user</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="{{route('list_user')}}">Danh sách user</a></li>
+						
+                    </ul>
+                </li> 
+                @endhasrole                
             </ul>  
 </aside>
 
@@ -162,6 +173,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{url('/')}}/public/backend/js/jquery.scrollTo.js"></script>
 <!-- morris JavaScript -->	
 <script src="{{url('/')}}/public/backend/js/jquery.min.js"></script>	
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE
@@ -296,6 +308,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         }
     });
 </script>
+
 <script type="text/javascript">
 $('.update-amount-product-in-order').click(function(e) {
     e.preventDefault()
@@ -318,5 +331,34 @@ $('.update-amount-product-in-order').click(function(e) {
 
 })
 </script>
+
+<script type="text/javascript">
+$('.delete-user').click(function(e) {
+    e.preventDefault()
+    var id_remove=$(this).data('id_remove')
+    var id_login=$(this).data('id_login')
+    var route_del="http://localhost/lvtn2022/".concat(id_remove.toString())
+    if(id_remove==id_login){
+        swal({
+            icon: "warning",
+            title:"Không được xóa chính mình",
+        });
+    }
+    else{
+    $.ajax({
+        url : "http://localhost/lvtn2022/delete-user/"+id_remove.toString(),
+            method: 'get',
+            success:function(data){
+                alert('Xoa thanh cong')
+                location.reload();
+            },
+            error: (xhr) => {
+                console.log(xhr.responseText); 
+                }
+            });
+        }
+    })
+</script>
+
 </body>
 </html>
