@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call(RolesSeeder::class); //gọi class RolessSeeder ở file RoleSeeder.php, để chạy mở teminal lên, gõ php artisan db:seed
+        //$this->call(RolesSeeder::class); //gọi class RolessSeeder ở file RoleSeeder.php, để chạy mở teminal lên, gõ php artisan db:seed
     }
 }

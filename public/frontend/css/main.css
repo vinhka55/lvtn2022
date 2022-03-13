@@ -2525,3 +2525,22 @@ span#count-cart {
   padding: 8px;
   border-radius: 37%;
 }
+.fixed-nav-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+}
+
+.hover-cart {
+  border-radius: 8%;
+  margin-top: 4px;
+  width: 126px;
+  background-color: greenyellow;
+  position: absolute;
+  display: none;
+}
+.content-cart-menu:hover .hover-cart{
+  display: inherit;
+}

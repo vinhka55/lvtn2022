@@ -87,4 +87,22 @@ class CartController extends Controller
     {
         echo Cart::count();
     }
+    public function hover_cart_menu()
+    {
+        $content=Cart::items()->original;
+        $output='';
+        if(count($content)>0){
+            $output.= '<ul>';
+            foreach ($content as $key => $value) {
+                $output.='<li><a href="http://localhost/lvtn2022/gio-hang"><img width="100px" height="100px" src="'.asset('public/uploads/product/'.$value['thumb']).'"><p>'.$value['name'].'</p></a></li><hr>';
+            }
+            $output.= '</ul>';
+            $output.='<li class="text-center"><a href="http://localhost/lvtn2022/gio-hang">Xem all</a></li>';
+
+        }
+        else{
+            $output.="<p class='text-center'>empty cart</p>";
+        }
+        return $output;
+    }
 }

@@ -21,7 +21,7 @@
 <body>
   
     <div class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-success">
+        <nav class="navbar navbar-expand-lg navbar-light bg-success fixed-nav-bar">
             <div class="container-fluid">
               <a class="navbar-brand" href="{{url('/')}}">Trang chủ</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,8 +56,12 @@
               <?php 
               if(Session::get('user_id')){
                 ?>
-                <a href="{{route('shopping_cart')}}" class='btn btn-info me-2'><i class='fa fa-shopping-cart'></i>Giỏ hàng <span id="count-cart"></span></a>       
-                     
+                <div class="content-cart-menu">
+                    <a href="{{route('shopping_cart')}}" class='btn btn-info me-2'><i class='fa fa-shopping-cart'></i>Giỏ hàng <span id="count-cart"></span></a>   
+                    <div class="hover-cart">
+                        
+                    </div>  
+                </div>                      
               <?php }
               else { ?>
                 <a href="{{route('login')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
@@ -72,6 +76,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                         <a href="{{route('info_user')}}"><button class="dropdown-item" type="button">Thông tin tài khoản</button></a>
+                        <a href="{{route('my_order')}}"><button class="dropdown-item" type="button">Lịch sử đơn hàng</button></a>
                         <a href="{{route('logout')}}"><button class="dropdown-item" type="button">Đăng xuất</button></a>
                     </div>
                 </div>               
@@ -157,22 +162,31 @@
 
 <script type="text/javascript">
     function show_cart_menu() {
-          $.ajax({
-            url:"{{route('show_cart_menu')}}",
-            method:'get',
-            success:function(data){
-                //alert(data)
-              $('#count-cart').html(data)
+        $.ajax({
+        url:"{{route('show_cart_menu')}}",
+        method:'get',
+        success:function(data){
+            $('#count-cart').html(data)
             }
-          })
-        }
+        })
+    }
+    function hover_cart_menu() {
+        $.ajax({
+        url:"{{route('hover_cart_menu')}}",
+        method:'get',
+        success:function(data){
+                console.log(data)
+                $('.hover-cart').html(data)
+            },
+        error:function(xhr){
+                console.log(xhr.responseText);
+            }
+        })
+    }
         show_cart_menu()
+        hover_cart_menu()
   $(document).ready(function(){
-    
-    $('.add-to-cart').click(function(e){
-        
-        
-        
+    $('.add-to-cart').click(function(e){       
         var id = $(this).data('id_product');
         var cart_product_id = $('.cart_product_id_' + id).val();
         var cart_product_name = $('.cart_product_name_' + id).val();
@@ -194,6 +208,7 @@
                     timer:2000
                 });
                 show_cart_menu()
+                hover_cart_menu()
             },
             error:function(xhr){
                 console.log(xhr.responseText);

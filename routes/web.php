@@ -30,10 +30,9 @@ Route::middleware(['auth.admin.author'])->group(function(){
         Route::get('danh-sach-san-pham','App\Http\Controllers\ProductController@list')->name('list_product');
         Route::get('sua-trang-thai-san-pham/{id}','App\Http\Controllers\ProductController@edit_status')->name('edit_status_product');
         Route::get('xoa-san-pham/{id}','App\Http\Controllers\ProductController@delete')->name('delete_product');
-        Route::get('san-pham/{id}','App\Http\Controllers\ProductController@detail')->name('detail_product');
     }
 );
-
+Route::get('san-pham/{id}','App\Http\Controllers\ProductController@detail')->name('detail_product');
 
 //cart 
 Route::get('gio-hang','App\Http\Controllers\CartController@get_mothod_shopping_cart')->name('get_mothod_shopping_cart');
@@ -43,7 +42,7 @@ Route::get('xoa-san-pham-trong-gio-hang/{uid}','App\Http\Controllers\CartControl
 Route::post('add-cart-ajax','App\Http\Controllers\CartController@add_cart_ajax')->name('add-cart-by-ajax');
 Route::get('xoa-tat-ca-san-pham-trong-gio-hang','App\Http\Controllers\CartController@delete_all')->name('delete-all-product-in-cart');
 Route::get('dem-san-pham-trong-cart-menu','App\Http\Controllers\CartController@show_cart_menu')->name('show_cart_menu');
-
+Route::get('hover-san-pham-trong-cart-menu','App\Http\Controllers\CartController@hover_cart_menu')->name('hover_cart_menu');
 
 //checkout
 Route::get('dang-nhap','App\Http\Controllers\CheckoutController@login')->name('login');
@@ -55,15 +54,17 @@ Route::post('phuong-thuc-thanh-toan','App\Http\Controllers\CheckoutController@pa
 
 //order
 Route::middleware(['auth.admin.author'])->group(function(){
-        Route::get('danh-sach-don-hang','App\Http\Controllers\CheckoutController@list_order')->name('list_order');
-        Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\CheckoutController@delete_order')->name('delete_order');
-        Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\CheckoutController@detail_order')->name('detail_order');
+        Route::get('danh-sach-don-hang','App\Http\Controllers\OrderControllerController@list_order')->name('list_order');
+        Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\OrderControllerController@delete_order')->name('delete_order');
+        Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\OrderControllerController@detail_order')->name('detail_order');
     }
 );
-Route::post('dat-hang','App\Http\Controllers\CheckoutController@order_place')->name('order_place');
-Route::post('cap-nhat-trang-thai-san-pham-cua-don-hang','App\Http\Controllers\CheckoutController@update_status_of_product')->name('update_status_of_product_in_order');
-Route::get('xoa-san-pham-trong-don-hang/{id}','App\Http\Controllers\CheckoutController@delete_product_in_order')->name('delete_product_in_order');
-Route::post('cap-nhat-so-luong-san-pham-trong-don-hang','App\Http\Controllers\CheckoutController@update_qty_product_in_order')->name('update_qty_product_in_order');
+Route::post('dat-hang','App\Http\Controllers\OrderController@order_place')->name('order_place');
+Route::post('cap-nhat-trang-thai-san-pham-cua-don-hang','App\Http\Controllers\OrderController@update_status_of_product')->name('update_status_of_product_in_order');
+Route::get('xoa-san-pham-trong-don-hang/{id}','App\Http\Controllers\OrderController@delete_product_in_order')->name('delete_product_in_order');
+Route::post('cap-nhat-so-luong-san-pham-trong-don-hang','App\Http\Controllers\OrderController@update_qty_product_in_order')->name('update_qty_product_in_order');
+Route::get('don-hang-cua-toi','App\Http\Controllers\OrderController@my_order')->name('my_order');
+Route::get('chi-tiet-don-hang-cua-toi/{id}','App\Http\Controllers\OrderController@detail_my_order')->name('detail_my_order');
 
 
 //user người mua hàng
