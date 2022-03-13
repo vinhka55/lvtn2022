@@ -54,9 +54,9 @@ Route::post('phuong-thuc-thanh-toan','App\Http\Controllers\CheckoutController@pa
 
 //order
 Route::middleware(['auth.admin.author'])->group(function(){
-        Route::get('danh-sach-don-hang','App\Http\Controllers\OrderControllerController@list_order')->name('list_order');
-        Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\OrderControllerController@delete_order')->name('delete_order');
-        Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\OrderControllerController@detail_order')->name('detail_order');
+        Route::get('danh-sach-don-hang','App\Http\Controllers\OrderController@list_order')->name('list_order');
+        Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\OrderController@delete_order')->name('delete_order');
+        Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\OrderController@detail_order')->name('detail_order');
     }
 );
 Route::post('dat-hang','App\Http\Controllers\OrderController@order_place')->name('order_place');
@@ -65,6 +65,8 @@ Route::get('xoa-san-pham-trong-don-hang/{id}','App\Http\Controllers\OrderControl
 Route::post('cap-nhat-so-luong-san-pham-trong-don-hang','App\Http\Controllers\OrderController@update_qty_product_in_order')->name('update_qty_product_in_order');
 Route::get('don-hang-cua-toi','App\Http\Controllers\OrderController@my_order')->name('my_order');
 Route::get('chi-tiet-don-hang-cua-toi/{id}','App\Http\Controllers\OrderController@detail_my_order')->name('detail_my_order');
+Route::post('huy-don-hang','App\Http\Controllers\OrderController@customer_cancel_order')->name('customer_cancel_order');
+
 
 
 //user người mua hàng

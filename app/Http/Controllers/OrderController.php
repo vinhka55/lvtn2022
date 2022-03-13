@@ -166,4 +166,11 @@ class OrderController extends Controller
         //return view('admin.order.detail',['info_user'=>$info_user,'info_shipping'=>$info_shipping,'info_product'=>$info_product,'order'=>$order]);
         return view('page.order.detail_my_order')->with(compact('info_shipping','info_product'));
     }
+    public function customer_cancel_order(Request $req)
+    {
+        $order=Order::where('id',$req->order_id)->first();
+        $order->reason=$req->reason_cancel_order;
+        $order->status="Đơn đã hủy";
+        $order->save();
+    }
 }

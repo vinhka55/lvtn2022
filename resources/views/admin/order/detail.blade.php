@@ -201,8 +201,9 @@
                   <select class="form-control order_details">
                     
                     <option id="{{$or->id}}" selected value="Đang chờ xử lý">Đang chờ xử lý</option>
+                    <option id="{{$or->id}}" value="Đã thanh toán-chờ nhận hàng">Đã thanh toán-chờ nhận hàng</option>
                     <option id="{{$or->id}}" value="Đã xử lý">Đã xử lý</option>
-                    <option id="{{$or->id}}" value="Hủy đơn">Hủy đơn</option>
+                    <option id="{{$or->id}}" value="Đơn đã hủy">Hủy đơn</option>
                   </select>
                 </form>
                 @elseif($or->status=="Đã xử lý")
@@ -210,8 +211,19 @@
                   @csrf
                   <select class="form-control order_details " disabled>                    
                     <option id="{{$or->id}}" value="Đang chờ xử lý">Đang chờ xử lý</option>
+                    <option id="{{$or->id}}" value="Đã thanh toán-chờ nhận hàng">Đã thanh toán-chờ nhận hàng</option>
                     <option id="{{$or->id}}" selected value="Đã xử lý">Đã xử lý</option>
-                    <option id="{{$or->id}}" value="Hủy đơn">Hủy đơn</option>
+                    <option id="{{$or->id}}" value="Đơn đã hủy">Hủy đơn</option>
+                  </select>
+                </form>
+                @elseif($or->status=="Đã thanh toán-chờ nhận hàng")
+                <form>
+                  @csrf
+                  <select class="form-control order_details " disabled>                    
+                    <option id="{{$or->id}}" value="Đang chờ xử lý">Đang chờ xử lý</option>
+                    <option id="{{$or->id}}" selected value="Đã thanh toán-chờ nhận hàng">Đã thanh toán-chờ nhận hàng</option>
+                    <option id="{{$or->id}}" value="Đã xử lý">Đã xử lý</option>
+                    <option id="{{$or->id}}" value="Đơn đã hủy">Hủy đơn</option>
                   </select>
                 </form>
                 @else
@@ -220,8 +232,9 @@
                   <select class="form-control order_details" disabled>
                     
                     <option id="{{$or->id}}" value="Đang chờ xử lý">Đang chờ xử lý</option>
+                    <option id="{{$or->id}}" value="Đã thanh toán-chờ nhận hàng">Đã thanh toán-chờ nhận hàng</option>
                     <option id="{{$or->id}}" value="Đã xử lý">Đã xử lý</option>
-                    <option id="{{$or->id}}" selected value="Hủy đơn">Hủy đơn</option>
+                    <option id="{{$or->id}}" selected value="Đơn đã hủy">Hủy đơn</option>
                   </select>
                 </form>
                 @endif

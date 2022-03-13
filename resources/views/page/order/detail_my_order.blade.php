@@ -66,8 +66,7 @@
             <tbody>     
                         <?php $total_money=0; ?>            
                         @foreach($info_product as $item)
-                        <tr>
-                            
+                        <tr>                            
                             <td><p class="text-ellipsis name">{{$item->product_name}}</p></td>
                             <td><p class="text-ellipsis name">{{number_format($item->product_price)}}</p></td>                     
                             <td>      

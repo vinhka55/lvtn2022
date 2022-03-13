@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Lịch sử đơn hàng</title>
     <!-- bootstrap-css -->
     <link rel="stylesheet" href="{{url('/')}}/public/backend/css/bootstrap.min.css" >
@@ -73,7 +74,8 @@
                         <th>Mã đơn hàng</td>
                         <th>Tổng giá tiền</th>
                         <th>Ngày đặt</th>
-                        <th>Tình trạng</th>           
+                        <th>Tình trạng</th>  
+                        <th></th>         
                         <th></th>
                     </tr>
                     </thead>
@@ -85,8 +87,47 @@
                                     <td><p class="text-ellipsis name"><?php echo 'ORDER'.$item->id ?></p></td>
                                     <td><p class="text-ellipsis name">{{number_format($item->total_money)}}</p></td>                       
                                     <td>{{$item->created_at}}</td>
-                                    <td>{{$item->status}}</td>                       
+                                    <td><p <?php 
+                                    if($item->status=="Đã xử lý")echo "class='text-success'";
+                                    else if($item->status=="Đang chờ xử lý")echo "class='text-warning'";
+                                    else if($item->status=="Đã thanh toán-chờ nhận hàng")echo "class='text-info'";
+                                    else if($item->status=="Đơn đã hủy")echo "class='text-danger'";
+                                     ?>>{{$item->status}}</p></td>                      
                                     <td><a href="{{route('detail_my_order',$item->id)}}">Xem chi tiết</a></td>
+                                    @if($item->status=="Đang chờ xử lý")
+                                    <!-- <td><button class="btn btn-danger cancel-order">Hủy đơn</button></td> -->
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                                        Hủy đơn hàng
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Lý do hủy đơn</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                
+                                                <div class="modal-body">
+                                                    <textarea class="reason-cancel-area" required cols="70" rows="7" placeholder="Làm ơn điền lý do hủy đơn hàng..."></textarea>
+                                                    <p class="warning-not-null-reason-cancel text-danger"></p>
+                                                </div>
+                                                
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                    <button type="submit" class="btn btn-primary" onclick="cancel_order({{$item->id}})">Gửi</button>
+                                                
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                         
@@ -205,3 +246,27 @@
 
 		});
 	</script>
+
+<script type="text/javascript">
+    function cancel_order(order_id) {
+        var reason_cancel_order=$('.reason-cancel-area').val();
+        if($('.reason-cancel-area').val()!=""){
+            $.ajax({
+            url: "{{route('customer_cancel_order')}}",
+            method: 'POST',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:{reason_cancel_order:reason_cancel_order,order_id:order_id,},
+            
+            success:function(){
+                location.reload()
+            },
+            error:function(xhr){
+                console.log(xhr.responseText);
+            }
+        });
+    }
+    else{
+        $('.warning-not-null-reason-cancel').text("Không được để trống lý do")
+    }
+}
+</script>
