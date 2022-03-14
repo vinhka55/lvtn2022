@@ -21,7 +21,7 @@
 <body>
   
     <div class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-success fixed-nav-bar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-nav-bar">
             <div class="container-fluid">
               <a class="navbar-brand" href="{{url('/')}}">Trang chủ</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,15 +44,14 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
                   </li>
-                </ul>
-                <form class="d-flex" action="{{route('search_product')}}" method="post">
+                </ul>            
+              </div>
+              <form class="d-flex" action="{{route('search_product')}}" method="post">
                     @csrf
                     <input class="form-control me-2" name="search" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
                     <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>
                   
-                </form>             
-              </div>
-
+                </form> 
               <?php 
               if(Session::get('user_id')){
                 ?>
@@ -88,30 +87,32 @@
         </nav>
   
     </div>
-        <div class="slider-top mt-3">
-            <img width="100%" src="https://thucphamhuunghi.com/plugins/hinh-anh/banner/horizontal-404x-768-768-q1.webp" alt="top banner">
-        </div>
-        <div class="top-content row mt-3">
-            <div class="col-3">
-                <h3>DANH MỤC SẢN PHẨM</h3>
-                <ul>
-                    @foreach ($category as $cate)
-                      <a href="{{route('danh_muc_san_pham',$cate->id)}}"><li>{{$cate->name}}</li></a>
-                    @endforeach
-                </ul>
+    <div class="container-fluid mb-5">
+            <div class="slider-top mt-3">
+                <img width="100%" src="https://thucphamhuunghi.com/plugins/hinh-anh/banner/horizontal-404x-768-768-q1.webp" alt="top banner">
             </div>
-            <div class="col-6">
-                <a href=""><img src="{{url('/')}}/public/frontend/images/main-2022-1280-400-qbanner.jpg" alt=""></a>
+            <div class="top-content row mx-0 px-0 mt-3">
+                <div class="cate col-12 col-md-3">
+                    <h3 class="p-3 bg-success text-white m-0">DANH MỤC SẢN PHẨM</h3>
+                    <ul class="p-3 bg-white text-dark">
+                        @foreach ($category as $cate)
+                        <a href="{{route('danh_muc_san_pham',$cate->id)}}"><li>{{$cate->name}}</li></a>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="col-12 col-md-6">
+                    <img class="img-fuild" src="{{url('/')}}/public/frontend/images/main-2022-1280-400-qbanner.jpg" alt="">
+                </div>
+                <div class="col-12 col-md-3">
+                    <a href=""><img src="{{url('/')}}/public/frontend/images/rLE2AAo.gif" alt="gif image"></a>
+                </div>
             </div>
-            <div class="col-3">
-                <a href=""><img src="{{url('/')}}/public/frontend/images/rLE2AAo.gif" alt="gif image"></a>
-            </div>
-        </div>
+    </div>
   
     @yield("content")
     <div class="footer">
-        <div class="container-fluid bg-dark text-white border-top pt-3">
-            <div class="row">
+        <div class="container-fluid bg-dark text-white border-top p-3">
+            <div class="row m-0 p-0">
                 <div class="col-md-3 col-6 border-right">
                     <h4 class="font-weight-bold">LIÊN HỆ</h4>
                     <h5>CÔNG TY TNHH XUẤT NHẬP KHẨU THỰC PHẨM HỮU NGHỊ</h5>

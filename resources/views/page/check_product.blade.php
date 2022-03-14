@@ -1,19 +1,19 @@
 @extends("welcome")
 @section("content")
-<div class="container">
+<div class="container-fluid m-0 p-5">
 <div class="product-details"><!--product-details-->
     @foreach($product as $item)					
-        <div class="col-sm-5">
+        <div class="col-12 col-md-5">
             <div class="view-product">
                 <img src="{{url('/')}}/public/uploads/product/{{$item->image}}" alt="image" width="50%"/>
             </div>
         </div>
-        <div class="col-sm-7">
+        <div class="col-12 col-md-7">
             <div class="product-information"><!--/product-information-->	
                     <span>
                         <form action="{{route('shopping_cart')}}" method="POST">
                             {{ csrf_field() }}
-                            <h3>{{$item->name}}</h3>
+                            <h1 class="bg-success text-white m-0 p-3 mb-3">{{$item->name}}</h1>
                             <p>Xuất xứ: {{$item->origin}}</p>
                             <p>Đã bán: {{$item->count_sold}}</p>
                             <p>{{$item->note}}</p>
@@ -47,8 +47,8 @@
         </div>
     @endforeach
 </div><!--/product-details-->
-<div class="relation-product">
-    <h3>Sản phẩm liên quan</h3>
+<div class="relation-product p-5">
+    <h3 class="bg-success text-white m-0 p-3 mb-3">Sản phẩm liên quan</h3>
 </div>
 </div>
 @stop
