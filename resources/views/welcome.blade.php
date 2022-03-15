@@ -175,7 +175,7 @@
         url:"{{route('hover_cart_menu')}}",
         method:'get',
         success:function(data){
-                console.log(data)
+                //console.log(data)
                 $('.hover-cart').html(data)
             },
         error:function(xhr){
@@ -217,5 +217,44 @@
     });
   });
 </script>
-
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.checkout-now').click(function(){ 
+        var name=$('#name').val()
+        var phone=$('#phone').val()
+        var email=$('#email').val()
+        var address=$('#address').val()
+        var notes=$('#notes').val()
+        var _token = $('input[name="_token"]').val()
+        var pay=$('input[name="pay"]').val()
+        var data={name:name,email:email,phone:phone,address:address,notes:notes,_token:_token,pay:pay}
+        swal({
+            title: "Bạn chắc chắn đặt hàng?",
+            text: "Bấm OK để xác nhận đặt hàng, nếu chưa chắc chắn hãy bấm Cancel",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "{{route('order_place')}}",
+                    method: 'POST',
+                    data:data,
+                    success:function(data){
+                        //alert(data)
+                    },
+                    error:function(xhr){
+                        console.log(xhr.responseText);
+                    }
+                });
+                swal("Cảm ơn bạn đã mua hàng!", {
+                icon: "success",
+                });
+                window.location.href = "http://localhost/lvtn2022/don-hang-cua-toi";
+            }
+        });
+    })
+})
+</script>
 

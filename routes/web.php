@@ -103,3 +103,7 @@ Route::middleware(['auth.admin'])->group(function(){
     }
 );
 
+
+//print pdf file
+Route::get('in-don-hang/{order_id}','App\Http\Controllers\PdfController@print_order')->name('print_order');
+

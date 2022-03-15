@@ -4,25 +4,38 @@
 <div class="content-page">  
         <div class="body-content">
             <!-- sản phẩm hot -->
-            <div class="hot-product product">
+            <div class="hot-product product row">
                 <h1 class="title-hot-product">SẢN PHẨM HOT</h1>
-                <div class="col-3 mt-3">
+                @foreach($hot_product as $hot_pro)
+                <div class="col-3 mt-2">
                     <div class="card" style="width: 18rem;">
-                        <a href=""><img src="{{url('/')}}/public/frontend/images/bao-ngu-20c.jpg" class="card-img-top" alt="product"></a>
+                        <a href="{{route('detail_product',$hot_pro->id)}}"><img src="{{url('/')}}/public/uploads/product/{{$hot_pro->image}}" alt="error" width="100%"></a>
                         <div class="card-body">
-                          <h3 class="card-text name-product">Bào ngư loại 20C</h3>
-                          <p class="price-product">Giá: 200.000</p>
-                          <a href="">Chi tiết</a>
+                          <h3 class="card-text name-product">{{$hot_pro->name}}</h3>
+                          <p class="price-product">{{number_format($hot_pro->price)}}</p>
+                          <a href="{{route('detail_product',$hot_pro->id)}}">Chi tiết</a>
+                          <!-- add to cart by ajax -->
+                          <form>
+                                @csrf
+                                <input type="hidden" value="{{$hot_pro->id}}" class="cart_product_id_{{$hot_pro->id}}">
+                                <input type="hidden" value="{{$hot_pro->name}}" class="cart_product_name_{{$hot_pro->id}}">
+                                <input type="hidden" value="{{$hot_pro->image}}" class="cart_product_image_{{$hot_pro->id}}">
+                                <input type="hidden" value="{{$hot_pro->price}}" class="cart_product_price_{{$hot_pro->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$hot_pro->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$hot_pro->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
             <!-- thịt gà đông lạnh -->
             
-                <div class="cool-chicken product">
+                <div class="cool-chicken product row">
                     <h1 class="title-hot-product">THỊT GÀ ĐÔNG LẠNH</h1>                        
-                    @foreach($ga_dong_lanh as $ga1)        
-                    <div class="col-3">                                              
+                    @foreach($ga_dong_lanh as $ga1)
+                    <div class="col-3 mt-2">                                              
                         <div class="card" style="width: 18rem;">
                             <a href="{{route('detail_product',$ga1->id)}}"><img src="{{url('/')}}/public/uploads/product/{{$ga1->image}}" alt="error" width="100%"></a>
                             <div class="card-body">
@@ -48,10 +61,10 @@
             
 
             <!-- thịt gà tươi sạch -->
-            <div class="fresh-chicken product">
+            <div class="fresh-chicken product row">
                 <h1 class="title-hot-product">THỊT GÀ TƯƠI SẠCH</h1> 
                 @foreach($ga_tuoi_sach as $ga2)        
-                    <div class="col-3">                                              
+                    <div class="col-3 mt-2">                                              
                         <div class="card" style="width: 18rem;">
                             <a href="{{route('detail_product',$ga2->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$ga2->image}}" alt="error"></a>
                             <div class="card-body">
@@ -75,10 +88,10 @@
                 @endforeach                                        
             </div>
             <!-- thịt bò úc, mỹ ngon -->
-            <div class="beef product">
+            <div class="beef product row">
                 <h1 class="title-hot-product">THỊT BÒ ÚC MỸ NGON</h1> 
                 @foreach($bo_uc_my as $bo_u_m)        
-                    <div class="col-3">                                              
+                    <div class="col-3 mt-2">                                              
                         <div class="card" style="width: 18rem;">
                             <a href="{{route('detail_product',$bo_u_m->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$bo_u_m->image}}" alt="error"></a>
                             <div class="card-body">
@@ -102,10 +115,10 @@
                 @endforeach    
             </div>
             <!-- thịt heo -->
-            <div class="pork product">
+            <div class="pork product row">
                 <h1 class="title-hot-product">THỊT LỢN</h1> 
                 @foreach($thit_heo as $heo)        
-                    <div class="col-3">                                              
+                    <div class="col-3 mt-2">                                              
                         <div class="card" style="width: 18rem;">
                             <a href="{{route('detail_product',$heo->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$heo->image}}" alt="error"></a>
                             <div class="card-body">
@@ -129,10 +142,10 @@
                 @endforeach       
             </div>
             <!-- thịt trâu ấn độ -->
-            <div class="buffalo product">
+            <div class="buffalo product row">
                 <h1 class="title-hot-product">THỊT TRÂU ẤN ĐỘ</h1> 
                 @foreach($trau_an_do as $trau)        
-                    <div class="col-3">                                              
+                    <div class="col-3 mt-2">                                              
                         <div class="card" style="width: 18rem;">
                             <a href="{{route('detail_product',$trau->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$trau->image}}" alt="error"></a>
                             <div class="card-body">
@@ -156,10 +169,10 @@
                 @endforeach      
             </div>
             <!-- hải sản -->
-            <div class="seafood product">
+            <div class="seafood product row">
                 <h1 class="title-hot-product">HẢI SẢN</h1> 
                 @foreach($hai_san as $seafood)        
-                    <div class="col-3">                                              
+                    <div class="col-3 mt-2">                                              
                         <div class="card" style="width: 18rem;">
                             <a href="{{route('detail_product',$seafood->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$seafood->image}}" alt="error"></a>
                             <div class="card-body">
@@ -184,10 +197,10 @@
             </div>
 
             <!-- gạo sạch cao cấp -->
-            <div class="spice product">
+            <div class="spice product row">
                 <h1 class="title-hot-product">GẠO SẠCH CAO CẤP</h1> 
                 @foreach($gao_sach as $gs)        
-                    <div class="col-3">                                              
+                    <div class="col-3 mt-2">                                              
                         <div class="card" style="width: 18rem;">
                             <a href="{{route('detail_product',$gs->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$gs->image}}" alt="error"></a>
                             <div class="card-body">
@@ -212,10 +225,10 @@
             </div>
 
             <!-- gia vị tẩm ướp -->
-            <div class="spice product">
+            <div class="spice product row">
                 <h1 class="title-hot-product">GIA VỊ TẨM ƯỚP</h1> 
                 @foreach($gia_vi as $gv)        
-                    <div class="col-3">                                              
+                    <div class="col-3 mt-2">                                              
                         <div class="card" style="width: 18rem;">
                             <a href="{{route('detail_product',$gv->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$gv->image}}" alt="error"></a>
                             <div class="card-body">

@@ -42,7 +42,7 @@
     <div class="form-group">
         <label for="desc" class="control-label col-lg-3">Mô tả sản phẩm</label>
         <br>
-        <textarea class="form-control" for="desc"  name="description" rows=8 required="" style="resize:none;"></textarea>
+        <textarea class="form-control" for="desc"  name="description" id="description-by-ckeditor"></textarea>
     </div>
 
     <!-- Hình ảnh sản phẩm -->

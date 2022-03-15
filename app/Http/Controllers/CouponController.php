@@ -33,36 +33,37 @@ class CouponController extends Controller
     {
         $data = $req->all();
         //echo $data['code_coupon'];
-        if(Coupon::where('code',$data['code_coupon'])->value('amount')>0){
-            if(Coupon::where('code',$data['code_coupon'])->value('id')){            
-                $id_coupon=Coupon::where('code',$data['code_coupon'])->value('id');
-                if(Session::has('id_coupon')){
-                    Session::forget('id_coupon');
-                }
-                //Tạo session cho poupn
-                Session::put('id_coupon',$id_coupon);
-                
-                if(Session::has('incorrect_coupon')){
-                    Session::forget('incorrect_coupon');
-                }
-                return redirect('/gio-hang');
+        $coupon=Coupon::where('code',$data['code_coupon'])->first();
+        //dd($coupon);
+        if($coupon!=null){
+            if($coupon->amount>0){
+           
+                    $id_coupon=$coupon->id;
+                    if(Session::has('id_coupon')){
+                        Session::forget('id_coupon');
+                    }
+                    //Tạo session cho poupn
+                    Session::put('id_coupon',$id_coupon);
+                    
+                    if(Session::has('incorrect_coupon')){
+                        Session::forget('incorrect_coupon');
+                    }
+                    return redirect('/gio-hang');
+
             }
             else{
                 if(Session::has('id_coupon')){
                     Session::forget('id_coupon');
                 }
-                Session::put('incorrect_coupon','Mã giảm giá sai');
-                //echo ' alert("JavaScript Alert Box by PHP")';
-                return redirect()->back();
+                Session::put('incorrect_coupon','Mã giảm giá đã hết');
+                return redirect('/gio-hang');
             }
         }
         else{
-            if(Session::has('id_coupon')){
-                Session::forget('id_coupon');
-            }
-            Session::put('incorrect_coupon','Mã giảm giá đã hết');
+            Session::put('incorrect_coupon','Mã giảm giá sai');
             return redirect('/gio-hang');
         }
+        
     }
     public function delete($id)
     {

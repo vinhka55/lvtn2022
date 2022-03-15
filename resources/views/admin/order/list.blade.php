@@ -36,7 +36,8 @@
                 </th>
                 <th>Mã đơn hàng</td>
                 <th>Tổng giá tiền</th>
-                <th>Tình trạng</th>           
+                <th>Tình trạng</th> 
+                <th>Lý do hủy</th>          
                 <th>Hiển thị</th>
                 <th></th>
             </tr>
@@ -47,13 +48,23 @@
                         <tr>
                             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                             <td><p class="text-ellipsis name"><?php echo 'ORDER'.$item->id ?></p></td>
-                            <td><p class="text-ellipsis name">{{number_format($item->total_money)}}</p></td>                       
-                            <td>{{$item->status}}</td>                       
+                            <td><p class="text-ellipsis name">{{number_format($item->total_money)}} VND</p></td>                       
+                            <td><p 
+                                    <?php 
+                                        if($item->status=="Đã xử lý")echo "class='text-success'";
+                                        else if($item->status=="Đang chờ xử lý")echo "class='text-warning'";
+                                        else if($item->status=="Đã thanh toán-chờ nhận hàng")echo "class='text-info'";
+                                        else if($item->status=="Đơn đã hủy")echo "class='text-danger'";
+                                    ?>>
+                                    {{$item->status}}
+                                </p>
+                            </td>   
+                            <td>{{$item->reason}}</td>                     
                             <td>
                             <a title="click to edit" href=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
                             <a title="click to delete" onclick="return confirm('Are you sure?')" href="{{route('delete_order',$item->id)}}"><i class="fa fa-times text-danger text"></i></a>
                             </td>
-                            <td><a href="{{route('detail_order',$item->id)}}">Detail</a></td>
+                            <td><a href="{{route('detail_order',$item->id)}}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>
                         </tr>
                         @endforeach
                 

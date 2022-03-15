@@ -37,7 +37,7 @@
 									<div class="cart_quantity_button">
 										
 											
-											<input class="cart_quantity_input" type="number" name="quantity[{{$item['uid']}}]" value="{{$item['qty']}}" >
+											<input class="cart_quantity_input" type="number" name="quantity[{{$item['uid']}}]" value="{{$item['qty']}}" min="1">
 											<input type="hidden" name="uid[{{$item['uid']}}]" value="{{$item['uid']}}">
 									</div>
 								</td>
@@ -72,7 +72,8 @@
 				{{ csrf_field() }}
 				<p class="text-danger">{{Session::get('error')}}</p>
 				@if(Session::has('incorrect_coupon'))
-					<p class="text-danger">{{Session::get('incorrect_coupon')}}</p> 
+					<p class="text-danger">{{Session::get('incorrect_coupon')}}</p>
+					{{Session::put('incorrect_coupon',null)}}
 				@endif
 				<input type="text" name="code_coupon" class="form-control w-25" placeholder="Mã giảm giá" >
 				<input type="submit" value="Áp dụng" class="btn btn-info">

@@ -28,7 +28,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- calendar -->
 <link rel="stylesheet" href="{{url('/')}}/public/backend/css/monthly.css">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-
+<link rel="stylesheet" href="{{url('/')}}/public/backend/css/admin.css">
 <!-- //calendar -->
 <!-- //font-awesome icons -->
 <script src="{{url('/')}}/public/backend/js/jquery2.0.3.min.js"></script>
@@ -174,6 +174,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- morris JavaScript -->	
 <script src="{{url('/')}}/public/backend/js/jquery.min.js"></script>	
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{url('/')}}/public/backend/ckeditor5/ckeditor.js"></script>	
+
+<script>
+    ClassicEditor
+        
+        .create( document.querySelector( '#description-by-ckeditor' ), {
+		ckfinder: {
+			uploadUrl: '/ckfinder/libs/images',
+		},
+		toolbar: [ 'ckfinder', 'imageUpload', '|', 'heading', '|', 'bold', 'italic', '|', 'undo', 'redo' ]
+	} )
+        .catch( error => {
+            console.error( error );
+        } );
+    
+</script>
+
 <script>
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE

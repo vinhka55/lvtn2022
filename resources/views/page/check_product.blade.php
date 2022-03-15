@@ -45,10 +45,12 @@
                     </span>			
             </div><!--/product-information-->
         </div>
-    @endforeach
+    
 </div><!--/product-details-->
-<div class="relation-product">
-    <h3>Sản phẩm liên quan</h3>
-</div>
+    <div class="details-product">
+        <h3>Mô tả chi tiết</h3>
+        <p>{{$item->description}}</p>
+    </div>
+    @endforeach
 </div>
 @stop

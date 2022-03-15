@@ -29,10 +29,9 @@
     <script src="{{url('/')}}/public/backend/js/morris.js"></script>
 </head>
 <body>
-    
+
     @if(count($data)==0)
     <div class="container" style="text-align:center"> 
-
         <h3>Bạn chưa có giao dịch nào</h3> 
         <img style="margin:auto;" width="60%" src="https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png" alt="empty list oeder">
     </div>
@@ -85,8 +84,8 @@
                                 <tr>
                                     <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                                     <td><p class="text-ellipsis name"><?php echo 'ORDER'.$item->id ?></p></td>
-                                    <td><p class="text-ellipsis name">{{number_format($item->total_money)}}</p></td>                       
-                                    <td>{{$item->created_at}}</td>
+                                    <td><p class="text-ellipsis name">{{number_format($item->total_money)}} VND</p></td>                       
+                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->format("d-m-Y H:i:s") }}</td>
                                     <td><p <?php 
                                     if($item->status=="Đã xử lý")echo "class='text-success'";
                                     else if($item->status=="Đang chờ xử lý")echo "class='text-warning'";
@@ -249,6 +248,7 @@
 
 <script type="text/javascript">
     function cancel_order(order_id) {
+        console.log(order_id)
         var reason_cancel_order=$('.reason-cancel-area').val();
         if($('.reason-cancel-area').val()!=""){
             $.ajax({
@@ -257,7 +257,8 @@
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             data:{reason_cancel_order:reason_cancel_order,order_id:order_id,},
             
-            success:function(){
+            success:function(data){
+                //alert(data)
                 location.reload()
             },
             error:function(xhr){

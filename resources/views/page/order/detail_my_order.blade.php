@@ -3,7 +3,7 @@
 <!-- Thông tin người đặt hàng -->
 <div class="container">
     <div class="table-agile-info">
-        <a href="{{route('my_order')}}"><i class="fa fa-arrow-left" aria-hidden="true"></i>Quay lại</a>
+        <a href="{{url()->previous()}}"><i class="fa fa-arrow-left" aria-hidden="true"></i>Quay lại</a>
     </div>
 </div>
 <!-- Thông tin giao hàng -->
@@ -66,6 +66,7 @@
             <tbody>     
                         <?php $total_money=0; ?>            
                         @foreach($info_product as $item)
+                        <?php $order_id=$item->order_id ?>
                         <tr>                            
                             <td><p class="text-ellipsis name">{{$item->product_name}}</p></td>
                             <td><p class="text-ellipsis name">{{number_format($item->product_price)}}</p></td>                     
@@ -101,6 +102,6 @@
         ?>
     </div>
     </div>
-    <a href="" class="btn btn-info">In đơn hàng</a>
+    <a href="http://localhost/lvtn2022/in-don-hang/<?php echo $order_id; ?>" class="btn btn-info">In đơn hàng</a>
 </div>
 @stop

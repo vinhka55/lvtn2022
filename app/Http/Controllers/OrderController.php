@@ -10,13 +10,16 @@ use App\Models\Order;
 use App\Models\Coupon;
 use App\Models\OrderDetails;
 use App\Models\Product;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    
+    public function format_datetime($datetime)
+    {
+        return Carbon::parse($datetime);
+    }
     public function order_place(Request $req)
     {
-
         //Cập nhật lại số lượng coupon nếu có áp mã
         if(Session::has('id_coupon')){        
             $amount_coupon=Coupon::where('id',Session::get('id_coupon'))->value('amount');
@@ -26,7 +29,9 @@ class OrderController extends Controller
                 $coupon->amount=$amount_coupon;
                 $coupon->save();
             }
+            Session::forget('id_coupon');
         }
+        
 
         //insert thông tin nhận hàng
         $data=[];
@@ -63,9 +68,15 @@ class OrderController extends Controller
             $data['product_price']=$item['price'];
             $data['product_quantyti']=$item['qty'];
             DB::table('order_detail')->insert($data);
+            //Cập nhật lại số lượng sản phẩm
+            $count=DB::table('product')->where('id',$data['product_id'])->value('count');
+            //echo $data['product_quantyti'];
+            $new_count=$count-$data['product_quantyti'];
+            DB::table('product')->where('id',$data['product_id'])->update(['count'=>$new_count]);
         }
-         
-        return view('page.checkout.payment_done');
+        
+        //Cart::clear();
+        //return view('page.checkout.payment_done');
     }
     public function list_order()
     {
@@ -107,7 +118,7 @@ class OrderController extends Controller
         $order=Order::find($data['order_id']);
         $order->status=$data['order_status'];
         $order->save();
-        if($data['order_status']=="Đã xử lý"){
+        if($data['order_status']=="Đã xử lý" || $data['order_status']=="Đã thanh toán-chờ nhận hàng" ){
             for($i=0;$i<count($data['order_product_id']);$i++){
                 $product=Product::find($data['order_product_id'][$i]);
                 //$product->count=$product->count-$data['quantity'][$i];
@@ -115,7 +126,7 @@ class OrderController extends Controller
                 $product->save();
             }
         }
-        elseif ($data['order_status']=="Hủy đơn") {
+        elseif ($data['order_status']=="Đơn đã hủy") {
             for($i=0;$i<count($data['order_product_id']);$i++){
                 $product=Product::find($data['order_product_id'][$i]);
                 $product->count=$product->count+$data['quantity'][$i];
@@ -172,5 +183,13 @@ class OrderController extends Controller
         $order->reason=$req->reason_cancel_order;
         $order->status="Đơn đã hủy";
         $order->save();
+
+        //Cập nhật lại số lượng sản phẩm
+        $product=OrderDetails::where('order_id',$req->order_id)->get();
+        foreach ($product as $key => $value) {
+            $product_cancel=DB::table('product')->where('id',$value->product_id)->first();
+            $product_cancel->count=$product_cancel->count+$value->product_quantyti;
+            DB::table('product')->where('id',$value->product_id)->update(['count' => $product_cancel->count]);
+        }
     }
 }

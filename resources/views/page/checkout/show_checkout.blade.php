@@ -60,8 +60,8 @@
                 
 				<div class="col-sm-6">
 					<div class="total_area">
-                        <form action="{{route('order_place')}}" method="post">
-							@csrf
+                        <!-- <form action="{{route('order_place')}}" method="post"> -->
+							<!-- @csrf -->
                             @foreach($info as $item)
                             <ul>
                                 <label for="name">Tên khách hàng</label>
@@ -70,8 +70,8 @@
                                 <input type="text" name="phone" id="phone" value="{{$item->phone}}"><br><br>
                                 <label for="email">Email</label>
                                 <input type="text" name="email" id="email" value="{{$item->email}}"><br><br>
-                                <textarea name="address" placeholder="Địa chỉ..."></textarea><br><br>
-                                <textarea name="notes" rows="11" placeholder="Lưu ý khác..."></textarea><br><br>
+                                <textarea id="address" name="address" placeholder="Địa chỉ..."></textarea><br><br>
+                                <textarea id="notes" name="notes" rows="11" placeholder="Lưu ý khác..."></textarea><br><br>
                                 <p>Tổng tiền: 
                                     <?php
                                         $total=Cart::total()+0.1*Cart::total();
@@ -87,13 +87,12 @@
 								<label for="momo"> Momo QR</label><br>
                             </ul>  
                             @endforeach
-                            <input type="submit" value="Thanh toán ngay" class="btn btn-primary">
-                        </form>	
+                            <!-- <input type="submit" value="Thanh toán ngay" class="btn btn-primary"> -->
+							<button class="btn btn-primary checkout-now">Thanh toán ngay</button>
+                        <!-- </form>	 -->
 					</div>
 				</div>              	
 			</div>
 		</div>
 	</section><!--/#do_action-->
-
-
 @stop
