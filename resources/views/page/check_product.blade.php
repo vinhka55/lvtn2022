@@ -47,7 +47,7 @@
         </div>
     
 </div><!--/product-details-->
-    <div class="details-product">
+    <div class="details-product text-center">
         <h3>Mô tả chi tiết</h3>
         <?php echo htmlspecialchars_decode($item->description); ?>
     </div>

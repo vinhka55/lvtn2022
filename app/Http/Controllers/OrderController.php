@@ -11,6 +11,7 @@ use App\Models\Coupon;
 use App\Models\OrderDetails;
 use App\Models\Product;
 use Carbon\Carbon;
+use Mail;
 
 class OrderController extends Controller
 {
@@ -34,29 +35,26 @@ class OrderController extends Controller
         
 
         //insert thông tin nhận hàng
-        $data=[];
-        $data['name']=$req->name;
-        $data['email']=$req->email;
-        $data['phone']=$req->phone;
-        $data['address']=$req->address;
-        $data['notes']=$req->notes;
-        $data['pay_method']=$req->pay;
-        $shipping_id=DB::table('shipping')->insertGetId($data);
+        $data_shipping=[];
+        $data_shipping['name']=$req->name;
+        $data_shipping['email']=$req->email;
+        $data_shipping['phone']=$req->phone;
+        $data_shipping['address']=$req->address_re;
+        $data_shipping['notes']=$req->notes;
+        $data_shipping['pay_method']=$req->pay;
+        $shipping_id=DB::table('shipping')->insertGetId($data_shipping);
         Session::put('shipping_id',$shipping_id);
 
-        // $data=[];
-        // $data['method']=$req->pay;
-        // $data['status']="Đang chờ xử lý";
-        // $payment_id=DB::table('payment')->insertGetId($data);
+        //echo $data_shipping;
 
         //insert đơn hàng
-        $data=[];
-        $data['customer_id']=Session::get('user_id');
-        $data['shipping_id']=Session::get('shipping_id');
-        $data['payment']=$req->pay;
-        $data['total_money']=Cart::total();
-        $data['status']="Đang chờ xử lý";
-        $order_id=DB::table('order')->insertGetId($data);
+        $data_order=[];
+        $data_order['customer_id']=Session::get('user_id');
+        $data_order['shipping_id']=Session::get('shipping_id');
+        $data_order['payment']=$req->pay;
+        $data_order['total_money']=Cart::total();
+        $data_order['status']="Đang chờ xử lý";
+        $order_id=DB::table('order')->insertGetId($data_order);
 
         //insert chi tiết đơn hàng      
         $content=Cart::items()->original;
@@ -74,9 +72,19 @@ class OrderController extends Controller
             $new_count=$count-$data['product_quantyti'];
             DB::table('product')->where('id',$data['product_id'])->update(['count'=>$new_count]);
         }
-        
+
+        //send mail to customer
+        Session::put('dmm',$req->email);
+        Mail::send('emails.confirm_checkout',compact('data_shipping','data_order','content','order_id'),function ($email)
+        {           
+            $email->from('noreply@gmail.com', 'Công ty TNHH thực phẩm sạch Thiên An Phú');
+            $email->to(Session::get('dmm'),Session::get('name_user'))->subject('Đơn hàng của bạn!');
+        });
         //Cart::clear();
         //return view('page.checkout.payment_done');
+        Session::forget('discount');
+        Session::forget('id_coupon');
+        Cart::clear();
     }
     public function list_order()
     {

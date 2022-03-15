@@ -223,11 +223,11 @@ $(document).ready(function(){
         var name=$('#name').val()
         var phone=$('#phone').val()
         var email=$('#email').val()
-        var address=$('#address').val()
+        var address_re=$('#address-re').val()
         var notes=$('#notes').val()
         var _token = $('input[name="_token"]').val()
         var pay=$('input[name="pay"]').val()
-        var data={name:name,email:email,phone:phone,address:address,notes:notes,_token:_token,pay:pay}
+        var data={name:name,email:email,phone:phone,address_re:address_re,notes:notes,_token:_token,pay:pay}
         swal({
             title: "Bạn chắc chắn đặt hàng?",
             text: "Bấm OK để xác nhận đặt hàng, nếu chưa chắc chắn hãy bấm Cancel",

@@ -70,7 +70,7 @@
                                 <input type="text" name="phone" id="phone" value="{{$item->phone}}"><br><br>
                                 <label for="email">Email</label>
                                 <input type="text" name="email" id="email" value="{{$item->email}}"><br><br>
-                                <textarea id="address" name="address" placeholder="Địa chỉ..."></textarea><br><br>
+                                <textarea id="address-re" name="address_re" placeholder="Địa chỉ..."></textarea><br><br>
                                 <textarea id="notes" name="notes" rows="11" placeholder="Lưu ý khác..."></textarea><br><br>
                                 <p>Tổng tiền: 
                                     <?php

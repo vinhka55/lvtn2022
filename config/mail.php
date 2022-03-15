@@ -32,15 +32,15 @@ return [
     |            "postmark", "log", "array", "failover"
     |
     */
-
+    //tài khoản để đăng nhập vào ứng dụng
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
+            'host' => 'smtp.gmail.com',
+            'port' => 587,
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'username' => 'cskhthp888@gmail.com',
+            'password' => 'fjtrxrxhfvpqitxk',
             'timeout' => null,
         ],
 
@@ -89,10 +89,10 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
-
+    //tài khoản để gửi
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => 'cskhthp888@gmail.com',
+        'name' => 'Đơn hàng của tôi', //tên tiêu đề mail
     ],
 
     /*

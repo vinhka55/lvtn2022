@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Shipping;
 use PDF;
+use Mail;
 
 class PdfController extends Controller
 {
@@ -20,4 +21,12 @@ class PdfController extends Controller
         
         return $pdf->download('order.pdf'); 
     }
+    // public function send()
+    // {
+    //     Mail::send('emails.confirm_checkout',[],function ($email)
+    //     {
+    //         $email->from('cskhthp888@gmail.com', 'Công ty TNHH thực phẩm sạch Thiên An Phú');
+    //         $email->to('1614117@hcmut.edu.vn','nguoi mua hang')->subject('Đơn hàng của bạn!');
+    //     });
+    // }
 }
