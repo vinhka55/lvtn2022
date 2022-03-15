@@ -1,7 +1,8 @@
 @extends("welcome")
 @section("content")
+<div class="container-fluid">
 <section id="cart_items">
-		<div class="container mt-5">			
+		<div class="container-fluid m-0 p-0 mt-5">			
 			<div class="table-responsive cart_info">
 				<form action="{{route('update_cart')}}" method="post">
 					@csrf
@@ -35,8 +36,6 @@
 								</td>
 								<td class="quantity ">
 									<div class="cart_quantity_button">
-										
-											
 											<input class="cart_quantity_input" type="number" name="quantity[{{$item['uid']}}]" value="{{$item['qty']}}" >
 											<input type="hidden" name="uid[{{$item['uid']}}]" value="{{$item['uid']}}">
 									</div>
@@ -63,86 +62,84 @@
 				</form>			
 			</div>
 		</div>
-	</section> <!--/#cart_items-->
+</section> <!--/#cart_items-->
 
-	<!-- form coupon -->
-	<section id="coupon">
-		<div class="container">
-			<form action="{{route('discount')}}" method="post">
-				{{ csrf_field() }}
-				<p class="text-danger">{{Session::get('error')}}</p>
-				@if(Session::has('incorrect_coupon'))
-					<p class="text-danger">{{Session::get('incorrect_coupon')}}</p> 
-				@endif
-				<input type="text" name="code_coupon" class="form-control w-25" placeholder="Mã giảm giá" >
-				<input type="submit" value="Áp dụng" class="btn btn-info">
-			</form>
-		</div>
-	</section>
-	<!-- end form coupom -->
-
-    <section id="do_action">
-		<div class="container mt-3">	
-			<div class="row">				
-				<div class="col-sm-6">
-					<div class="total_area">
-						<ul>
-							<li>Thành tiền <span>{{number_format(Cart::total())}}</span></li>
-							<li>Thuế <span>
-								<?php 
-									$tax= 0.1*Cart::total();
-									echo number_format($tax);
-								?>
-							</span></li>
-							<li>Phí vận chuyển <span>Free</span></li>
-							<!--  -->
-							@if($coupon)
-							<li>Giảm giá <span>
-							@foreach($coupon as $item)								
-								@if($item->condition=='percent')
-								<?php 
-								$discount= $item->rate*(Cart::total()+$tax)/100;
-								echo number_format($discount);
-								Session::put('discount',$discount);							
-								?>
-								@else
-								<?php 
-								$discount= $item->rate;
-								echo number_format($discount);	
-								Session::put('discount',$discount);							
-								?>
-								@endif
-							@endforeach
-							</span></li>
+<!-- form coupon -->
+<section id="coupon">
+	<div class="container">
+		<form action="{{route('discount')}}" method="post">
+			{{ csrf_field() }}
+			<p class="text-danger">{{Session::get('error')}}</p>
+			@if(Session::has('incorrect_coupon'))
+				<p class="text-danger">{{Session::get('incorrect_coupon')}}</p> 
+			@endif
+			<input type="text" name="code_coupon" class="form-control" placeholder="Mã giảm giá" >
+			<input type="submit" value="Áp dụng" class="btn btn-info">
+		</form>
+	</div>
+	<div class="container mt-3">	
+		<div class="row m-0 p-0">				
+			<div class="col-sm-6 p-0">
+				<div class="total_area">
+					<ul>
+						<li>Thành tiền <span>{{number_format(Cart::total())}}</span></li>
+						<li>Thuế <span>
+							<?php 
+								$tax= 0.1*Cart::total();
+								echo number_format($tax);
+							?>
+						</span></li>
+						<li>Phí vận chuyển <span>Free</span></li>
+						<!--  -->
+						@if($coupon)
+						<li>Giảm giá <span>
+						@foreach($coupon as $item)								
+							@if($item->condition=='percent')
+							<?php 
+							$discount= $item->rate*(Cart::total()+$tax)/100;
+							echo number_format($discount);
+							Session::put('discount',$discount);							
+							?>
 							@else
-								<?php $discount=0;
-								Session::put('discount',0);
-								?>
-								
+							<?php 
+							$discount= $item->rate;
+							echo number_format($discount);	
+							Session::put('discount',$discount);							
+							?>
 							@endif
-							<li>Tổng tiền <span>
-								<?php
-									$total=Cart::total()+$tax-$discount;
-									echo number_format($total);
-							 	?></span>
-							</li>
-						</ul>
-						<?php 
-							if(Session::get('user_id')){
-								?>
-							<a class="btn btn-default check_out" href="{{route('pay_product')}}">Thanh toán</a>   
-							<?php }
-							else { ?>
-							<a class="btn btn-default check_out" href="{{route('login')}}">Thanh toán</a>
-						<?php } ?>
+						@endforeach
+						</span></li>
+						@else
+							<?php $discount=0;
+							Session::put('discount',0);
+							?>
 							
-					</div>
+						@endif
+						<li>Tổng tiền <span>
+							<?php
+								$total=Cart::total()+$tax-$discount;
+								echo number_format($total);
+							?></span>
+						</li>
+					</ul>
+					<?php 
+						if(Session::get('user_id')){
+							?>
+						<a class="btn btn-default check_out" href="{{route('pay_product')}}">Thanh toán</a>   
+						<?php }
+						else { ?>
+						<a class="btn btn-default check_out" href="{{route('login')}}">Thanh toán</a>
+					<?php } ?>
+						
 				</div>
 			</div>
 		</div>
-	</section>
-	@else
-		<?php echo "<h3 class='text-center'>Không có sản phẩm nào trong giỏ hàng</h3>"; ?>
-		<?php Session::forget('id_coupon'); ?>
-	@endif
+	</div>
+</section>
+<!-- end form coupom -->
+@else
+	<?php echo "<h3 class='text-center'>Không có sản phẩm nào trong giỏ hàng</h3>"; ?>
+	<?php Session::forget('id_coupon'); ?>
+@endif
+</div>
 @stop

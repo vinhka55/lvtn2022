@@ -2530,9 +2530,6 @@ span#count-cart {
 
 .hover-cart {
   border-radius: 8%;
-  margin-top: 4px;
-  width: 126px;
-  background-color: greenyellow;
   position: absolute;
   display: none;
 }

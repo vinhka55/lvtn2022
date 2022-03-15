@@ -1,64 +1,57 @@
 @extends("welcome")
 @section("content")
 <section id="cart_items">
-		<div class="container mt-5">			
-			<div class="table-responsive cart_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="cart_menu">
-							<td class="image text-center">Ảnh</td>
-							<td class="name">Tên sản phẩm</td>
-							<td class="price">Giá</td>
-							<td class="quantity">Số lượng</td>
-							<td class="total">Thành tiền</td>
-							<td></td>
-						</tr>
-					</thead>
-					<tbody>
-						<?php 
-							$content=Cart::items()->original;
-						?>
-						@foreach($content as $item)																						
-						<tr>
-							<td class="image" width="20%">
-								<a href=""><img width="80%" src="{{url('/')}}/public/uploads/product/{{$item['thumb']}}" alt="ảnh lỗi"></a>
-							</td>
-							<td class="name">
-								<h4><a href="">{{$item['name']}}</a></h4>								
-							</td>
-							<td class="price">
-								<p>{{number_format($item['price'])}}</p>
-							</td>
-							<td class="quantity">
-								<div class="cart_quantity_button">
-									
-									<input disabled class="cart_quantity_input" type="number" name="quantity" value="{{$item['qty']}}" autocomplete="off" size="2">
+		<div class="container-fluid m-5 p-0 bg-white">
+			<div class="row m-0 p-5">
+				<div class="table-responsive cart_info col-12 col-md-7">
+					<table class="table table-condensed">
+						<thead>
+							<tr class="cart_menu">
+								<td class="image text-center">Ảnh</td>
+								<td class="name">Tên sản phẩm</td>
+								<td class="price">Giá</td>
+								<td class="quantity">Số lượng</td>
+								<td class="total">Thành tiền</td>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+								$content=Cart::items()->original;
+							?>
+							@foreach($content as $item)																						
+							<tr>
+								<td class="image" width="20%">
+									<a href=""><img width="80%" src="{{url('/')}}/public/uploads/product/{{$item['thumb']}}" alt="ảnh lỗi"></a>
+								</td>
+								<td class="name">
+									<h4><a href="">{{$item['name']}}</a></h4>								
+								</td>
+								<td class="price">
+									<p>{{number_format($item['price'])}}</p>
+								</td>
+								<td class="quantity">
+									<div class="cart_quantity_button">
 										
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">
-									<?php
-										$subtotal=$item['qty']*$item['price'];
-										echo number_format($subtotal).' '.'VND';
-									?>
-								</p>
-							</td>
-							
-						</tr> 						
-						@endforeach                     
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</section> <!--/#cart_items-->
-
-    <section id="do_action">
-		<div class="container">
-			
-			<div class="row">	
-                
-				<div class="col-sm-6">
+										<input disabled class="cart_quantity_input" type="number" name="quantity" value="{{$item['qty']}}" autocomplete="off" size="2">
+											
+									</div>
+								</td>
+								<td class="cart_total">
+									<p class="cart_total_price">
+										<?php
+											$subtotal=$item['qty']*$item['price'];
+											echo number_format($subtotal).' '.'VND';
+										?>
+									</p>
+								</td>
+								
+							</tr> 						
+							@endforeach                     
+						</tbody>
+					</table>
+				</div>
+				<div class="col-12 col-md-5">
 					<div class="total_area">
                         <form action="{{route('order_place')}}" method="post">
 							@csrf
@@ -90,7 +83,17 @@
                             <input type="submit" value="Thanh toán ngay" class="btn btn-primary">
                         </form>	
 					</div>
-				</div>              	
+				</div> 
+			</div>		
+		</div>
+	</section> <!--/#cart_items-->
+
+    <section id="do_action">
+		<div class="container-fluid">
+			
+			<div class="row">	
+                
+				             	
 			</div>
 		</div>
 	</section><!--/#do_action-->

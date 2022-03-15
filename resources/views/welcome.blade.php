@@ -57,7 +57,7 @@
                 ?>
                 <div class="content-cart-menu">
                     <a href="{{route('shopping_cart')}}" class='btn btn-info me-2'><i class='fa fa-shopping-cart'></i>Giỏ hàng <span id="count-cart"></span></a>   
-                    <div class="hover-cart">
+                    <div class="hover-cart bg-white p-5 m-0">
                         
                     </div>  
                 </div>                      
@@ -108,8 +108,8 @@
                 </div>
             </div>
     </div>
-  
     @yield("content")
+    
     <div class="footer">
         <div class="container-fluid bg-dark text-white border-top p-3">
             <div class="row m-0 p-0">
@@ -127,7 +127,7 @@
                     <div class="form-group mb-2">
                         <input type="password" class="form-control" id="inputPassword2" placeholder="Email">
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2">Đăng ký</button>
+                    <button type="submit" class="btn btn-primary mb-2 mt-0">Đăng ký</button>
                     </form>
                 </div>
                 <div class="col-md-3 col-6 border-right">
@@ -143,7 +143,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid text-center bg-dark text-white border-top">
+        <div class="container-fluid text-center bg-dark text-white border-top py-2">
             <div id="copyright">© Copyright 2022 lvtn2022-levinhit</div>
         </div>
     </div>

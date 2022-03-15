@@ -92,12 +92,12 @@ class CartController extends Controller
         $content=Cart::items()->original;
         $output='';
         if(count($content)>0){
-            $output.= '<ul>';
+            $output.= '<ul class="list-unstyled">';
             foreach ($content as $key => $value) {
-                $output.='<li><a href="http://localhost/lvtn2022/gio-hang"><img width="100px" height="100px" src="'.asset('public/uploads/product/'.$value['thumb']).'"><p>'.$value['name'].'</p></a></li><hr>';
+                $output.='<li><a href="http://localhost/lvtn2022/gio-hang"><p class="text-danger">'.$value['name'].': '.$value['price'].'</p></a></li><hr>';
             }
             $output.= '</ul>';
-            $output.='<li class="text-center"><a href="http://localhost/lvtn2022/gio-hang">Xem all</a></li>';
+            $output.='<button type="button" class="btn btn-success text-white"><a class="text-decoration-none text-white" href="http://localhost/lvtn2022/gio-hang">Thanh toán</a></button>';
 
         }
         else{
