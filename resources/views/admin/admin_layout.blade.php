@@ -174,22 +174,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- morris JavaScript -->	
 <script src="{{url('/')}}/public/backend/js/jquery.min.js"></script>	
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="{{url('/')}}/public/backend/ckeditor5/ckeditor.js"></script>	
-
+<script src="{{url('/')}}/ckeditor/ckeditor.js"></script>	
+<script src="{{url('/')}}/ckeditor/ckefinder/ckefinder.js"></script>	
 <script>
+    var editor=CKEDITOR.replace( 'description-by-ckeditor' );
+    CKFinder.setupCKEditor( editor );
+</script>
+<!-- <script>
     ClassicEditor
-        
-        .create( document.querySelector( '#description-by-ckeditor' ), {
+	.create( document.querySelector( '#description-by-ckeditor' ), {
 		ckfinder: {
-			uploadUrl: '/ckfinder/libs/images',
+			uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
 		},
 		toolbar: [ 'ckfinder', 'imageUpload', '|', 'heading', '|', 'bold', 'italic', '|', 'undo', 'redo' ]
 	} )
-        .catch( error => {
-            console.error( error );
-        } );
-    
-</script>
+	.catch( error => {
+		console.error( error );
+	} );
+</script> -->
 
 <script>
 	$(document).ready(function() {

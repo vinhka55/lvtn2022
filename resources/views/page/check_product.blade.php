@@ -49,7 +49,7 @@
 </div><!--/product-details-->
     <div class="details-product">
         <h3>Mô tả chi tiết</h3>
-        <p>{{$item->description}}</p>
+        <?php echo htmlspecialchars_decode($item->description); ?>
     </div>
     @endforeach
 </div>
