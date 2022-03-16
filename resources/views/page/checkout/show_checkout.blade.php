@@ -1,6 +1,6 @@
 @extends("welcome")
 @section("content")
-<section id="cart_items">
+<section id="cart_items" style="margin-top:80px;">
 		<div class="container mt-5">			
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
@@ -54,42 +54,53 @@
 	</section> <!--/#cart_items-->
 
     <section id="do_action">
-		<div class="container">
-			
-			<div class="row">	
-                
+		<div class="container">	
+			<div class="row">	            
 				<div class="col-sm-6">
 					<div class="total_area">
                         <!-- <form action="{{route('order_place')}}" method="post"> -->
 							<!-- @csrf -->
                             @foreach($info as $item)
                             <ul>
-                                <label for="name">Tên khách hàng</label>
-                                <input type="text" name="name" id="name" value="{{$item->name}}"><br><br>
-                                <label for="phone">Số điện thoại</label>
-                                <input type="text" name="phone" id="phone" value="{{$item->phone}}"><br><br>
-                                <label for="email">Email</label>
-                                <input type="text" name="email" id="email" value="{{$item->email}}"><br><br>
-                                <textarea id="address-re" name="address_re" placeholder="Địa chỉ..."></textarea><br><br>
+                                <label for="name">Tên khách hàng</label><br>
+                                <input type="text" name="name" id="name" value="{{$item->name}}"><br>
+								<p><small id="error-name-null" class="text-danger"></small></p>
+                                <label for="phone">Số điện thoại</label><br>
+                                <input type="text" name="phone" id="phone" value="{{$item->phone}}"><br>
+								<p><small id="error-phone-null" class="text-danger"></small></p>
+                                <label for="email">Email</label><br>
+                                <input type="text" name="email" id="email" value="{{$item->email}}"><br>
+								<p><small id="error-email-null" class="text-danger"></small></p>
+                                <textarea id="address-re" name="address_re" placeholder="Địa chỉ..."></textarea><br>
+								<p><small id="error-address-null" class="text-danger"></small></p>
                                 <textarea id="notes" name="notes" rows="11" placeholder="Lưu ý khác..."></textarea><br><br>
                                 <p>Tổng tiền: 
                                     <?php
-                                        $total=Cart::total()+0.1*Cart::total();
-                                        echo number_format($total).' '.'VND (Đã bao gồm 10% thuế VAT)';
+                                        $total=Cart::total()+0.1*Cart::total()-Session::get('discount');
+                                        echo number_format($total).' '.'VND (Đã bao gồm 10% thuế VAT và khấu trừ khuyễn mãi nếu có)';
                                     ?>
                                 </p>
 								<p>Chọn phương thức thanh toán</p>
-								<input type="radio" id="atm" name="pay" value="atm">
-								<label for="atm"> ATM</label><br>
-								<input type="radio" id="cash" name="pay" value="cash">
-								<label for="cash"> Tiền mặt</label><br>
-								<input type="radio" id="momo" name="pay" value="momo">
-								<label for="momo"> Momo QR</label><br>
+								<form id="pay_online_method">
+									<input type="radio" id="cash" name="pay" value="cash">
+									<label for="cash"> Tiền mặt</label><br>
+									<input type="radio" id="atm" name="pay" value="atm">
+									<label for="atm"> ATM</label><br>								
+								</form>			
+								<p><small id="error-pay-null" class="text-danger"></small></p>			
                             </ul>  
                             @endforeach
-                            <!-- <input type="submit" value="Thanh toán ngay" class="btn btn-primary"> -->
-							<button class="btn btn-primary checkout-now">Thanh toán ngay</button>
-                        <!-- </form>	 -->
+                            
+							<div class="nut-thanh-toan" style="display:flex;">
+								<!-- Thanh toán bình thường -->
+								<button class="btn btn-primary checkout-now">Thanh toán ngay</button>
+								<!-- Thanh toán momo -->
+								<form method="post" action="{{route('momo')}}">									
+									@csrf
+									<input type="hidden" name="total_money" value="{{$total}}">								
+									<button type="submit" name="payUrl" class="button-momo ">Thanh toán Momo</button>
+								</form>
+							</div>
 					</div>
 				</div>              	
 			</div>

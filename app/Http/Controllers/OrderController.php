@@ -53,6 +53,11 @@ class OrderController extends Controller
         $data_order['shipping_id']=Session::get('shipping_id');
         $data_order['payment']=$req->pay;
         $data_order['total_money']=Cart::total();
+        if(Session::has('discount')){
+            $data_order['discount']=Session::get('discount');
+        }else{
+            $data_order['discount']=0;
+        }
         $data_order['status']="Đang chờ xử lý";
         $order_id=DB::table('order')->insertGetId($data_order);
 
@@ -177,13 +182,14 @@ class OrderController extends Controller
     }
     public function detail_my_order($id)
     {
+        $discount=Order::where('id',$id)->value('discount');
 
         $shipping_id=DB::table('order')->where('id',$id)->value('shipping_id');
         $info_shipping=DB::table('shipping')->where('id',$shipping_id)->get();
 
         $info_product=OrderDetails::with('product')->where('order_id',$id)->get();
         //return view('admin.order.detail',['info_user'=>$info_user,'info_shipping'=>$info_shipping,'info_product'=>$info_product,'order'=>$order]);
-        return view('page.order.detail_my_order')->with(compact('info_shipping','info_product'));
+        return view('page.order.detail_my_order')->with(compact('info_shipping','info_product','discount'));
     }
     public function customer_cancel_order(Request $req)
     {

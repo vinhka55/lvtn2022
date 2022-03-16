@@ -58,7 +58,7 @@
                 ?>
                 <div class="content-cart-menu">
                     <a href="{{route('shopping_cart')}}" class='btn btn-info me-2'><i class='fa fa-shopping-cart'></i>Giỏ hàng <span id="count-cart"></span></a>   
-                    <div class="hover-cart">
+                    <div class="hover-cart bg-white p-5 m-0">
                         
                     </div>  
                 </div>                      
@@ -88,25 +88,7 @@
         </nav>
   
     </div>
-        <div class="slider-top mt-3">
-            <img width="100%" src="https://thucphamhuunghi.com/plugins/hinh-anh/banner/horizontal-404x-768-768-q1.webp" alt="top banner">
-        </div>
-        <div class="top-content row mt-3">
-            <div class="col-3">
-                <h3>DANH MỤC SẢN PHẨM</h3>
-                <ul>
-                    @foreach ($category as $cate)
-                      <a href="{{route('danh_muc_san_pham',$cate->id)}}"><li>{{$cate->name}}</li></a>
-                    @endforeach
-                </ul>
-            </div>
-            <div class="col-6">
-                <a href=""><img src="{{url('/')}}/public/frontend/images/main-2022-1280-400-qbanner.jpg" alt=""></a>
-            </div>
-            <div class="col-3">
-                <a href=""><img src="{{url('/')}}/public/frontend/images/rLE2AAo.gif" alt="gif image"></a>
-            </div>
-        </div>
+    
   
     @yield("content")
     <div class="footer">
@@ -220,15 +202,37 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('.checkout-now').click(function(){ 
-        var name=$('#name').val()
-        var phone=$('#phone').val()
-        var email=$('#email').val()
-        var address_re=$('#address-re').val()
-        var notes=$('#notes').val()
-        var _token = $('input[name="_token"]').val()
-        var pay=$('input[name="pay"]').val()
-        var data={name:name,email:email,phone:phone,address_re:address_re,notes:notes,_token:_token,pay:pay}
-        swal({
+        $("#error-name-null").html("")
+        $("#error-phone-null").html("")
+        $("#error-email-null").html("")
+        $("#error-address-null").html("")
+        $("#error-pay-null").html("")
+        if($('#name').val()==""){
+            $("#error-name-null").html("Tên không được bỏ trống")    
+        }
+        else if($('#phone').val()==""){
+            $("#error-phone-null").html("Sô điện thoại không được bỏ trống")
+        }
+        else if($('#email').val()==""){
+            $("#error-email-null").html("Email không được bỏ trống")
+        }
+        else if($('#address-re').val()==""){
+            $("#error-address-null").html("Địa chỉ không được bỏ trống")
+        }
+        else if($('input[name="pay"]:checked','#pay_online_method').val()==undefined){
+            $("#error-pay-null").html("Chọn 1 phương thức thanh toán")
+        }
+        else{
+            var name=$('#name').val()
+            var phone=$('#phone').val()
+            var email=$('#email').val()
+            var address_re=$('#address-re').val()
+            var notes=$('#notes').val()
+            var _token = $('input[name="_token"]').val()
+            var pay=$('input[name="pay"]:checked','#pay_online_method').val()
+            var data={name:name,email:email,phone:phone,address_re:address_re,notes:notes,_token:_token,pay:pay}
+         
+            swal({
             title: "Bạn chắc chắn đặt hàng?",
             text: "Bấm OK để xác nhận đặt hàng, nếu chưa chắc chắn hãy bấm Cancel",
             icon: "warning",
@@ -251,10 +255,12 @@ $(document).ready(function(){
                 swal("Cảm ơn bạn đã mua hàng!", {
                 icon: "success",
                 });
-                window.location.href = "http://localhost/lvtn2022/don-hang-cua-toi";
-            }
-        });
+                window.location.href = "{{url('/')}}/don-hang-cua-toi";
+                }
+            });          
+        }    
     })
 })
 </script>
+
 

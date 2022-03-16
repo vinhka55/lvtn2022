@@ -1,5 +1,6 @@
 @extends("welcome")
 @section("content")
+@include("page.header.header")
 <div class="container">
     <h3>Kết quả tìm kiếm sản phẩm</h3>
     <div class="row">

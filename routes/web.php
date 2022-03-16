@@ -107,3 +107,6 @@ Route::middleware(['auth.admin'])->group(function(){
 //print pdf file
 Route::get('in-don-hang/{order_id}','App\Http\Controllers\PdfController@print_order')->name('print_order');
 
+//payment online
+Route::post('thanh-toan-momo','App\Http\Controllers\PaymentOnlineController@momo')->name('momo');
+Route::get('xu-ly-thanh-toan-momo?partnerCode&orderId&requestId&amount&orderInfo&orderType&transId&resultCode&message&payType&responseTime&extraData&signature','App\Http\Controllers\PaymentOnlineController@handle_momo')->name('handle_momo');

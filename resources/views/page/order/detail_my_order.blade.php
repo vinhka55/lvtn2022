@@ -1,7 +1,7 @@
 @extends("welcome")
 @section("content")
 <!-- Thông tin người đặt hàng -->
-<div class="container">
+<div class="container" style="margin-top:80px;">
     <div class="table-agile-info">
         <a href="{{url()->previous()}}"><i class="fa fa-arrow-left" aria-hidden="true"></i>Quay lại</a>
     </div>
@@ -87,16 +87,7 @@
         <br>
         <?php echo "Thuế VAT 10%: ".number_format($total_money*10/100).' VND' ; ?>
         <br>
-        <?php
-            if(Session::get('discount')){
-                $discount=Session::get('discount');
-                echo "Giảm giá: ".number_format(Session::get('discount')).' VND' ; 
-            }
-            else{
-                $discount=0;
-                echo "Giảm giá: 0 VND";
-            }
-        ?>
+        <p>Giảm giá: <?php echo number_format($discount).' VND'; ?></p>
         <br>
         <?php echo "Số tiền cần thanh toán: ".number_format($total_money+$total_money*10/100-$discount).' VND' ;
         ?>

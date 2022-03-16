@@ -1,6 +1,6 @@
 @extends("welcome")
 @section("content")
-<section id="cart_items">
+<section id="cart_items" style="margin-top:80px;">
 		<div class="container mt-5">			
 			<div class="table-responsive cart_info">
 				<form action="{{route('update_cart')}}" method="post">

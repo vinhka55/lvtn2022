@@ -1,5 +1,6 @@
 @extends("welcome")
 @section("content")
+@include("page.header.header")
 <div class="container">
 <div class="content-page">  
         <div class="body-content">
