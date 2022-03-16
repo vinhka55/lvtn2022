@@ -193,7 +193,7 @@ class OrderController extends Controller
     }
     public function customer_cancel_order(Request $req)
     {
-        $order=Order::where('id',$req->order_id)->first();
+        $order=Order::where('id',$req->orderid)->first();
         $order->reason=$req->reason_cancel_order;
         $order->status="Đơn đã hủy";
         $order->save();

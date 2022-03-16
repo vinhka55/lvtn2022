@@ -1,6 +1,5 @@
 @extends("welcome")
 @section("content")
-
 <div style="margin-top:80px;">
     @if(count($data)==0)
     <div class="container" style="text-align:center"> 
@@ -73,26 +72,25 @@
                                         </button>
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top:50px;">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Lý do hủy đơn</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                
-                                                <div class="modal-body">
-                                                    <textarea class="reason-cancel-area" required cols="70" rows="7" placeholder="Làm ơn điền lý do hủy đơn hàng..."></textarea>
-                                                    <p class="warning-not-null-reason-cancel text-danger"></p>
-                                                </div>
-                                                
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                    <button type="submit" class="btn btn-primary" onclick="cancel_order({{$item->id}})">Gửi</button>
-                                                
-                                                </div>
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Lý do hủy đơn</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    
+                                                    <div class="modal-body">
+                                                        <textarea class="reason-cancel-area" required cols="70" rows="7" placeholder="Làm ơn điền lý do hủy đơn hàng..."></textarea>
+                                                        <p class="warning-not-null-reason-cancel text-danger"></p>
+                                                    </div>
+                                                    
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                        <button type="submit" class="btn btn-primary" onclick="cancel_order({{$item->id}})">Gửi</button>                  
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
