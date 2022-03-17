@@ -1,8 +1,5 @@
 body{
-    background-color: rgb(201, 206, 205);
-}
-.body-content{
-    margin-top: 5px;
+    background-color: #f0f2f0;
 }
 .product{
     background-color: white;
@@ -26,4 +23,29 @@ body{
 .title-category-product{
     background-color: #9c3;
     color: azure;
+}
+.body-content{
+    margin-top: 60px !important;
+}
+.nav-item{
+    padding: 0 0rem;
+    border-left: #f0f2f0 solid 0.2rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.form-control{
+    border-radius: 1rem;
+}
+.cateHead{
+    padding: 1rem;
+    background-color: #9c3;
+    color: #f0f2f0;
+}
+.cate ul a li {
+    font-size: 2rem;
+}
+.cate ul{
+    background-color: #fff;
+    padding: 1.2rem;
 }

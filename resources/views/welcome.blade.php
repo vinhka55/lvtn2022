@@ -18,12 +18,12 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <title>THỰC PHẨM HỮU NGHỊ| Cung Cấp Thực Phẩm Sỉ Lẻ Uy Tín</title>
 </head>
-<body>
+<body class="mt-5">
   
     <div class="header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-success fixed-nav-bar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-nav-bar">
             <div class="container-fluid">
-              <a class="navbar-brand" href="{{url('/')}}">Trang chủ</a>
+              <a class="navbar-brand" href="{{url('/')}}">TRANG CHỦ</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -45,13 +45,14 @@
                     <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
                   </li>
                 </ul>
-                <form class="d-flex" action="{{route('search_product')}}" method="post">
+                            
+              </div>
+              <form class="d-flex" action="{{route('search_product')}}" method="post">
                     @csrf
                     <input class="form-control me-2" name="search" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
                     <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>
                   
-                </form>             
-              </div>
+                </form> 
 
               <?php 
               if(Session::get('user_id')){

@@ -1,20 +1,20 @@
 @extends("welcome")
 @section("content")
 @include("page.header.header")
-<div class="container">
-<div class="product-details"><!--product-details-->
+<div class="container-fluid p-2">
+<div class="product-details row p-0 m-0"><!--product-details-->
     @foreach($product as $item)					
-        <div class="col-sm-5">
+        <div class="col-12 col-md-5">
             <div class="view-product">
-                <img src="{{url('/')}}/public/uploads/product/{{$item->image}}" alt="image" width="50%"/>
+                <img src="{{url('/')}}/public/uploads/product/{{$item->image}}" alt="image" width="100%"/>
             </div>
         </div>
-        <div class="col-sm-7">
+        <div class="col-12 col-md-7">
             <div class="product-information"><!--/product-information-->	
                     <span>
                         <form action="{{route('shopping_cart')}}" method="POST">
                             {{ csrf_field() }}
-                            <h3>{{$item->name}}</h3>
+                            <h3 class="p-2 m-0 bg-success text-white">{{$item->name}}</h3>
                             <p>Xuất xứ: {{$item->origin}}</p>
                             <p>Đã bán: {{$item->count_sold}}</p>
                             <p>{{$item->note}}</p>

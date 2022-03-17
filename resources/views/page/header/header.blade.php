@@ -1,4 +1,4 @@
-<div class="container-fluid mb-5">
+<div class="container-fluid my-5">
             <div class="slider-top mt-3">
                 <img width="100%" src="https://thucphamhuunghi.com/plugins/hinh-anh/banner/horizontal-404x-768-768-q1.webp" alt="top banner">
             </div>
@@ -12,10 +12,10 @@
                     </ul>
                 </div>
                 <div class="col-12 col-md-6">
-                    <img class="img-fuild" src="{{url('/')}}/public/frontend/images/main-2022-1280-400-qbanner.jpg" alt="">
+                    <img class="img-fluid" src="{{url('/')}}/public/frontend/images/main-2022-1280-400-qbanner.jpg" width="100%" alt="">
                 </div>
                 <div class="col-12 col-md-3">
-                    <a href=""><img src="{{url('/')}}/public/frontend/images/rLE2AAo.gif" alt="gif image"></a>
+                    <a href=""><img src="{{url('/')}}/public/frontend/images/rLE2AAo.gif" class="img-fluid" width="100%" alt="gif image"></a>
                 </div>
             </div>
     </div>
