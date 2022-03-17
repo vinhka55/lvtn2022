@@ -94,7 +94,7 @@ class CartController extends Controller
         if(count($content)>0){
             $output.= '<ul>';
             foreach ($content as $key => $value) {
-                $output.='<li><a href="http://localhost/test/gio-hang"><img width="100px" height="100px" src="'.asset('public/uploads/product/'.$value['thumb']).'"><p>'.$value['name'].'</p></a></li><hr>';
+                $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
             }
             $output.= '</ul>';
             $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';

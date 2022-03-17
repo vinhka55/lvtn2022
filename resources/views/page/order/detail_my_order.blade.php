@@ -66,7 +66,7 @@
             <tbody>     
                         <?php $total_money=0; ?>            
                         @foreach($info_product as $item)
-                        <?php $order_id=$item->order_id ?>
+                        
                         <tr>                            
                             <td><p class="text-ellipsis name">{{$item->product_name}}</p></td>
                             <td><p class="text-ellipsis name">{{number_format($item->product_price)}}</p></td>                     
@@ -93,6 +93,6 @@
         ?>
     </div>
     </div>
-    <a href="http://localhost/lvtn2022/in-don-hang/<?php echo $order_id; ?>" class="btn btn-info">In đơn hàng</a>
+    <a href="{{url('/')}}/in-don-hang/<?php echo $order_id; ?>" class="btn btn-info">In đơn hàng</a>
 </div>
 @stop

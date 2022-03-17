@@ -182,6 +182,8 @@ class OrderController extends Controller
     }
     public function detail_my_order($id)
     {
+        $order_id=$id;
+
         $discount=Order::where('id',$id)->value('discount');
 
         $shipping_id=DB::table('order')->where('id',$id)->value('shipping_id');
@@ -189,7 +191,7 @@ class OrderController extends Controller
 
         $info_product=OrderDetails::with('product')->where('order_id',$id)->get();
         //return view('admin.order.detail',['info_user'=>$info_user,'info_shipping'=>$info_shipping,'info_product'=>$info_product,'order'=>$order]);
-        return view('page.order.detail_my_order')->with(compact('info_shipping','info_product','discount'));
+        return view('page.order.detail_my_order')->with(compact('info_shipping','info_product','discount','order_id'));
     }
     public function customer_cancel_order(Request $req)
     {

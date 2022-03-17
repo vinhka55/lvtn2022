@@ -10,7 +10,7 @@
                 @foreach($hot_product as $hot_pro)
                 <div class="col-12 col-md-2 my-2">
                     <div class="card">
-                        <a href="{{route('detail_product',$hot_pro->id)}}"><img src="{{url('/')}}/public/uploads/product/{{$hot_pro->image}}" alt="error" width="100%"></a>
+                        <a href="{{route('detail_product',$hot_pro->id)}}"><img height="220px" src="{{url('/')}}/public/uploads/product/{{$hot_pro->image}}" alt="error" width="100%"></a>
                         <div class="card-body">
                           <h3 class="card-text name-product">{{$hot_pro->name}}</h3>
                           <p class="price-product">{{number_format($hot_pro->price)}}</p>
@@ -38,7 +38,7 @@
                     @foreach($ga_dong_lanh as $ga1)
                     <div class="col-12 col-md-2 my-2">                                              
                         <div class="card">
-                            <a href="{{route('detail_product',$ga1->id)}}"><img src="{{url('/')}}/public/uploads/product/{{$ga1->image}}" alt="error" width="100%"></a>
+                            <a href="{{route('detail_product',$ga1->id)}}"><img height="220px" src="{{url('/')}}/public/uploads/product/{{$ga1->image}}" alt="error" width="100%"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$ga1->name}}</h3>
                             <p class="price-product">Giá: {{number_format($ga1->price)}}</p>
@@ -67,7 +67,7 @@
                 @foreach($ga_tuoi_sach as $ga2)        
                     <div class="col-12 col-md-2 my-2">                                              
                         <div class="card">
-                            <a href="{{route('detail_product',$ga2->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$ga2->image}}" alt="error"></a>
+                            <a href="{{route('detail_product',$ga2->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$ga2->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$ga2->name}}</h3>
                             <p class="price-product">Giá: {{number_format($ga2->price)}}</p>
@@ -94,7 +94,7 @@
                 @foreach($bo_uc_my as $bo_u_m)        
                     <div class="col-12 col-md-2 my-2">                                              
                         <div class="card" >
-                            <a href="{{route('detail_product',$bo_u_m->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$bo_u_m->image}}" alt="error"></a>
+                            <a href="{{route('detail_product',$bo_u_m->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$bo_u_m->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$bo_u_m->name}}</h3>
                             <p class="price-product">Giá: {{number_format($bo_u_m->price)}}</p>
@@ -121,7 +121,7 @@
                 @foreach($thit_heo as $heo)        
                     <div class="col-12 col-md-2 my-2">                                              
                         <div class="card" >
-                            <a href="{{route('detail_product',$heo->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$heo->image}}" alt="error"></a>
+                            <a href="{{route('detail_product',$heo->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$heo->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$heo->name}}</h3>
                             <p class="price-product">Giá: {{number_format($heo->price)}}</p>
@@ -148,7 +148,7 @@
                 @foreach($trau_an_do as $trau)        
                     <div class="col-12 col-md-2 my-2">                                              
                         <div class="card" >
-                            <a href="{{route('detail_product',$trau->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$trau->image}}" alt="error"></a>
+                            <a href="{{route('detail_product',$trau->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$trau->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$trau->name}}</h3>
                             <p class="price-product">Giá: {{number_format($trau->price)}}</p>
@@ -175,7 +175,7 @@
                 @foreach($hai_san as $seafood)        
                     <div class="col-12 col-md-2 my-2">                                              
                         <div class="card" >
-                            <a href="{{route('detail_product',$seafood->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$seafood->image}}" alt="error"></a>
+                            <a href="{{route('detail_product',$seafood->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$seafood->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$seafood->name}}</h3>
                             <p class="price-product">Giá: {{number_format($seafood->price)}}</p>
@@ -203,7 +203,7 @@
                 @foreach($gao_sach as $gs)        
                     <div class="col-12 col-md-2 my-2">                                              
                         <div class="card" >
-                            <a href="{{route('detail_product',$gs->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$gs->image}}" alt="error"></a>
+                            <a href="{{route('detail_product',$gs->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$gs->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$gs->name}}</h3>
                             <p class="price-product">Giá: {{number_format($gs->price)}}</p>

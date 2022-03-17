@@ -365,7 +365,7 @@ $('.delete-user').click(function(e) {
     }
     else{
     $.ajax({
-        url : "http://localhost/lvtn2022/delete-user/"+id_remove.toString(),
+        url : "{{url('/')}}/delete-user/"+id_remove.toString(),
             method: 'get',
             success:function(data){
                 alert('Xoa thanh cong')

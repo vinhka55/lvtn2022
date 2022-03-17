@@ -4,19 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Đơn hàng của tôi</title>
+    <style>
+    *{ font-family: DejaVu Sans !important;}
+    @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin-ext');
+    body {font-family: 'Roboto', sans-serif;}
+  </style>
+  
 </head>
 <body>
     <div class="container">
-    <div style="padding-left: 600px;">
-        <h3 class="text-center">Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</h3>
-        <h4 class="text-center">Độc lập-Tự do-Hạnh phúc</h4>
+    <div style="text-align: center;">
+        <p><b style="font-size:23px;">Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam</b></p>
+        <p><b style="font-size:23px;">Độc lập-Tự do-Hạnh phúc</b></p>
     </div>
     
     <div class="mt-5">
-        <h2 class="text-center">Công ty TNHH thực phẩm sạch Thiên An Phú</h2>
-        <h2 class="text-center">ĐƠN HÀNG ĐÃ MUA</h2>
+        <p class="text-center" style="font-size:20px;">Công ty TNHH thực phẩm sạch Thiên An Phú</p>
+        <p class="text-center" style="font-size:20px;">ĐƠN HÀNG ĐÃ MUA</p>
     </div>
     
     <!-- Thông tin giao hàng -->
@@ -40,17 +47,17 @@
             </tr>
             </thead>
             <tbody>                    
-                        @foreach($info_shipping as $item)
+                        
                         <tr>
                             
-                            <td><p class="text-ellipsis name">{{$item->name}}</p></td>
-                            <td><p class="text-ellipsis name">{{$item->phone}}</p></td>
-                            <td><p class="text-ellipsis name">{{$item->email}}</p></td> 
-                            <td><p class="text-ellipsis name">{{$item->address}}</p></td>
-                            <td><p class="text-ellipsis name">{{$item->pay_method}}</p></td>
-                            <td><p class="text-ellipsis name">{{$item->notes}}</p></td>                                              
+                            <td><p class="text-ellipsis name">{{$info_shipping->name}}</p></td>
+                            <td><p class="text-ellipsis name">{{$info_shipping->phone}}</p></td>
+                            <td><p class="text-ellipsis name">{{$info_shipping->email}}</p></td> 
+                            <td><p class="text-ellipsis name">{{$info_shipping->address}}</p></td>
+                            <td><p class="text-ellipsis name">{{$info_shipping->pay_method}}</p></td>
+                            <td><p class="text-ellipsis name">{{$info_shipping->notes}}</p></td>                                              
                         </tr>
-                        @endforeach    
+                        
             </tbody>
         </table>
         </div>
@@ -62,8 +69,8 @@
 <div class="container">
     <div class="table-agile-info">
     <div class="panel panel-default">
-        <div class="panel-heading h3">
-        Chi tiết sản phẩm
+        <div style="font-size:24px;">
+        <b>Chi tiết sản phẩm</b>
         </div>
         <div class="table-responsive">
         <table class="table table-striped b-t b-light">
@@ -96,32 +103,33 @@
         
         <br>
         </div>
-        <?php echo "Tổng tiền: ".number_format($total_money).' VND' ; ?>
+        <?php echo "<b>Tổng tiền:</b> ".number_format($total_money).' VND' ; ?>
         <br>
-        <?php echo "Thuế VAT 10%: ".number_format($total_money*10/100).' VND' ; ?>
+        <?php echo "<b>Thuế VAT 10%:</b> ".number_format($total_money*10/100).' VND' ; ?>
         <br>
         <?php
             if(Session::get('discount')){
                 $discount=Session::get('discount');
-                echo "Giảm giá: ".number_format(Session::get('discount')).' VND' ; 
+                echo "<b>Giảm giá:</b> ".number_format(Session::get('discount')).' VND' ; 
             }
             else{
                 $discount=0;
-                echo "Giảm giá: 0 VND";
+                echo "<b>Giảm giá:</b> 0 VND";
             }
         ?>
         <br>
-        <?php echo "Số tiền cần thanh toán: ".number_format($total_money+$total_money*10/100-$discount).' VND' ;
+        <?php echo "<b>Số tiền cần thanh toán:</b> ".number_format($total_money+$total_money*10/100-$discount).' VND' ;
         ?>
     </div>
     </div>
 </div>
+<br>
 <div class="float-left">
-    <h2>Người mua hàng</h2>
+    <p><b>Người mua hàng</b></p>
     
 </div>
 <div class="float-right">
-    <h2>Giám đốc</h2>
+    <p><b>Giám đốc</b></p>
     <p class="text-center">Lê Hữu Vinh</p>
 </div>
 </div>

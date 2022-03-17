@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class ProductController extends Controller
 {
@@ -21,6 +23,25 @@ class ProductController extends Controller
     {
         return view('admin.product.add_product');
     }
+    //function resize image
+    public function resizeImage($file, $fileNameToStore) {
+        // Resize image
+        $resize = Image::make($file)->resize(210, 220, function ($constraint) {
+          $constraint->aspectRatio();
+        })->encode('jpg');
+        //$resize->stream();
+        // Create hash value
+        //$hash = md5($resize->__toString());
+  
+        // Prepare qualified image name
+        //$image = $hash."jpg";
+  
+        // Put image to storage
+        //$save = Storage::put("public/uploads/product/{$fileNameToStore}", $resize->__toString());
+  
+        Storage::putFileAs('public/uploads/product/' . $fileNameToStore, (string)$resize->encode('jpg', 95), $fileNameToStore);
+      }
+
     public function handle_add(Request $req)
     {
         $this->AuthLogin();
@@ -35,10 +56,12 @@ class ProductController extends Controller
         $product->count=$req->count;
         $product->status=$req->status;
         $product->note=$req->note;
-        
+        //echo $req->file("image");return;
         if($product->image){
             $name_image= $product->image->getClientOriginalName();
             $product->image->move("public/uploads/product",$name_image);
+            //$this->resizeImage($product->image,$name_image);
+            //Image::make($product->image)->resize(210, 220)->encode('jpg')->save("public/uploads/product/{{$name_image}}");
             $product->image=$name_image;
             $product->save();
             return redirect('/danh-sach-san-pham');
