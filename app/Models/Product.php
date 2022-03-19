@@ -10,4 +10,8 @@ class Product extends Model
     use HasFactory;
     protected $table='product';
     protected $dates = ['exp'];
+    public function comment()
+    {
+        return $this->hasMany("App\Models\Comment");
+    }
 }

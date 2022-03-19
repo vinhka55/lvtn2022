@@ -110,3 +110,10 @@ Route::get('in-don-hang/{order_id}','App\Http\Controllers\PdfController@print_or
 //payment online
 Route::post('thanh-toan-momo','App\Http\Controllers\PaymentOnlineController@momo')->name('momo');
 Route::get('xu-ly-thanh-toan-momo?partnerCode&orderId&requestId&amount&orderInfo&orderType&transId&resultCode&message&payType&responseTime&extraData&signature','App\Http\Controllers\PaymentOnlineController@handle_momo')->name('handle_momo');
+
+//comment   
+Route::post('danh-sach-binh-luan-tung-san-pham','App\Http\Controllers\CommentController@show_comment')->name('show_comment');
+Route::post('binh-luan-san-pham','App\Http\Controllers\CommentController@send_comment')->name('send_comment');
+Route::get('admin/danh-sach-binh-luan','App\Http\Controllers\CommentController@list_comment')->name('list_comment');
+Route::post('admin/thay-doi-trang-thai-comment','App\Http\Controllers\CommentController@change_status_comment')->name('change_status_comment');
+Route::post('admin/admin-tra-loi-comment','App\Http\Controllers\CommentController@admin_rep')->name('admin_rep');

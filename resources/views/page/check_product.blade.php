@@ -1,8 +1,33 @@
-@extends("welcome")
-@section("content")
-@include("page.header.header")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        .list-group{
+            flex-direction:row;
+            
+        }
+        
+        .list-group {
+        -webkit-box-sizing: inherit;
+            -moz-box-sizing: inherit;
+                box-sizing: inherit;
+        }
+        .list-group:before,
+        .list-group:after {
+        -webkit-box-sizing: inherit;
+            -moz-box-sizing: inherit;
+                box-sizing: inherit;
+        }
+    </style>
+</head>
+<body>
 <div class="container-fluid p-2">
-<div class="product-details row p-0 m-0"><!--product-details-->
+    <div class="product-details row p-0 m-0"><!--product-details-->
     @foreach($product as $item)					
         <div class="col-12 col-md-5">
             <div class="view-product">
@@ -23,7 +48,7 @@
                             
                             <label>Số lượng:</label>
                             <input width="50%" type="number" name="quantity" value="1" min="1" max="{{$item->count}}"  size="2"/>
-                            <input type="hidden" name="id" value="{{$item->id}}"/>
+                            <input type="hidden" name="id" id="id-product-hidden" value="{{$item->id}}"/>
                             <input type="hidden" name="name" value="{{$item->name}}"/>
                             <input type="hidden" name="price" value="{{$item->price}}"/>
                             <input type="hidden" name="image" value="{{$item->image}}"/>
@@ -46,12 +71,119 @@
                     </span>			
             </div><!--/product-information-->
         </div>
-    
-</div><!--/product-details-->
-    <div class="details-product text-center">
-        <h3>Mô tả chi tiết</h3>
-        <?php echo htmlspecialchars_decode($item->description); ?>
     </div>
-    @endforeach
 </div>
-@stop
+        <div class="row d-inline">
+            <div class="col-4">
+                <div class="list-group d-flex" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Mô tả</a>
+                <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Bình luận</a>                
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                         <?php echo htmlspecialchars_decode($item->description); ?>
+                    </div>
+                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                        
+                            <div class="row" style="border: 2px solid black;">                                
+                                    <div class="col-md-3" style="border: 2px solid black;">
+                                    <img width="50%" src="{{url('/')}}/public/uploads/avatar/{{$my_avatar}}" alt="my avatar">
+                                    </div>
+                                    <input type="hidden" id="product_id" name="product_id" value="{{$item->id}}">
+                                    
+                                    <div class="col-md-9">
+                                        <input type="text" id="your_comment" placeholder="Điền bình luận của bạn">
+                                        <p class="text-danger" id="empty_comment"></p>
+                                        <button class="btn btn-info send-comment">Gửi</button>
+                                    </div>                                                            
+                            </div>                          
+                        
+                        <div class="show-comment row">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script src="{{url('/')}}/public/jquery/jquery-3.6.0.min.js"></script>
+<script>
+function show_comment(){
+    var id_product=$('#id-product-hidden').val()
+    var _token = $('input[name="_token"]').val()
+    $.ajax({
+            url: "{{route('show_comment')}}",
+            method: 'POST',
+            data:{id_product:id_product,_token:_token},
+            success:function(data){
+                $('.show-comment').html(data)
+            },
+            error:function(xhr){
+                console.log(xhr.responseText);
+            }
+        });
+}
+show_comment()
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".send-comment").on('click',function() {
+        if($("#your_comment").val().length==0){            
+            $("#empty_comment").html("Bình luận không được bỏ trống")
+        }
+        else{
+            var product_id=$("#product_id").val()           
+            var content=$("#your_comment").val()
+            var _token = $('input[name="_token"]').val()
+            var data={product_id:product_id,content:content,_token:_token}
+            $.ajax({
+                url: "{{route('send_comment')}}",
+                method: 'POST',
+                data:data,
+                success:function(data){
+                    show_comment()
+                    $("#your_comment").val("")
+                },
+                error:function(xhr){
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    })
+})
+</script>
+
+<script>
+    function handle_send_rep(id_comment) {
+        var content_reply=$(".txtarea-content-rep").val()
+        var _token = $('input[name="_token"]').val()
+        var name=$('.name-'+id_comment).val()
+        var avatar=$('.avatar-'+id_comment).val()
+        var data={content_reply:content_reply,id_comment:id_comment,_token:_token}
+        $.ajax({
+                url: "{{route('admin_rep')}}",
+                method: 'POST',
+                data:data,
+                success:function(data){
+                    $(".comment-reply-"+id_comment).html("")
+                    $(".append-reply-"+id_comment).append('<div class="col-md-3" style="border: 2px solid black;"><img width="50%" src="'+'{{url("/")}}/public/uploads/avatar/'+avatar+'" alt="my avatar"></div><div class="col-md-9"><p class="text-success">@ '+name+'</p><p>'+content_reply+'</p><p>'+new Date().toLocaleDateString()+'</p></div>')
+                },
+                error:function(xhr){
+                    console.log(xhr.responseText);
+                }
+            });
+    }
+    function rep(id_comment) {
+        $(".comment-reply-"+id_comment).html(
+            "<textarea class='txtarea-content-rep'></textarea><button onclick='handle_send_rep("+id_comment+")'>Gửi</Button>"
+        )
+    }
+
+</script>

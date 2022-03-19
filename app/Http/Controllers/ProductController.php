@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\Models\Product;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
 use Image;
+use Session;
 
 class ProductController extends Controller
 {
@@ -100,7 +102,11 @@ class ProductController extends Controller
     }
     public function detail($id)
     {
+        //load avatar
+        
+        $my_avatar=DB::table('user')->where('id',Session::get('user_id'))->value('avatar');
+
         $product=DB::table('product')->where('id',$id)->get();
-        echo view('page.check_product',['product'=>$product]);
+        echo view('page.check_product',['product'=>$product,'my_avatar'=>$my_avatar]);
     }
 }

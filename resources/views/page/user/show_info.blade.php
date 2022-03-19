@@ -10,7 +10,7 @@
                 <div class="px-4 pt-0 pb-4 cover" style="text-align:center;">
                     <div class="media align-items-end profile-head" style="display:inline-block;padding-top:10px">
                         <div class="profile mr-3">
-                            <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                            <img src="{{url('/')}}/public/uploads/avatar/{{$item->avatar}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
                         </div>
                         <div class="media-body mb-5 text-white">
                             <h4 class="mt-0 mb-0">{{$item->name}}</h4>

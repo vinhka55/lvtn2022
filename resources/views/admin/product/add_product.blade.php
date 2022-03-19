@@ -76,4 +76,10 @@
         <button type="submit" class="btn btn-info">Thêm sản phẩm</button>
     </div>
 </form>
+<script src="{{url('/')}}/ckeditor/ckeditor.js"></script>	
+<script src="{{url('/')}}/ckeditor/ckefinder/ckefinder.js"></script>	
+<script>
+    var editor=CKEDITOR.replace( 'description-by-ckeditor' );
+    CKFinder.setupCKEditor( editor );
+</script>
 @stop

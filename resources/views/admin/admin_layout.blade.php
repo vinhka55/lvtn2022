@@ -132,6 +132,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						
                     </ul>
                 </li>  
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fas fa-book-open"></i>
+                        <span>Quản lý bình luận</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="{{route('list_comment')}}">Danh sách bình luận</a></li>
+						
+                    </ul>
+                </li> 
                 @hasrole('admin')
                 <li class="sub-menu">
                     <a href="javascript:;">
@@ -174,12 +184,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- morris JavaScript -->	
 <script src="{{url('/')}}/public/backend/js/jquery.min.js"></script>	
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="{{url('/')}}/ckeditor/ckeditor.js"></script>	
-<script src="{{url('/')}}/ckeditor/ckefinder/ckefinder.js"></script>	
-<script>
-    var editor=CKEDITOR.replace( 'description-by-ckeditor' );
-    CKFinder.setupCKEditor( editor );
-</script>
+
 <!-- <script>
     ClassicEditor
 	.create( document.querySelector( '#description-by-ckeditor' ), {
@@ -378,6 +383,29 @@ $('.delete-user').click(function(e) {
         }
     })
 </script>
-
+<script>
+    function ok(id_comment){
+        var content_reply=$(".txtarea-content-admin-rep").val()
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+        url : "{{route('admin_rep')}}",
+            method: 'post',
+            data:{id_comment:id_comment,content_reply:content_reply,_token:_token},
+            success:function(){
+                location.reload()
+            },
+            error: (xhr) => {
+                console.log(xhr.responseText); 
+                }
+        });
+    }
+    $('.admin-reply').click(function(){
+        var id_comment=$(this).data('id_comment')
+        $(".all-reply-comment-"+id_comment).hide()
+        $(".content-reply-"+id_comment).html(
+            "<textarea class='txtarea-content-admin-rep' placeholder='Admin trả lời'></textarea><button onclick='ok("+id_comment+")' data-id_send='"+id_comment+"' class='btn-xs btn-info send-reply-comment'>Gửi</button>"
+        )      
+    })
+</script>
 </body>
 </html>

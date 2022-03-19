@@ -264,24 +264,3 @@ $(document).ready(function(){
 })
 </script>
 
-
-
-<script>
-    function cancel_order(orderid){
-        var orderid=orderid;
-        var _token = $('input[name="_token"]').val()
-        $.ajax({
-            url: "{{route('customer_cancel_order')}}",
-            method: 'post',
-            data:{orderid:orderid,_token:_token}
-            success:function(){
-                location.reload();
-            },
-            error:function(xhr){
-                console.log(xhr.responseText);
-            }
-        });
-    }
-
-
-</script>
