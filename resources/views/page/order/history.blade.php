@@ -98,12 +98,12 @@
                                     <!-- <td><button class="btn btn-danger cancel-order">Hủy đơn</button></td> -->
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                                        <button  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$item->id}}">
                                         Hủy đơn hàng
                                         </button>
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModal-{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
@@ -114,14 +114,13 @@
                                                 </div>
                                                 
                                                 <div class="modal-body">
-                                                    <textarea class="reason-cancel-area" required cols="70" rows="7" placeholder="Làm ơn điền lý do hủy đơn hàng..."></textarea>
+                                                    <textarea class="reason-cancel-area-{{$item->id}}" required cols="70" rows="7" placeholder="Làm ơn điền lý do hủy đơn hàng..."></textarea>
                                                     <p class="warning-not-null-reason-cancel text-danger"></p>
                                                 </div>
                                                 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                    <button type="submit" class="btn btn-primary" onclick="cancel_order({{$item->id}})">Gửi</button>
-                                                
+                                                    <button type="submit" class="btn btn-primary" onclick="cancel_order({{$item->id}})">Gửi</button>             
                                                 </div>
                                                 </div>
                                             </div>
@@ -245,8 +244,8 @@
 
 <script type="text/javascript">
     function cancel_order(order_id) {
-        var reason_cancel_order=$('.reason-cancel-area').val();
-        if($('.reason-cancel-area').val()!=""){
+        var reason_cancel_order=$('.reason-cancel-area-'+order_id).val();
+        if($('.reason-cancel-area-'+order_id).val()!=""){
             $.ajax({
             url: "{{route('customer_cancel_order')}}",
             method: 'POST',
