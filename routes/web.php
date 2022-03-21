@@ -102,6 +102,7 @@ Route::middleware(['auth.admin'])->group(function(){
         Route::get('delete-user/{id}','App\Http\Controllers\UserController@delete')->name('delete_user');
     }
 );
+Route::post('thay-doi-avatar','App\Http\Controllers\UserController@user_change_avatar')->name('user_change_avatar');
 
 
 //print pdf file

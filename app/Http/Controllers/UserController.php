@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\Customer;
 use App\Models\Roles;
 use Auth;
 
@@ -38,5 +39,18 @@ class UserController extends Controller
             $user->delete();
             return redirect()->back();
         }
+    }
+    public function user_change_avatar(Request $req)
+    {
+        $user=Customer::find($req->hidden_id_user);
+        $user->avatar=$req->file("change_avatar");
+
+        if($user->avatar){
+            $name_avatar= $user->avatar->getClientOriginalName();
+            $user->avatar->move("public/uploads/avatar",$name_avatar);
+            $user->avatar=$name_avatar;
+            $user->save();        
+        }
+        return redirect('/thong-tin-tai-khoan');
     }
 }
