@@ -25,6 +25,10 @@
         <input type="text" name="rate" class="form-control" id="rate">
     </div>
     <div class="form-group">
+        <label for="rate">Hạn sử dụng</label>
+        <input type="datetime-local" name="duration" class="form-control" id="duration">
+    </div>
+    <div class="form-group">
         <button type="submit" class="btn btn-info">Thêm mã giảm giá</button>
     </div>
 </form>

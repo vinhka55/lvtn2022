@@ -24,7 +24,8 @@
 								<input type="checkbox" class="checkbox"> 
 								Keep me signed in
 							</span>
-							<button type="submit" class="btn btn-default">Login</button>
+							<button type="submit" class="btn btn-default">Login</button>							
+							<p><a href="{{route('login_google')}}">Login with google account</a></p>
 						</form>
 					</div><!--/login form-->
 				</div>

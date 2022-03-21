@@ -81,6 +81,7 @@ class CartController extends Controller
     public function delete_all()
     {
         Cart::clear();
+        if(Session::has('id_coupon'))Session::forget('id_coupon');
         return redirect()->back();
     }
     public function show_cart_menu()

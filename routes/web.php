@@ -118,3 +118,7 @@ Route::post('binh-luan-san-pham','App\Http\Controllers\CommentController@send_co
 Route::get('admin/danh-sach-binh-luan','App\Http\Controllers\CommentController@list_comment')->name('list_comment');
 Route::post('admin/thay-doi-trang-thai-comment','App\Http\Controllers\CommentController@change_status_comment')->name('change_status_comment');
 Route::post('admin/admin-tra-loi-comment','App\Http\Controllers\CommentController@admin_rep')->name('admin_rep');
+
+//login social
+Route::get('dang-nhap-bang-google-mail','App\Http\Controllers\LoginController@login_google')->name('login_google');
+Route::get('google/callback','App\Http\Controllers\LoginController@callback_google')->name('callback_google');

@@ -23,17 +23,17 @@ class OrderController extends Controller
     {
         //Cập nhật lại số lượng coupon nếu có áp mã
         if(Session::has('id_coupon')){        
+            $coupon_used=Coupon::where('id',Session::get('id_coupon'))->value('used');
             $amount_coupon=Coupon::where('id',Session::get('id_coupon'))->value('amount');
-            if($amount_coupon>0){
-                $amount_coupon=$amount_coupon-1;
+            if($coupon_used<$amount_coupon){
+                $coupon_used=$coupon_used+1;
                 $coupon=Coupon::find(Session::get('id_coupon'));
-                $coupon->amount=$amount_coupon;
+                $coupon->used=$coupon_used;
                 $coupon->save();
             }
-            Session::forget('id_coupon');
+            //Session::forget('id_coupon');
         }
         
-
         //insert thông tin nhận hàng
         $data_shipping=[];
         $data_shipping['name']=$req->name;

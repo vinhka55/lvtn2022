@@ -247,7 +247,7 @@ $(document).ready(function(){
                     method: 'POST',
                     data:data,
                     success:function(data){
-                        //alert(data)
+                        console.log("ok")
                     },
                     error:function(xhr){
                         console.log(xhr.responseText);
@@ -256,7 +256,7 @@ $(document).ready(function(){
                 swal("Cảm ơn bạn đã mua hàng!", {
                 icon: "success",
                 });
-                window.location.href = "{{url('/')}}/don-hang-cua-toi";
+                location.href = "{{url('/')}}/don-hang-cua-toi";
                 }
             });          
         }    

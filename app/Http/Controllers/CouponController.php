@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Coupon;
 use Session;
 
+
 class CouponController extends Controller
 {
     public function insert()
@@ -32,11 +33,19 @@ class CouponController extends Controller
     public function discount(Request $req)
     {
         $data = $req->all();
-        //echo $data['code_coupon'];
-        $coupon=Coupon::where('code',$data['code_coupon'])->first();
+        $now=date("d/m/Y h:i:s");
+        $duration=Coupon::where('code',$data['code_coupon'])->value('duration');
+        if($now>$duration){
+            if(Session::has('id_coupon')){
+                Session::forget('id_coupon');
+            }
+            Session::put('incorrect_coupon','Mã giảm giá hết hạn');
+            return redirect('/gio-hang');
+        }
+        $coupon=Coupon::where('code',$data['code_coupon'])->where($duration,'>=',date("Y-m-d h:i:s"))->first();
         //dd($coupon);
         if($coupon!=null){
-            if($coupon->amount>0){
+            if($coupon->amount>$coupon->used){
            
                     $id_coupon=$coupon->id;
                     if(Session::has('id_coupon')){

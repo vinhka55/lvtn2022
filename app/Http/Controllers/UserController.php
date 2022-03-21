@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
-use App\Models\Customer;
+use App\Models\User;
 use App\Models\Roles;
 use Auth;
 
@@ -42,7 +42,7 @@ class UserController extends Controller
     }
     public function user_change_avatar(Request $req)
     {
-        $user=Customer::find($req->hidden_id_user);
+        $user=User::find($req->hidden_id_user);
         $user->avatar=$req->file("change_avatar");
 
         if($user->avatar){

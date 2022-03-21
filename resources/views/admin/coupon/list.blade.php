@@ -37,8 +37,10 @@
             <th>Tên mã</th>
             <th>Mã</th>
             <th>Số lượng</th>
+            <th>Đã dùng</th>
             <th>Điều kiện</th>
             <th>Số tiền giảm</th>
+            <th>Hạn sử dụng</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -48,7 +50,8 @@
                         <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                         <td><p class="text-ellipsis name">{{$item->name}}</p></td>    
                         <td><p class="text-ellipsis name">{{$item->code}}</p></td>                      
-                        <td><p class="text-ellipsis name">{{$item->amount}}</p></td>    
+                        <td><p class="text-ellipsis name">{{$item->amount}}</p></td>
+                        <td><p class="text-ellipsis name">{{$item->used}}</p></td>     
                         <td><p class="text-ellipsis name">{{$item->condition}}</p></td> 
                         <td><p class="text-ellipsis name">
                           @if($item->condition=='percent')
@@ -56,7 +59,8 @@
                           @else
                           {{number_format((int)$item->rate)}}
                           @endif
-                        </p></td>   
+                        </p></td> 
+                        <td>{{date("d/m/Y h:i:s", strtotime($item->duration));}}</td>  
                         <td>
                             <a title="click to edit" href="{{route('edit_coupon',$item->id)}}" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
                             <a title="click to delete" onclick="return confirm('Bạn chắc chắn muốn xóa?')" href="{{route('delete_coupon',$item->id)}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
