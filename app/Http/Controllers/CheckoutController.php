@@ -20,6 +20,10 @@ class CheckoutController extends Controller
     }
     public function handle_login(Request $req)
     {
+        $this->validate($req,[
+            'email'=>"required|email",
+            'password'=>"required",
+        ]);
         $data=DB::table('user')->where('email',$req->email)->where('password',$req->password)->get();
         if(count($data)!=0){
             
@@ -39,6 +43,13 @@ class CheckoutController extends Controller
     }
     public function register(Request $req)
     {
+        $this->validate($req,[
+            'name'=>"required",
+            'email'=>"required|email",
+            'password'=>'min:6|required|same:repassword',
+            'repassword'=>'min:6',
+            'phone'=>"required",
+        ]);
         $data=[];
         $data['name']=$req->name;
         $data['email']=$req->email;
