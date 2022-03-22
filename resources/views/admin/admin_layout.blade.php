@@ -142,6 +142,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						
                     </ul>
                 </li> 
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fas fa-book-open"></i>
+                        <span>Quản lý tin tức</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{route('add_category_news')}}">Thêm danh mục tin tức</a></li>	
+						<li><a href="{{route('list_category_news')}}">Danh sách danh mục tin tức</a></li>						
+						<li><a href="{{route('add_news')}}">Thêm tin tức</a></li>						
+						<li><a href="{{route('list_news')}}">Danh sách tin tức</a></li>						
+                    </ul>
+                </li> 
                 @hasrole('admin')
                 <li class="sub-menu">
                     <a href="javascript:;">

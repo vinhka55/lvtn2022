@@ -44,8 +44,6 @@ class ProductController extends Controller
         if($product->image){
             $name_image= $product->image->getClientOriginalName();
             $product->image->move("public/uploads/product",$name_image);
-            //$this->resizeImage($product->image,$name_image);
-            //Image::make($product->image)->resize(210, 220)->encode('jpg')->save("public/uploads/product/{{$name_image}}");
             $product->image=$name_image;
             $product->save();
             return redirect('/danh-sach-san-pham');

@@ -45,10 +45,7 @@ Route::get('dem-san-pham-trong-cart-menu','App\Http\Controllers\CartController@s
 Route::get('hover-san-pham-trong-cart-menu','App\Http\Controllers\CartController@hover_cart_menu')->name('hover_cart_menu');
 
 //checkout
-Route::get('dang-nhap','App\Http\Controllers\CheckoutController@login')->name('login');
-Route::get('dang-xuat','App\Http\Controllers\CheckoutController@logout')->name('logout');
-Route::post('dang-ki-tai-khoan','App\Http\Controllers\CheckoutController@register')->name('register_customer');
-Route::post('xu-ly-dang-nhap','App\Http\Controllers\CheckoutController@handle_login')->name('handle_login_customer');
+
 Route::get('thanh-toan','App\Http\Controllers\CheckoutController@pay')->name('pay_product');
 Route::post('phuong-thuc-thanh-toan','App\Http\Controllers\CheckoutController@payment_method')->name('payment_method');
 
@@ -110,7 +107,7 @@ Route::get('in-don-hang/{order_id}','App\Http\Controllers\PdfController@print_or
 
 //payment online
 Route::post('thanh-toan-momo','App\Http\Controllers\PaymentOnlineController@momo')->name('momo');
-Route::get('xu-ly-thanh-toan-momo?partnerCode&orderId&requestId&amount&orderInfo&orderType&transId&resultCode&message&payType&responseTime&extraData&signature','App\Http\Controllers\PaymentOnlineController@handle_momo')->name('handle_momo');
+Route::get('xu-ly-thanh-toan-momo','App\Http\Controllers\PaymentOnlineController@handle_momo')->name('handle_momo');
 
 //comment   
 Route::post('danh-sach-binh-luan-tung-san-pham','App\Http\Controllers\CommentController@show_comment')->name('show_comment');
@@ -119,6 +116,28 @@ Route::get('admin/danh-sach-binh-luan','App\Http\Controllers\CommentController@l
 Route::post('admin/thay-doi-trang-thai-comment','App\Http\Controllers\CommentController@change_status_comment')->name('change_status_comment');
 Route::post('admin/admin-tra-loi-comment','App\Http\Controllers\CommentController@admin_rep')->name('admin_rep');
 
-//login social
+//login and login social
 Route::get('dang-nhap-bang-google-mail','App\Http\Controllers\LoginController@login_google')->name('login_google');
 Route::get('google/callback','App\Http\Controllers\LoginController@callback_google')->name('callback_google');
+Route::get('dang-nhap','App\Http\Controllers\LoginController@login')->name('login');
+Route::get('dang-xuat','App\Http\Controllers\LoginController@logout')->name('logout');
+Route::post('dang-ki-tai-khoan','App\Http\Controllers\LoginController@register')->name('register_customer');
+Route::post('xu-ly-dang-nhap','App\Http\Controllers\LoginController@handle_login')->name('handle_login_customer');
+
+//category news 
+Route::get('them-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@add_category')->name('add_category_news');
+Route::post('xu-ly-them-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@handle_add_category')->name('handle_add_category_news');
+Route::get('danh-sach-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@list')->name('list_category_news');
+Route::get('sua-trang-thai-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@edit_status')->name('edit_status_category_news');
+Route::get('xoa-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@delete')->name('delete_category_news');
+Route::get('sua-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@edit_category_news')->name('edit_category_news');
+Route::post('xu-ly-sua-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@handle_edit_category_news')->name('handle_edit_category_news');
+
+//news
+Route::get('them-tin-tuc','App\Http\Controllers\NewsController@insert')->name('add_news');
+Route::post('xu-ly-them-tin-tuc','App\Http\Controllers\NewsController@handle_insert')->name('handle_insert_news');
+Route::get('danh-sach-tin-tuc','App\Http\Controllers\NewsController@list')->name('list_news');
+Route::get('xoa-danh-sach-tin-tuc/{id}','App\Http\Controllers\NewsController@delete')->name('delete_news');
+Route::get('sua-danh-sach-tin-tuc/{id}','App\Http\Controllers\NewsController@edit')->name('edit_news');
+Route::post('xu-ly-sua-danh-sach-tin-tuc','App\Http\Controllers\NewsController@handle_edit')->name('handle_edit_news');
+Route::get('sua-trang-thai-tin-tuc/{id}','App\Http\Controllers\NewsController@edit_status')->name('edit_status_news');

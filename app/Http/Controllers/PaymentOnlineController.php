@@ -37,7 +37,7 @@ class PaymentOnlineController extends Controller
         $amount = $req->total_money;
         $orderId = time() ."";
         $redirectUrl = "http://localhost/test/xu-ly-thanh-toan-momo";
-        $ipnUrl = "http://localhost/test/xu-ly-thanh-toan-momo";
+        $ipnUrl = "http://localhost/test/api/cap-nhat-don-hang";
         $extraData = "";
 
 
@@ -66,13 +66,17 @@ class PaymentOnlineController extends Controller
         return redirect()->to($jsonResult['payUrl']);
         //header('Location: ' . $jsonResult['payUrl']);
     }
-    public function handle_momo($orderId,$resultCode,$amount)
+    public function handle_momo()
     {
-        if($resultCode=0){
-            Order::where('id',$orderId)->update(['status'=>'Đã thanh toán-chờ nhận hàng']);
-        }
-        else{
-            Order::where('id',$orderId)->update(['status'=>'Đang chờ xử lý']);
-        }
+        $output='';
+        $output.= "<form method='post' action='api/cap-nhat-don-hang'>";
+        $output.= "<button type='submit'>gui</button>";
+        $output.= "</form>";
+        echo $output;
+    }
+    public function update_order(Request $req)
+    {
+        echo "<pre>";
+        var_dump($req->URL) ;
     }
 }
