@@ -26,7 +26,7 @@ class CategoryNewsController extends Controller
         ]);
 
         $category_news->save();
-        return redirect('danh-sach-danh-muc-tin-tuc');
+        return redirect('admin/danh-sach-danh-muc-tin-tuc');
     }
     public function list()
     {
@@ -59,6 +59,6 @@ class CategoryNewsController extends Controller
         $slug = SlugService::createSlug(CategoryNews::class, 'slug', $req->name);
         $category_news->slug=$slug;
         $category_news->save();
-        return redirect("danh-sach-danh-muc-tin-tuc");
+        return redirect("admin/danh-sach-danh-muc-tin-tuc");
     }
 }

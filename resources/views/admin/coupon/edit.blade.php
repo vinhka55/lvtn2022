@@ -27,6 +27,11 @@
         <input type="text" name="rate" class="form-control" id="rate" value="{{$item->rate}}">
     </div>
     <div class="form-group">
+        <label for="duration">Hạn sử dụng</label>
+        <input type="datetime-local" name="duration" class="form-control" id="duration" value="{{ date('Y-m-d\TH:i', strtotime($item->duration)) }}">
+    </div>
+   
+    <div class="form-group">
         <button type="submit" class="btn btn-info">Sửa mã giảm giá</button>
     </div>
     @endforeach

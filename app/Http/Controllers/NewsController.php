@@ -34,7 +34,7 @@ class NewsController extends Controller
             $news->image->move("public/uploads/news",$new_name_image);
             $news->image=$new_name_image;
             $news->save();
-            return redirect('danh-sach-tin-tuc');
+            return redirect('admin/danh-sach-tin-tuc');
         }
         $news->image="";
         echo "Not save image of news!";
@@ -48,7 +48,7 @@ class NewsController extends Controller
     public function delete($id)
     {
         if(News::find($id)->delete()){
-            return redirect('danh-sach-tin-tuc');
+            return redirect('admin/danh-sach-tin-tuc');
         }
     }
     public function edit($id)
@@ -77,11 +77,11 @@ class NewsController extends Controller
             $news->image->move("public/uploads/news",$new_name_image);
             $news->image=$new_name_image;
             $news->save();
-            return redirect('danh-sach-tin-tuc');
+            return redirect('admin/danh-sach-tin-tuc');
         }
         $news->image=$old_image;
         $news->save();
-        return redirect('danh-sach-tin-tuc');
+        return redirect('admin/danh-sach-tin-tuc');
     }
     public function edit_status($id)
     {

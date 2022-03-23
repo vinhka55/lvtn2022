@@ -27,8 +27,8 @@ class CommentController extends Controller
                                     </div>
                                     <div class="col-md-9">
                                         <p class="text-success">@ '.$value->name_user_comment.'</p>'.
-                                        '<p>'.$value->content.'</p>'.
-                                        '<p>'.Carbon::parse($value->time)->format('m-d-Y').'</p>'.
+                                        '<p><b>'.$value->content.'</b></p>'.
+                                        '<p>'.Carbon::parse($value->time)->format('d-m-Y').'</p>'.
                                     '</div>
                                     <button onclick="rep('.$value->id.')" class="rep-comment-ui">Trả lời</button>
                                     <div class="comment-reply-'.$value->id.'"></div>
@@ -43,12 +43,12 @@ class CommentController extends Controller
                 else $name="Admin";
                 if($value->id==$rep->id_parent_comment){
                     $output=$output.'<div class="col-md-3" style="border: 2px solid black;">
-                                    <img width="50%" src="'.url("public/uploads/avatar/{$avatar_rep}").'" alt="my avatar">
+                                        <img width="50%" src="'.url("public/uploads/avatar/{$avatar_rep}").'" alt="my avatar">
                                     </div>
                                     <div class="col-md-9">
                                         <p class="text-success">@ '.$name.'</p>'.
                                         '<p>'.$rep->content.'</p>'.
-                                        '<p>'.Carbon::parse($rep->time)->format('m-d-Y').'</p>'.
+                                        '<p>'.Carbon::parse($rep->time)->format('d-m-Y').'</p>'.
                                     '</div>';
                 }
             }                    

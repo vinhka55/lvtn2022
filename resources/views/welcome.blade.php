@@ -49,9 +49,8 @@
               </div>
               <form class="d-flex" action="{{route('search_product')}}" method="post">
                     @csrf
-                    <input class="form-control me-2" name="search" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
-                    <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>
-                  
+                    <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
+                    <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>              
                 </form> 
 
               <?php 
@@ -256,7 +255,7 @@ $(document).ready(function(){
                 swal("Cảm ơn bạn đã mua hàng!", {
                 icon: "success",
                 });
-                location.href = "{{url('/')}}/don-hang-cua-toi";
+                //location.href = "{{url('/')}}/don-hang-cua-toi";
                 }
             });          
         }    

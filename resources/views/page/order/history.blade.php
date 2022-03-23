@@ -86,7 +86,7 @@
                                     <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                                     <td><p class="text-ellipsis name"><?php echo 'ORDER'.$item->id ?></p></td>
                                     <td><p class="text-ellipsis name">{{number_format($item->total_money)}}</p></td>                       
-                                    <td>{{$item->created_at}}</td>
+                                    <td>{{date('d-m-Y h:i:s', strtotime($item->created_at))}}</td>
                                     <td><p <?php 
                                     if($item->status=="Đã xử lý")echo "class='text-success'";
                                     else if($item->status=="Đang chờ xử lý")echo "class='text-warning'";

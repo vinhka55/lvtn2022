@@ -9,29 +9,29 @@ Route::get('/','App\Http\Controllers\HomeController@index');
 Route::get('danh-muc/{id_danh_muc}','App\Http\Controllers\CategoryController@index')->name('danh_muc_san_pham');
 
 //trang chủ admin page
-Route::get('admin','App\Http\Controllers\AdminController@index')->name('admin')->middleware('auth.admin.author');
+Route::get('admin','App\Http\Controllers\AdminController@index')->name('admin')->middleware('auth.AdminAndAuthor');
 
 //category
-Route::middleware(['auth.admin.author'])->group(function(){
-        Route::get('them-danh-muc','App\Http\Controllers\CategoryController@add_category')->name('add_category');
-        Route::post('xu-ly-them-danh-muc','App\Http\Controllers\CategoryController@handle_add')->name('handle_add_category');
-        Route::get('danh-sach-danh-muc','App\Http\Controllers\CategoryController@list')->name('list_category');
-        Route::get('xoa-danh-muc/{id}','App\Http\Controllers\CategoryController@delete')->name('delete_category');
-        Route::get('sua-danh-muc/{id}','App\Http\Controllers\CategoryController@edit')->name('edit_category');
-        Route::post('xu-ly-sua-danh-muc/{id}','App\Http\Controllers\CategoryController@handle_edit')->name('handle_edit_category');
-        Route::get('sua-trang-thai/{id}','App\Http\Controllers\CategoryController@edit_status')->name('edit_status');
-    }
-);
+Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
+{
+    Route::get('them-danh-muc','App\Http\Controllers\CategoryController@add_category')->name('add_category');
+    Route::post('xu-ly-them-danh-muc','App\Http\Controllers\CategoryController@handle_add')->name('handle_add_category');
+    Route::get('danh-sach-danh-muc','App\Http\Controllers\CategoryController@list')->name('list_category');
+    Route::get('xoa-danh-muc/{id}','App\Http\Controllers\CategoryController@delete')->name('delete_category');
+    Route::get('sua-danh-muc/{id}','App\Http\Controllers\CategoryController@edit')->name('edit_category');
+    Route::post('xu-ly-sua-danh-muc/{id}','App\Http\Controllers\CategoryController@handle_edit')->name('handle_edit_category');
+    Route::get('sua-trang-thai/{id}','App\Http\Controllers\CategoryController@edit_status')->name('edit_status');
+});
 
 //product
-Route::middleware(['auth.admin.author'])->group(function(){
-        Route::get('them-san-pham','App\Http\Controllers\ProductController@add')->name('add_product');
-        Route::post('xu-ly-them-san-pham','App\Http\Controllers\ProductController@handle_add')->name('handle_add_product');
-        Route::get('danh-sach-san-pham','App\Http\Controllers\ProductController@list')->name('list_product');
-        Route::get('sua-trang-thai-san-pham/{id}','App\Http\Controllers\ProductController@edit_status')->name('edit_status_product');
-        Route::get('xoa-san-pham/{id}','App\Http\Controllers\ProductController@delete')->name('delete_product');
-    }
-);
+Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
+{
+    Route::get('them-san-pham','App\Http\Controllers\ProductController@add')->name('add_product');
+    Route::post('xu-ly-them-san-pham','App\Http\Controllers\ProductController@handle_add')->name('handle_add_product');
+    Route::get('danh-sach-san-pham','App\Http\Controllers\ProductController@list')->name('list_product');
+    Route::get('sua-trang-thai-san-pham/{id}','App\Http\Controllers\ProductController@edit_status')->name('edit_status_product');
+    Route::get('xoa-san-pham/{id}','App\Http\Controllers\ProductController@delete')->name('delete_product');
+});
 Route::get('san-pham/{id}','App\Http\Controllers\ProductController@detail')->name('detail_product');
 
 //cart 
@@ -50,12 +50,12 @@ Route::get('thanh-toan','App\Http\Controllers\CheckoutController@pay')->name('pa
 Route::post('phuong-thuc-thanh-toan','App\Http\Controllers\CheckoutController@payment_method')->name('payment_method');
 
 //order
-Route::middleware(['auth.admin.author'])->group(function(){
-        Route::get('danh-sach-don-hang','App\Http\Controllers\OrderController@list_order')->name('list_order');
-        Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\OrderController@delete_order')->name('delete_order');
-        Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\OrderController@detail_order')->name('detail_order');
-    }
-);
+Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
+{
+    Route::get('danh-sach-don-hang','App\Http\Controllers\OrderController@list_order')->name('list_order');
+    Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\OrderController@delete_order')->name('delete_order');
+    Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\OrderController@detail_order')->name('detail_order');
+});
 Route::post('dat-hang','App\Http\Controllers\OrderController@order_place')->name('order_place');
 Route::post('cap-nhat-trang-thai-san-pham-cua-don-hang','App\Http\Controllers\OrderController@update_status_of_product')->name('update_status_of_product_in_order');
 Route::get('xoa-san-pham-trong-don-hang/{id}','App\Http\Controllers\OrderController@delete_product_in_order')->name('delete_product_in_order');
@@ -73,15 +73,15 @@ Route::get('thong-tin-tai-khoan','App\Http\Controllers\InfoUserController@show_i
 Route::post('tim-kiem-san-pham','App\Http\Controllers\HomeController@search')->name('search_product');
 
 //coupon
-Route::middleware(['auth.admin.author'])->group(function(){
-        Route::get('them-ma-giam-gia','App\Http\Controllers\CouponController@insert')->name('insert_coupon');
-        Route::post('xu-ly-them-ma-giam-gia','App\Http\Controllers\CouponController@handle_insert')->name('handle_insert_coupon');
-        Route::get('danh-sach-ma-giam-gia','App\Http\Controllers\CouponController@list')->name('list_coupon');
-        Route::get('sua-ma-giam-gia/{id}','App\Http\Controllers\CouponController@edit')->name('edit_coupon');
-        Route::post('xu-ly-sua-ma-giam-gia','App\Http\Controllers\CouponController@handle_edit')->name('handle_edit_coupon');
-        Route::get('xoa-ma-giam-gia/{id}','App\Http\Controllers\CouponController@delete')->name('delete_coupon');
-    }
-);
+Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
+{
+    Route::get('them-ma-giam-gia','App\Http\Controllers\CouponController@insert')->name('insert_coupon');
+    Route::post('xu-ly-them-ma-giam-gia','App\Http\Controllers\CouponController@handle_insert')->name('handle_insert_coupon');
+    Route::get('danh-sach-ma-giam-gia','App\Http\Controllers\CouponController@list')->name('list_coupon');
+    Route::get('sua-ma-giam-gia/{id}','App\Http\Controllers\CouponController@edit')->name('edit_coupon');
+    Route::post('xu-ly-sua-ma-giam-gia','App\Http\Controllers\CouponController@handle_edit')->name('handle_edit_coupon');
+    Route::get('xoa-ma-giam-gia/{id}','App\Http\Controllers\CouponController@delete')->name('delete_coupon');
+});
 Route::post('giam-gia','App\Http\Controllers\CouponController@discount')->name('discount');
 
 //admin login, register
@@ -93,12 +93,12 @@ Route::post('admin/handle-login','App\Http\Controllers\AuthController@handle_log
 Route::get('admin/logout','App\Http\Controllers\AuthController@logout')->name('admin_logout');
 
 //user
-Route::middleware(['auth.admin'])->group(function(){
-        Route::get('list-user','App\Http\Controllers\UserController@index')->name('list_user');
-        Route::post('assign-roles','App\Http\Controllers\UserController@assign_roles')->name('assign_roles');
-        Route::get('delete-user/{id}','App\Http\Controllers\UserController@delete')->name('delete_user');
-    }
-);
+Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
+{
+    Route::get('list-user','App\Http\Controllers\UserController@index')->name('list_user');
+    Route::post('assign-roles','App\Http\Controllers\UserController@assign_roles')->name('assign_roles');
+    Route::get('delete-user/{id}','App\Http\Controllers\UserController@delete')->name('delete_user');
+});
 Route::post('thay-doi-avatar','App\Http\Controllers\UserController@user_change_avatar')->name('user_change_avatar');
 
 
@@ -112,9 +112,13 @@ Route::get('xu-ly-thanh-toan-momo','App\Http\Controllers\PaymentOnlineController
 //comment   
 Route::post('danh-sach-binh-luan-tung-san-pham','App\Http\Controllers\CommentController@show_comment')->name('show_comment');
 Route::post('binh-luan-san-pham','App\Http\Controllers\CommentController@send_comment')->name('send_comment');
-Route::get('admin/danh-sach-binh-luan','App\Http\Controllers\CommentController@list_comment')->name('list_comment');
-Route::post('admin/thay-doi-trang-thai-comment','App\Http\Controllers\CommentController@change_status_comment')->name('change_status_comment');
-Route::post('admin/admin-tra-loi-comment','App\Http\Controllers\CommentController@admin_rep')->name('admin_rep');
+Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
+{
+    Route::get('danh-sach-binh-luan','App\Http\Controllers\CommentController@list_comment')->name('list_comment');
+    Route::post('thay-doi-trang-thai-comment','App\Http\Controllers\CommentController@change_status_comment')->name('change_status_comment');
+    Route::post('admin-tra-loi-comment','App\Http\Controllers\CommentController@admin_rep')->name('admin_rep');
+});
+
 
 //login and login social
 Route::get('dang-nhap-bang-google-mail','App\Http\Controllers\LoginController@login_google')->name('login_google');
@@ -125,19 +129,25 @@ Route::post('dang-ki-tai-khoan','App\Http\Controllers\LoginController@register')
 Route::post('xu-ly-dang-nhap','App\Http\Controllers\LoginController@handle_login')->name('handle_login_customer');
 
 //category news 
-Route::get('them-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@add_category')->name('add_category_news');
-Route::post('xu-ly-them-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@handle_add_category')->name('handle_add_category_news');
-Route::get('danh-sach-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@list')->name('list_category_news');
-Route::get('sua-trang-thai-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@edit_status')->name('edit_status_category_news');
-Route::get('xoa-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@delete')->name('delete_category_news');
-Route::get('sua-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@edit_category_news')->name('edit_category_news');
-Route::post('xu-ly-sua-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@handle_edit_category_news')->name('handle_edit_category_news');
+Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
+{
+    Route::get('them-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@add_category')->name('add_category_news');
+    Route::post('xu-ly-them-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@handle_add_category')->name('handle_add_category_news');
+    Route::get('danh-sach-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@list')->name('list_category_news');
+    Route::get('sua-trang-thai-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@edit_status')->name('edit_status_category_news');
+    Route::get('xoa-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@delete')->name('delete_category_news');
+    Route::get('sua-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@edit_category_news')->name('edit_category_news');
+    Route::post('xu-ly-sua-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@handle_edit_category_news')->name('handle_edit_category_news');
+});
 
 //news
-Route::get('them-tin-tuc','App\Http\Controllers\NewsController@insert')->name('add_news');
-Route::post('xu-ly-them-tin-tuc','App\Http\Controllers\NewsController@handle_insert')->name('handle_insert_news');
-Route::get('danh-sach-tin-tuc','App\Http\Controllers\NewsController@list')->name('list_news');
-Route::get('xoa-danh-sach-tin-tuc/{id}','App\Http\Controllers\NewsController@delete')->name('delete_news');
-Route::get('sua-danh-sach-tin-tuc/{id}','App\Http\Controllers\NewsController@edit')->name('edit_news');
-Route::post('xu-ly-sua-danh-sach-tin-tuc','App\Http\Controllers\NewsController@handle_edit')->name('handle_edit_news');
-Route::get('sua-trang-thai-tin-tuc/{id}','App\Http\Controllers\NewsController@edit_status')->name('edit_status_news');
+Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
+{
+    Route::get('/them-tin-tuc','App\Http\Controllers\NewsController@insert')->name('add_news');
+    Route::post('xu-ly-them-tin-tuc','App\Http\Controllers\NewsController@handle_insert')->name('handle_insert_news');
+    Route::get('danh-sach-tin-tuc','App\Http\Controllers\NewsController@list')->name('list_news');
+    Route::get('xoa-danh-sach-tin-tuc/{id}','App\Http\Controllers\NewsController@delete')->name('delete_news');
+    Route::get('sua-danh-sach-tin-tuc/{id}','App\Http\Controllers\NewsController@edit')->name('edit_news');
+    Route::post('xu-ly-sua-danh-sach-tin-tuc','App\Http\Controllers\NewsController@handle_edit')->name('handle_edit_news');
+    Route::get('sua-trang-thai-tin-tuc/{id}','App\Http\Controllers\NewsController@edit_status')->name('edit_status_news');
+});

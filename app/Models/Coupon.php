@@ -10,4 +10,8 @@ class Coupon extends Model
     use HasFactory;
     protected $primaryKey='id';
     protected $table='coupon';
+    public function getDateStartAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d\TH:i');
+    }
 }

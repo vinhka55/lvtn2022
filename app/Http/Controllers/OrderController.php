@@ -25,10 +25,12 @@ class OrderController extends Controller
         if(Session::has('id_coupon')){        
             $coupon_used=Coupon::where('id',Session::get('id_coupon'))->value('used');
             $amount_coupon=Coupon::where('id',Session::get('id_coupon'))->value('amount');
+            //$id_user_used=$id_user_used.','.Session::get('user_id');
             if($coupon_used<$amount_coupon){
                 $coupon_used=$coupon_used+1;
                 $coupon=Coupon::find(Session::get('id_coupon'));
                 $coupon->used=$coupon_used;
+                $coupon->id_user_used=$coupon->id_user_used.','.Session::get('user_id');
                 $coupon->save();
             }
             //Session::forget('id_coupon');

@@ -25,7 +25,7 @@
 							@foreach($content as $item)																						
 							<tr>
 								<td class="image text-center" width="20%">
-									<a href=""><img width="80%" src="{{url('/')}}/public/uploads/product/{{$item['thumb']}}" alt="ảnh lỗi"></a>
+									<a href="#"><img width="80%" src="{{url('/')}}/public/uploads/product/{{$item['thumb']}}" alt="ảnh lỗi"></a>
 								</td>
 								<td class="name text-center">
 									<h4><a href="">{{$item['name']}}</a></h4>								

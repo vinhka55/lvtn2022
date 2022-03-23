@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Coupon;
 use Session;
 
-
 class CouponController extends Controller
 {
+    
     public function insert()
     {
         return view('admin.coupon.insert');
@@ -23,42 +23,48 @@ class CouponController extends Controller
         $coupon->condition=$data['condition'];
         $coupon->rate=$data['rate'];
         $coupon->save();
-        return redirect('/danh-sach-ma-giam-gia');
+        return redirect('admin/danh-sach-ma-giam-gia');
     }
     public function list()
     {
-        $data=Coupon::all();
+        $data=Coupon::orderBy('id','desc')->get();
         return view('admin.coupon.list')->with(compact('data'));
     }
     public function discount(Request $req)
     {
         $data = $req->all();
-        $now=date("d/m/Y h:i:s");
+        $now=date("Y/m/d h:i:s");
         $duration=Coupon::where('code',$data['code_coupon'])->value('duration');
-        if($now>$duration){
+        // echo $duration;
+        // var_dump($duration);
+        // return
+        if($duration!=NULL && strtotime($now)>strtotime($duration)){
             if(Session::has('id_coupon')){
                 Session::forget('id_coupon');
             }
             Session::put('incorrect_coupon','Mã giảm giá hết hạn');
             return redirect('/gio-hang');
         }
-        $coupon=Coupon::where('code',$data['code_coupon'])->where($duration,'>=',date("Y-m-d h:i:s"))->first();
-        //dd($coupon);
+        if(Coupon::where('code',$data['code_coupon'])->where('id_user_used','LIKE','%'.Session::get('user_id').'%')->first()!=null){
+            if(Session::has('id_coupon')){
+                Session::forget('id_coupon');
+            }
+            Session::put('incorrect_coupon','Bạn chỉ được dùng 1 lần mã giảm giá này');
+            return redirect('/gio-hang');
+        }
+        $coupon=Coupon::where('code',$data['code_coupon'])->first();
         if($coupon!=null){
-            if($coupon->amount>$coupon->used){
-           
+            if($coupon->amount>$coupon->used){           
                     $id_coupon=$coupon->id;
                     if(Session::has('id_coupon')){
                         Session::forget('id_coupon');
                     }
                     //Tạo session cho poupn
-                    Session::put('id_coupon',$id_coupon);
-                    
+                    Session::put('id_coupon',$id_coupon);                   
                     if(Session::has('incorrect_coupon')){
                         Session::forget('incorrect_coupon');
                     }
                     return redirect('/gio-hang');
-
             }
             else{
                 if(Session::has('id_coupon')){
@@ -72,17 +78,16 @@ class CouponController extends Controller
             Session::put('incorrect_coupon','Mã giảm giá sai');
             return redirect('/gio-hang');
         }
-        
     }
     public function delete($id)
     {
         $coupon= Coupon::find($id);
         $coupon->delete();
-        return redirect('danh-sach-ma-giam-gia');
+        return redirect('admin/danh-sach-ma-giam-gia');
     }
     public function edit($id)
     {
-        $coupon=Coupon::find($id)->get();
+        $coupon=Coupon::where('id',$id)->get();
         return view('admin.coupon.edit')->with(compact('coupon'));
     }
     public function handle_edit(Request $req)
@@ -95,7 +100,8 @@ class CouponController extends Controller
         $coupon->amount=$data['amount'];
         $coupon->condition=$data['condition'];
         $coupon->rate=$data['rate'];
+        $coupon->duration=$data['duration'];
         $coupon->save();
-        return redirect('/danh-sach-ma-giam-gia');
+        return redirect('admin/danh-sach-ma-giam-gia');
     }
 }
