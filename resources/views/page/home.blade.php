@@ -13,7 +13,7 @@
                         <a href="{{route('detail_product',$hot_pro->id)}}"><img height="220px" src="{{url('/')}}/public/uploads/product/{{$hot_pro->image}}" alt="error" width="100%"></a>
                         <div class="card-body">
                           <h3 class="card-text name-product">{{$hot_pro->name}}</h3>
-                          <p class="price-product">{{number_format($hot_pro->price)}}</p>
+                          <p class="price-product">{{number_format($hot_pro->price)}} VND</p>
                           <a href="{{route('detail_product',$hot_pro->id)}}">Chi tiết</a>
                           <!-- add to cart by ajax -->
                           <form>
@@ -41,7 +41,7 @@
                             <a href="{{route('detail_product',$ga1->id)}}"><img height="220px" src="{{url('/')}}/public/uploads/product/{{$ga1->image}}" alt="error" width="100%"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$ga1->name}}</h3>
-                            <p class="price-product">Giá: {{number_format($ga1->price)}}</p>
+                            <p class="price-product">Giá: {{number_format($ga1->price)}} VND</p>
                             <a href="{{route('detail_product',$ga1->id)}}">Chi tiết</a>
                             <!-- add to cart by ajax -->
                             <form>
@@ -70,7 +70,7 @@
                             <a href="{{route('detail_product',$ga2->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$ga2->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$ga2->name}}</h3>
-                            <p class="price-product">Giá: {{number_format($ga2->price)}}</p>
+                            <p class="price-product">Giá: {{number_format($ga2->price)}} VND</p>
                             <a href="{{route('detail_product',$ga2->id)}}">Chi tiết</a>
                             <!-- add to cart by ajax -->
                             <form>
@@ -97,7 +97,7 @@
                             <a href="{{route('detail_product',$bo_u_m->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$bo_u_m->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$bo_u_m->name}}</h3>
-                            <p class="price-product">Giá: {{number_format($bo_u_m->price)}}</p>
+                            <p class="price-product">Giá: {{number_format($bo_u_m->price)}} VND</p>
                             <a href="{{route('detail_product',$bo_u_m->id)}}">Chi tiết</a>
                             <!-- add to cart by ajax -->
                             <form>
@@ -124,7 +124,7 @@
                             <a href="{{route('detail_product',$heo->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$heo->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$heo->name}}</h3>
-                            <p class="price-product">Giá: {{number_format($heo->price)}}</p>
+                            <p class="price-product">Giá: {{number_format($heo->price)}} VND</p>
                             <a href="{{route('detail_product',$heo->id)}}">Chi tiết</a>
                             <!-- add to cart by ajax -->
                             <form>
@@ -151,7 +151,7 @@
                             <a href="{{route('detail_product',$trau->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$trau->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$trau->name}}</h3>
-                            <p class="price-product">Giá: {{number_format($trau->price)}}</p>
+                            <p class="price-product">Giá: {{number_format($trau->price)}} VND</p>
                             <a href="{{route('detail_product',$trau->id)}}">Chi tiết</a>
                             <!-- add to cart by ajax -->
                             <form>
@@ -178,7 +178,7 @@
                             <a href="{{route('detail_product',$seafood->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$seafood->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$seafood->name}}</h3>
-                            <p class="price-product">Giá: {{number_format($seafood->price)}}</p>
+                            <p class="price-product">Giá: {{number_format($seafood->price)}} VND</p>
                             <a href="{{route('detail_product',$seafood->id)}}">Chi tiết</a>
                             <!-- add to cart by ajax -->
                             <form>
@@ -206,7 +206,7 @@
                             <a href="{{route('detail_product',$gs->id)}}"><img height="220px" width="100%" src="{{url('/')}}/public/uploads/product/{{$gs->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$gs->name}}</h3>
-                            <p class="price-product">Giá: {{number_format($gs->price)}}</p>
+                            <p class="price-product">Giá: {{number_format($gs->price)}} VND</p>
                             <a href="{{route('detail_product',$gs->id)}}">Chi tiết</a>
                             <!-- add to cart by ajax -->
                             <form>
@@ -234,7 +234,7 @@
                             <a href="{{route('detail_product',$gv->id)}}"><img width="100%" src="{{url('/')}}/public/uploads/product/{{$gv->image}}" alt="error"></a>
                             <div class="card-body">
                             <h3 class="card-text name-product">{{$gv->name}}</h3>
-                            <p class="price-product">Giá: {{number_format($gv->price)}}</p>
+                            <p class="price-product">Giá: {{number_format($gv->price)}} VND</p>
                             <a href="{{route('detail_product',$gv->id)}}">Chi tiết</a>
                             <button class="btn btn-primary" value="Thêm giỏ hàng"></button>
                             <!-- add to cart by ajax -->

@@ -24,9 +24,10 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
 });
 
 //product
+Route::get('them-san-pham','App\Http\Controllers\ProductController@add')->name('add_product')->middleware('auth.AdminAndAuthor');
 Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
 {
-    Route::get('them-san-pham','App\Http\Controllers\ProductController@add')->name('add_product');
+    //Route::get('them-san-pham','App\Http\Controllers\ProductController@add')->name('add_product');
     Route::post('xu-ly-them-san-pham','App\Http\Controllers\ProductController@handle_add')->name('handle_add_product');
     Route::get('danh-sach-san-pham','App\Http\Controllers\ProductController@list')->name('list_product');
     Route::get('sua-trang-thai-san-pham/{id}','App\Http\Controllers\ProductController@edit_status')->name('edit_status_product');
@@ -141,9 +142,10 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
 });
 
 //news
+Route::get('/them-tin-tuc','App\Http\Controllers\NewsController@insert')->name('add_news')->middleware('auth.AdminAndAuthor');
 Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
 {
-    Route::get('/them-tin-tuc','App\Http\Controllers\NewsController@insert')->name('add_news');
+    //Route::get('/them-tin-tuc','App\Http\Controllers\NewsController@insert')->name('add_news');
     Route::post('xu-ly-them-tin-tuc','App\Http\Controllers\NewsController@handle_insert')->name('handle_insert_news');
     Route::get('danh-sach-tin-tuc','App\Http\Controllers\NewsController@list')->name('list_news');
     Route::get('xoa-danh-sach-tin-tuc/{id}','App\Http\Controllers\NewsController@delete')->name('delete_news');

@@ -69,7 +69,7 @@
                         
                         <tr>                            
                             <td><p class="text-ellipsis name">{{$item->product_name}}</p></td>
-                            <td><p class="text-ellipsis name">{{number_format($item->product_price)}}</p></td>                     
+                            <td><p class="text-ellipsis name">{{number_format($item->product_price)}} VND</p></td>                     
                             <td>      
                                 <input type="number" disabled class="order_product_qty_{{$item->id}}" name="product_sales_quantity" value="{{$item->product_quantyti}}">      
                             </td>

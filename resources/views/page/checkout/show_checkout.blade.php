@@ -27,7 +27,7 @@
 								<h4><a href="">{{$item['name']}}</a></h4>								
 							</td>
 							<td class="price">
-								<p>{{number_format($item['price'])}}</p>
+								<p>{{number_format($item['price'])}} VND</p>
 							</td>
 							<td class="quantity">
 								<div class="cart_quantity_button">
