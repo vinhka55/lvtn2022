@@ -2616,3 +2616,6 @@ form.d-flex {
   -o-animation: glowing 1500ms infinite;
   animation: glowing 1500ms infinite;
 }
+span.relative.z-0.inline-flex.shadow-sm.rounded-md {
+  visibility: hidden;
+}

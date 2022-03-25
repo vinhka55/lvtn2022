@@ -7,23 +7,27 @@ use DB;
 use Cart;
 use Session;
 use App\Models\Coupon;
+use App\Models\Cart as C;
 //use Munna\ShoppingCart\Cart;
 
 class CartController extends Controller
 {
     public function get_mothod_shopping_cart()
     {
+        $cart=C::where('user_id',Session::get('user_id'))->first();
+        $cart=json_decode($cart);
         //Session::forget('incorrect_coupon');
         if(Session::has('id_coupon')){
 
             $id_coupon=Session::get('id_coupon');
             $coupon=DB::table('coupon')->where('id',$id_coupon)->get();
-            return view('page.cart.show_cart',['coupon'=>$coupon]);
+            return view('page.cart.show_cart',['coupon'=>$coupon,'cart'=>$cart]);
         }
         else{
             $coupon=array();
-            return view('page.cart.show_cart',['coupon'=>$coupon]);
+            return view('page.cart.show_cart',['coupon'=>$coupon,'cart'=>$cart]);
         }
+        
     }
 
     public function shopping_cart(Request $req)
@@ -54,9 +58,9 @@ class CartController extends Controller
     public function update(Request $req)
     {
         $data=$req->all();
-        echo "<pre>";
-        var_dump($data['quantity']);
-        echo "</pre>";
+        // echo "<pre>";
+        // var_dump($data['quantity']);
+        // echo "</pre>";
         foreach($data['quantity'] as $key=>$val){
             Cart::update($key, $val);
         }
@@ -86,10 +90,36 @@ class CartController extends Controller
     }
     public function show_cart_menu()
     {
+        if(!Session::has('added_cart')){
+        $cart=C::where('user_id',Session::get('user_id'))->first();
+        $old_cart=json_decode($cart->values_cart);
+        foreach ($old_cart as $key => $value) {
+            $product_name = $value->name;
+            $product_id = $value->product;
+            $product_image = $value->thumb;
+            $product_qty = $value->qty;
+            $product_price = $value->price;
+
+            Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
+            Session::put('added_cart','ok');
+            }
+        }
         echo Cart::count();
     }
     public function hover_cart_menu()
     {
+        if(!Session::has('added_cart')){
+        $cart=C::where('user_id',Session::get('user_id'))->first();
+        $old_cart=json_decode($cart->values_cart);
+        foreach ($old_cart as $key => $value) {
+            $product_name = $value->name;
+            $product_id = $value->product;
+            $product_image = $value->thumb;
+            $product_qty = $value->qty;
+            $product_price = $value->price;
+            Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
+            }
+        }
         $content=Cart::items()->original;
         $output='';
         if(count($content)>0){

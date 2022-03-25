@@ -86,7 +86,6 @@
               <?php } ?>
             </div>
         </nav>
-  
     </div>
     
   
@@ -255,10 +254,18 @@ $(document).ready(function(){
                 swal("Cảm ơn bạn đã mua hàng!", {
                 icon: "success",
                 });
-                //location.href = "{{url('/')}}/don-hang-cua-toi";
+                location.href = "{{url('/')}}/don-hang-cua-toi";
                 }
             });          
         }    
     })
 })
+</script>
+<script>
+$('#pay_online_method input').on('change', function() {
+    $( ".id-bank" ).remove();
+   if($('input[name=pay]:checked', '#pay_online_method').val()=='atm'){
+    $('#pay_online_method').append('<div class="id-bank border border-primary p-3"><p>Chủ tài khoản: Lê Hữu Vinh STK: 189200331 Ngân hàng: VPBANK </p><p>Chủ tài khoản: Lê Hữu Vinh STK: 123456778 Ngân hàng: VIETCOMBANK </p><p class="text-danger h4">Nội dung chuyển khoản là mã đơn hàng của bạn</p></div>')
+   }
+});
 </script>

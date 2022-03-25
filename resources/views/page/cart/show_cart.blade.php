@@ -5,7 +5,19 @@
 			<div class="table-responsive cart_info">
 				<form action="{{route('update_cart')}}" method="post">
 					@csrf
-					<?php 
+					<?php
+						if(!Session::has('added_cart')){
+							$old_cart=json_decode($cart->values_cart);
+							foreach ($old_cart as $key => $value) {
+								$product_name = $value->name;
+								$product_id = $value->product;
+								$product_image = $value->thumb;
+								$product_qty = $value->qty;
+								$product_price = $value->price;
+								Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
+								Session::put('added_cart','ok');
+							}
+						}										
 						$content=Cart::items()->original;
 					?>
 					@if(count($content)>0)
@@ -20,8 +32,7 @@
 								<td class="text-center">Action</td>
 							</tr>
 						</thead>				
-						<tbody>
-							
+						<tbody>							
 							@foreach($content as $item)																						
 							<tr>
 								<td class="image text-center" width="20%">

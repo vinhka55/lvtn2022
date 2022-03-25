@@ -23,7 +23,7 @@ class CommentController extends Controller
         foreach ($comment as $key => $value) {
             $avatar=DB::table('user')->where('id',$value->user_id)->value('avatar');
             $output.='<section class="gradient-custom">
-            <div class="container py-5">
+            <div class="container py-1">
               <div class="row d-flex justify-content-center">
                 <div class="col-md-12 col-lg-10 col-xl-8">
                   <div class="card">
@@ -47,8 +47,8 @@ class CommentController extends Controller
                                   }
                                   </style>
                                       <div class="d-flex justify-content-between align-items-center">
-                                          <p class="mb-1">
-                                          '.$value->name_user_comment.' <span class="small"> '.Carbon::parse($value->time)->format('d-m-Y').'</span>
+                                          <p class="mb-1 text-primary">@
+                                          '.$value->name_user_comment.' <span class="small"> '.Carbon::parse($value->time)->format('d-m-Y h:i:s').'</span>
                                           </p>
                                           <p onclick="rep('.$value->id.')" class="rep-comment-ui"
                                           ><i class="fas fa-reply fa-xs"></i
@@ -56,7 +56,7 @@ class CommentController extends Controller
                                           >
                                       </div>
                                       <p class="small mb-0">
-                                          '.$value->content.'
+                                          <b>'.$value->content.'</b>
                                       </p>
                                   </div>
                                   <div class="comment-reply-'.$value->id.'"></div>
@@ -71,28 +71,28 @@ class CommentController extends Controller
                     $name=DB::table('user')->where('id',$rep->user_id)->value('name');
                 else $name="Admin";
                 if($value->id==$rep->id_parent_comment){
-
                     $output.='
-                    <a class="me-3" href="#">
-                      <img
-                        class="rounded-circle shadow-1-strong"
-                        src="'.url("public/uploads/avatar/{$avatar_rep}").'"
-                        alt="avatar"
-                        width="65"
-                        height="65"
-                      />
-                    </a>
-                    <div class="flex-grow-1 flex-shrink-1">
-                      <div>
-                        <div class="d-flex justify-content-between align-items-center">
-                          <p class="mb-1">
-                          '.$name.' <span class="small">- '.Carbon::parse($rep->time)->format('d-m-Y h:i:s').'</span>
-                          </p>
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <img
+                                class="rounded-circle shadow-1-strong"
+                                src="'.url("public/uploads/avatar/{$avatar_rep}").'"
+                                alt="avatar"
+                                width="65"
+                                height="65"
+                            />
                         </div>
-                        <p class="small mb-0">
-                        '.$rep->content.'
-                        </p>
-                      </div>
+                        <div class="flex-grow-1 flex-shrink-1 col-9">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="mb-1 text-success">@
+                                    '.$name.' <span class="small"> '.Carbon::parse($rep->time)->format('d-m-Y h:i:s').'</span>
+                                    </p>
+                                </div>
+                                <p class="small mb-0">
+                                <b>'.$rep->content.'</b>
+                                </p>
+                        </div>
+                    </div>
                     ';
                 }
             }    
@@ -131,7 +131,7 @@ class CommentController extends Controller
         $comment->save();
         return redirect('/admin/danh-sach-binh-luan');
     }
-    public function admin_rep(Request $req)
+    public function rep_comment(Request $req)
     {
         $reply_comment=new ReplyComment();
         $reply_comment->content=$req->content_reply;

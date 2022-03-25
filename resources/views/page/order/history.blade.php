@@ -5,31 +5,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
     <title>Lịch sử đơn hàng</title>
-    <!-- bootstrap-css -->
-    <link rel="stylesheet" href="{{url('/')}}/public/backend/css/bootstrap.min.css" >
-    <!-- //bootstrap-css -->
-    <!-- Custom CSS -->
-    <link href="{{url('/')}}/public/backend/css/style.css" rel='stylesheet' type='text/css' />
-    <link href="{{url('/')}}/public/backend/css/style-responsive.css" rel="stylesheet"/>
-    <!-- font CSS -->
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-    <!-- font-awesome icons -->
-    <link rel="stylesheet" href="{{url('/')}}/public/backend/css/font.css" type="text/css"/>
-    <link href="{{url('/')}}/public/backend/css/font-awesome.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="{{url('/')}}/public/backend/css/morris.css" type="text/css"/>
-    <!-- calendar -->
-    <link rel="stylesheet" href="{{url('/')}}/public/backend/css/monthly.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-
-    <!-- //calendar -->
-    <!-- //font-awesome icons -->
-    <script src="{{url('/')}}/public/backend/js/jquery2.0.3.min.js"></script>
-    <script src="{{url('/')}}/public/backend/js/raphael-min.js"></script>
-    <script src="{{url('/')}}/public/backend/js/morris.js"></script>
 </head>
 <body>
-    
+<div class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-nav-bar">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="{{url('/')}}">TRANG CHỦ</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="">Giới thiệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Sản phẩm</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Tin tức</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Dịch vụ</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
+                  </li>
+                </ul>
+                            
+              </div>
+              <form class="d-flex" action="{{route('search_product')}}" method="post">
+                    @csrf
+                    <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
+                    <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>              
+                </form> 
+
+              <?php 
+              if(Session::get('user_id')){
+                ?>
+                <div class="content-cart-menu">
+                    <a href="{{route('shopping_cart')}}" class='btn btn-info me-2'><i class='fa fa-shopping-cart'></i>Giỏ hàng <span id="count-cart"></span></a>   
+                    <div class="hover-cart bg-white p-5 m-0">
+                        
+                    </div>  
+                </div>                      
+              <?php }
+              else { ?>
+                <a href="{{route('login')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
+              <?php } ?>
+
+              <?php 
+              if(Session::get('user_id')){
+                ?>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{Session::get('name_user')}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <a href="{{route('info_user')}}"><button class="dropdown-item" type="button">Thông tin tài khoản</button></a>
+                        <a href="{{route('my_order')}}"><button class="dropdown-item" type="button">Lịch sử đơn hàng</button></a>
+                        <a href="{{route('logout')}}"><button class="dropdown-item" type="button">Đăng xuất</button></a>
+                    </div>
+                </div>               
+              <?php }
+              else { ?>
+              <a href="{{route('login')}}" class="btn btn-info">Đăng nhập</a>
+              <?php } ?>
+            </div>
+        </nav>
+    </div>
     @if(count($data)==0)
     <div class="container" style="text-align:center"> 
 
@@ -39,29 +87,29 @@
     @else
     <div class="container">
         <div class="table-agile-info">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel panel-default">
+                <div class="panel-heading">
                 Lịch sử đơn hàng
                 </div>
                 <div class="row w3-res-tb">
-                <div class="col-sm-5 m-b-xs">
-                    <select class="input-sm form-control w-sm inline v-middle">
-                    <option value="trang-thai">Trạng thái</option>
-                    <option value="sort-a-to-z">Tên a->z</option>
-                    </select>
-                    <a href="" class="btn btn-sm btn-default">Chọn</a>                
-                </div>
-                <div class="col-sm-4">
-                </div>
-                <div class="col-sm-3">
-                    <div class="input-group">
-                    <input type="text" class="input-sm form-control" placeholder="Search">
-                    <span class="input-group-btn">
-                        <button class="btn btn-sm btn-default" type="button">Tìm kiếm</button>
-                    </span>
+                    <div class="col-sm-5 m-b-xs">
+                        <select class="input-sm form-control w-sm inline v-middle">
+                        <option value="trang-thai">Trạng thái</option>
+                        <option value="sort-a-to-z">Tên a->z</option>
+                        </select>
+                        <a href="" class="btn btn-sm btn-default">Chọn</a>                
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                        <input type="text" class="input-sm form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-default" type="button">Tìm kiếm</button>
+                        </span>
+                        </div>
                     </div>
                 </div>
-            </div>
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
                     <thead>
@@ -98,7 +146,7 @@
                                     <!-- <td><button class="btn btn-danger cancel-order">Hủy đơn</button></td> -->
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal-{{$item->id}}">
+                                        <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$item->id}}">
                                         Hủy đơn hàng
                                         </button>
 
@@ -134,114 +182,26 @@
                 </table>
             </div>
         </div>
-        <footer class="panel-footer">
-            <div class="row">     
-                <div class="col-sm-7 text-right text-center-xs">                
-                <ul class="pagination pagination-sm m-t-none m-b-none">
-                    {!!$data->links()!!}
-                </ul>
-                </div>
-            </div>
-        </footer>
+        
+                    {{$data->links()}}
+
     </div>
     @endif   
     </div>
 </body>
 </html>
-
-<script src="{{url('/')}}/public/backend/js/bootstrap.js"></script>
-<script src="{{url('/')}}/public/backend/js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="{{url('/')}}/public/backend/js/scripts.js"></script>
-<script src="{{url('/')}}/public/backend/js/jquery.slimscroll.js"></script>
-<script src="{{url('/')}}/public/backend/js/jquery.nicescroll.js"></script>
-<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
-<script src="{{url('/')}}/public/backend/js/jquery.scrollTo.js"></script>
-<!-- morris JavaScript -->	
-<script src="{{url('/')}}/public/backend/js/jquery.min.js"></script>	
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script>
-	$(document).ready(function() {
-		//BOX BUTTON SHOW AND CLOSE
-	   jQuery('.small-graph-box').hover(function() {
-		  jQuery(this).find('.box-button').fadeIn('fast');
-	   }, function() {
-		  jQuery(this).find('.box-button').fadeOut('fast');
-	   });
-	   jQuery('.small-graph-box .box-close').click(function() {
-		  jQuery(this).closest('.small-graph-box').fadeOut(200);
-		  return false;
-	   });
-	   
-	    //CHARTS
-	    function gd(year, day, month) {
-			return new Date(year, month - 1, day).getTime();
-		}
-		
-		graphArea2 = Morris.Area({
-			element: 'hero-area',
-			padding: 10,
-        behaveLikeLine: true,
-        gridEnabled: false,
-        gridLineColor: '#dddddd',
-        axes: true,
-        resize: true,
-        smooth:true,
-        pointSize: 0,
-        lineWidth: 0,
-        fillOpacity:0.85,
-			data: [
-				{period: '2015 Q1', iphone: 2668, ipad: null, itouch: 2649},
-				{period: '2015 Q2', iphone: 15780, ipad: 13799, itouch: 12051},
-				{period: '2015 Q3', iphone: 12920, ipad: 10975, itouch: 9910},
-				{period: '2015 Q4', iphone: 8770, ipad: 6600, itouch: 6695},
-				{period: '2016 Q1', iphone: 10820, ipad: 10924, itouch: 12300},
-				{period: '2016 Q2', iphone: 9680, ipad: 9010, itouch: 7891},
-				{period: '2016 Q3', iphone: 4830, ipad: 3805, itouch: 1598},
-				{period: '2016 Q4', iphone: 15083, ipad: 8977, itouch: 5185},
-				{period: '2017 Q1', iphone: 10697, ipad: 4470, itouch: 2038},
-			
-			],
-			lineColors:['#eb6f6f','#926383','#eb6f6f'],
-			xkey: 'period',
-            redraw: true,
-            ykeys: ['iphone', 'ipad', 'itouch'],
-            labels: ['All Visitors', 'Returning Visitors', 'Unique Visitors'],
-			pointSize: 2,
-			hideHover: 'auto',
-			resize: true
-		});
-		
-	   
-	});
-	</script>
-<!-- calendar -->
-	<script type="text/javascript" src="{{url('/')}}/public/backend/js/monthly.js"></script>
-	<script type="text/javascript">
-		$(window).load( function() {
-			$('#mycalendar').monthly({
-				mode: 'event',
-				
-			});
-			$('#mycalendar2').monthly({
-				mode: 'picker',
-				target: '#mytarget',
-				setWidth: '250px',
-				startHidden: true,
-				showTrigger: '#mytarget',
-				stylePast: true,
-				disablePast: true
-			});
-		switch(window.location.protocol) {
-		case 'http:':
-		case 'https:':
-		// running on a server, should be good.
-		break;
-		case 'file:':
-		alert('Just a heads-up, events will not work when run locally.');
-		}
-		});
-	</script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+</script>
+<script src="{{url('/')}}/public/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/4e34373e01.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
     function cancel_order(order_id) {
         var reason_cancel_order=$('.reason-cancel-area-'+order_id).val();
@@ -264,4 +224,30 @@
         $('.warning-not-null-reason-cancel').text("Không được để trống lý do")
     }
 }
+</script>
+<script type="text/javascript">
+    function show_cart_menu() {
+        $.ajax({
+        url:"{{route('show_cart_menu')}}",
+        method:'get',
+        success:function(data){
+            $('#count-cart').html(data)
+            }
+        })
+    }
+    function hover_cart_menu() {
+        $.ajax({
+        url:"{{route('hover_cart_menu')}}",
+        method:'get',
+        success:function(data){
+                //console.log(data)
+                $('.hover-cart').html(data)
+            },
+        error:function(xhr){
+                console.log(xhr.responseText);
+            }
+        })
+    }
+        show_cart_menu()
+        hover_cart_menu()
 </script>

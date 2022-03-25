@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
     <title>Document</title>
     <style>
     .list-group {
@@ -31,6 +32,73 @@
 </head>
 
 <body>
+<div class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-nav-bar">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="{{url('/')}}">TRANG CHỦ</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="">Giới thiệu</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Sản phẩm</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Tin tức</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Dịch vụ</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Liên hệ</a>
+                  </li>
+                </ul>
+                            
+              </div>
+              <form class="d-flex" action="{{route('search_product')}}" method="post">
+                    @csrf
+                    <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
+                    <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>              
+                </form> 
+
+              <?php 
+              if(Session::get('user_id')){
+                ?>
+                <div class="content-cart-menu">
+                    <a href="{{route('shopping_cart')}}" class='btn btn-info me-2'><i class='fa fa-shopping-cart'></i>Giỏ hàng <span id="count-cart"></span></a>   
+                    <div class="hover-cart bg-white p-5 m-0">
+                        
+                    </div>  
+                </div>                      
+              <?php }
+              else { ?>
+                <a href="{{route('login')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
+              <?php } ?>
+
+              <?php 
+              if(Session::get('user_id')){
+                ?>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{Session::get('name_user')}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <a href="{{route('info_user')}}"><button class="dropdown-item" type="button">Thông tin tài khoản</button></a>
+                        <a href="{{route('my_order')}}"><button class="dropdown-item" type="button">Lịch sử đơn hàng</button></a>
+                        <a href="{{route('logout')}}"><button class="dropdown-item" type="button">Đăng xuất</button></a>
+                    </div>
+                </div>               
+              <?php }
+              else { ?>
+              <a href="{{route('login')}}" class="btn btn-info">Đăng nhập</a>
+              <?php } ?>
+            </div>
+        </nav>
+    </div>
     <div class="container-fluid p-2">
         <div class="product-details row p-0 m-0">
             <!--product-details-->
@@ -50,7 +118,7 @@
                             <p>Xuất xứ: {{$item->origin}}</p>
                             <p>Đã bán: {{$item->count_sold}}</p>
                             <p>{{$item->note}}</p>
-                            <p>Hạn sử dụng: {{$item->exp}}</p>
+                            <p>Hạn sử dụng: <?php echo date("d/m/Y", strtotime($item->exp)); ?></p>
                             <p>Giá: {{number_format($item->price)}} VND</p>
 
                             <label>Số lượng:</label>
@@ -99,39 +167,34 @@
                     <?php echo htmlspecialchars_decode($item->description); ?>
                 </div>
                 <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-                    <!-- <div class="row" style="border: 2px solid black;">                                
-                                <div class="col-md-3" style="border: 2px solid black;">
-                                <img width="50%" src="{{url('/')}}/public/uploads/avatar/{{$my_avatar}}" alt="my avatar">
-                                </div>
-                                <input type="hidden" id="product_id" name="product_id" value="{{$item->id}}">
-                                
-                                <div class="col-md-9">
-                                    <input type="text" id="your_comment" placeholder="Điền bình luận của bạn">
-                                    <p class="text-danger" id="empty_comment"></p>
-                                    <button class="btn btn-info send-comment">Gửi</button>
-                                </div>                                                            
-                            </div>                           -->
-                    <div class="d-flex flex-start">
+                    <!-- start comment -->
+                    @if(Session::get("user_id")!=null)
+                    <div class="d-flex flex-start mt-3 ms-5">
                         <input type="hidden" id="product_id" name="product_id" value="{{$item->id}}">
+                        <input type="hidden" id="user_id_hidden" value="{{Session::get('user_id')}}">
                         <img class="rounded-circle shadow-1-strong me-3"
                             src="{{url('/')}}/public/uploads/avatar/{{$my_avatar}}" alt="avatar" width="65"
                             height="65" />
                         <div class="flex-grow-1 flex-shrink-1">
                             <div>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <p class="mb-1">
-                                        {{Session::get('name_user')}}
+                                    <p class="mb-1 text-primary">
+                                        @ {{Session::get('name_user')}}
                                     </p>
                                 </div>
-                                <p class="small mb-0">
-                                    <input type="text" id="your_comment" placeholder="Điền bình luận của bạn">
+                                
+                                <input class="rounded-pill w-100" type="text" id="your_comment" placeholder="Điền bình luận của bạn">
+                                <button type="button" class="btn btn-primary send-comment">Gửi</button>
                                 <p class="text-danger" id="empty_comment"></p>
-                                <button class="btn btn-info send-comment">Gửi</button>
-                                </p>
+                                
+                        
                             </div>
                             <!-- end comment -->
                         </div>
                     </div>
+                    @else
+                    <h3 class="text-center text-danger">Đăng nhập để bình luận</h3>
+                    @endif
                     <div class="show-comment row">
                     </div>
                 </div>
@@ -142,6 +205,9 @@
 </body>
 
 </html>
+
+<script src="{{url('/')}}/public/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/4e34373e01.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
 </script>
@@ -151,8 +217,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
 </script>
-<script src="{{url('/')}}/public/jquery/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/4e34373e01.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 function show_comment() {
     var id_product = $('#id-product-hidden').val()
@@ -207,7 +272,12 @@ $(document).ready(function() {
 
 <script>
 function handle_send_rep(id_comment) {
+    $(".empty-rep").html("")
     var content_reply = $(".txtarea-content-rep").val()
+    if(content_reply.length==0){
+        $(".empty-rep").append("Vui lòng điền nội dung")
+        return;
+    }
     var _token = $('input[name="_token"]').val()
     var name = $('.name-' + id_comment).val()
     var avatar = $('.avatar-' + id_comment).val()
@@ -216,14 +286,28 @@ function handle_send_rep(id_comment) {
         id_comment: id_comment,
         _token: _token
     }
+    //get time now in js
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+    let h=today.getHours();
+    let i=today.getMinutes();
+    let s=today.getSeconds();
+
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+
+    const time_now = dd + '-' + mm + '-' + yyyy+' '+h+':'+i+':'+s;
+
     $.ajax({
-        url: "{{route('admin_rep')}}",
+        url: "{{route('rep_comment')}}",
         method: 'POST',
         data: data,
         success: function(data) {
             $(".comment-reply-" + id_comment).html("")
             $(".append-reply-" + id_comment).append(
-            '<a class="me-3" href="#"><img    class="rounded-circle shadow-1-strong"   src="' +   '{{url("/")}}/public/uploads/avatar/' + avatar +  '"  alt="avatar"   width="65"   height="65" />  </a> <div class="flex-grow-1 flex-shrink-1"> <div> <div class="d-flex justify-content-between align-items-center"> <p class="mb-1"> ' + name + ' <span class="small"> ' + new Date().toLocaleDateString() + '</span>  </p> </div> <p class="small mb-0"> ' + content_reply + '  </p>  </div></div>')             
+            '<div class="row mt-2"><div class="col-3"><a class="me-3" href="#"><img class="rounded-circle shadow-1-strong" src="' + '{{url("/")}}/public/uploads/avatar/' + avatar + '"alt="avatar" width="65" height="65" /> </a></div> <div class="flex-grow-1 flex-shrink-1 col-9"><div class="d-flex justify-content-between align-items-center"> <p class="mb-1 text-success">@ ' + name + ' <span class="small"> ' + time_now + '</span> </p></div><p class="small mb-0"> ' + content_reply + '</p></div></div></div>')             
         },
         error: function(xhr) {
             console.log(xhr.responseText);
@@ -232,9 +316,42 @@ function handle_send_rep(id_comment) {
 }
 
 function rep(id_comment) {
-    $(".comment-reply-" + id_comment).html(
-        "<p><textarea class='txtarea-content-rep'></textarea><button onclick='handle_send_rep(" + id_comment +
+    if($('#user_id_hidden').val()==undefined){
+        $(".comment-reply-" + id_comment).html(
+        "<small class='text-danger'>Đăng nhập để trả lời comment</small>"
+        )
+    }
+    else{
+        $(".comment-reply-" + id_comment).html(
+        "<p><textarea class='txtarea-content-rep'></textarea><p class='empty-rep text-danger'></p><button onclick='handle_send_rep(" + id_comment +
         ")'>Gửi</button></p>"
-    )
+        )
+    }
 }
+</script>
+<script type="text/javascript">
+    function show_cart_menu() {
+        $.ajax({
+        url:"{{route('show_cart_menu')}}",
+        method:'get',
+        success:function(data){
+            $('#count-cart').html(data)
+            }
+        })
+    }
+    function hover_cart_menu() {
+        $.ajax({
+        url:"{{route('hover_cart_menu')}}",
+        method:'get',
+        success:function(data){
+                //console.log(data)
+                $('.hover-cart').html(data)
+            },
+        error:function(xhr){
+                console.log(xhr.responseText);
+            }
+        })
+    }
+        show_cart_menu()
+        hover_cart_menu()
 </script>

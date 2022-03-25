@@ -117,8 +117,9 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
 {
     Route::get('danh-sach-binh-luan','App\Http\Controllers\CommentController@list_comment')->name('list_comment');
     Route::post('thay-doi-trang-thai-comment','App\Http\Controllers\CommentController@change_status_comment')->name('change_status_comment');
-    Route::post('admin-tra-loi-comment','App\Http\Controllers\CommentController@admin_rep')->name('admin_rep');
+    
 });
+Route::post('tra-loi-comment','App\Http\Controllers\CommentController@rep_comment')->name('rep_comment');
 
 
 //login and login social

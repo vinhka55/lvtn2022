@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Social;
 use Socialite;
 use App\Models\User;
+use App\Models\Cart as C;
 use Session;
 use DB;
+use Cart;
 
 class LoginController extends Controller
 {
@@ -77,6 +79,19 @@ class LoginController extends Controller
     }
     public function logout()
     {
+        $cart=json_encode(Cart::items()->original);
+        if(C::where('user_id',Session::get('user_id'))->first()){
+            $save_cart=C::where('user_id',Session::get('user_id'))->first();
+            $save_cart->values_cart=$cart;
+            $save_cart->save();
+        }
+        else{
+            $save_cart=new C();
+            $save_cart->values_cart=$cart;
+            $save_cart->user_id=Session::get('user_id');
+            $save_cart->save();
+        }
+        
         Session::flush();
         return redirect('/');
     }

@@ -85,7 +85,8 @@
 									<input type="radio" id="cash" name="pay" value="cash">
 									<label for="cash"> Tiền mặt</label><br>
 									<input type="radio" id="atm" name="pay" value="atm">
-									<label for="atm"> ATM</label><br>								
+									<label for="atm"> ATM</label><br>
+																	
 								</form>			
 								<p><small id="error-pay-null" class="text-danger"></small></p>			
                             </ul>  
