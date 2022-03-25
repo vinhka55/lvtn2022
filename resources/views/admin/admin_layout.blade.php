@@ -400,7 +400,7 @@ $('.delete-user').click(function(e) {
         var content_reply=$(".txtarea-content-admin-rep").val()
         var _token = $('input[name="_token"]').val();
         $.ajax({
-        url : "{{route('admin_rep')}}",
+        url : "{{route('rep_comment')}}",
             method: 'post',
             data:{id_comment:id_comment,content_reply:content_reply,_token:_token},
             success:function(){

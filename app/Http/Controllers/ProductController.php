@@ -46,7 +46,7 @@ class ProductController extends Controller
             $product->image->move("public/uploads/product",$name_image);
             $product->image=$name_image;
             $product->save();
-            return redirect('/danh-sach-san-pham');
+            return redirect('admin/danh-sach-san-pham');
         }
         $product->image="";
         $product->save();
@@ -55,8 +55,8 @@ class ProductController extends Controller
     public function list() 
     {
         $this->AuthLogin();
-        $product=DB::table('product')->get();
-        //return $product;
+        $product=DB::table('product')->paginate(5);
+        
         return view('admin.product.list_product',['product'=>$product]);
     }
     public function edit_status($id)
@@ -65,7 +65,7 @@ class ProductController extends Controller
         $bool_status=(Boolean)$status;
         $status=(int)!$bool_status;
         if(DB::table('product')->where('id', $id)->update(['status' =>$status ])){
-            return redirect('/danh-sach-san-pham');
+            return redirect('admin/danh-sach-san-pham');
         }
         else{
             echo 'Update status không thành công, vui lòng thử lại';
@@ -74,7 +74,7 @@ class ProductController extends Controller
     public function delete($id)
     {
         if(DB::table('product')->where('id',$id)->delete()){
-            return redirect('/danh-sach-san-pham');
+            return redirect('admin/danh-sach-san-pham');
         }
         else{
             echo 'Xóa không thành công, vui lòng thử lại';
@@ -88,5 +88,41 @@ class ProductController extends Controller
 
         $product=DB::table('product')->where('id',$id)->get();
         echo view('page.check_product',['product'=>$product,'my_avatar'=>$my_avatar]);
+    }
+    public function edit($id)
+    {
+        $product=Product::where('id',$id)->get();
+        // echo "<pre>";
+        // var_dump($product);
+        // return;
+        return view('admin.product.edit',compact('product'));
+    }
+    public function handle_edit(Request $req)
+    {
+        $product=Product::where('id',$req->id)->first();
+        $product->name=$req->name;
+        $product->origin=$req->origin;
+        $product->price=$req->price;
+        $product->exp=$req->exp;
+        $product->category_id=$req->category_id;
+        $product->description=$req->description;
+        $product->image=$req->file("image");
+        $product->count=$req->count;
+        $product->status=$req->status;
+        $product->note=$req->note;
+        //echo $req->file("image");return;
+        if($product->image!=null){
+            // echo "<pre>";
+            // var_dump($product->image);
+            // return;
+            $name_image= $product->image->getClientOriginalName();
+            $product->image->move("public/uploads/product",$name_image);
+            $product->image=$name_image;
+            $product->save();
+            return redirect('admin/danh-sach-san-pham');
+        }
+        $product->image=$req->old_image;
+        $product->save();
+        return redirect('admin/danh-sach-san-pham');
     }
 }

@@ -44,8 +44,7 @@
             <th>action</th>
           </tr>
         </thead>
-        <tbody>
-                      
+        <tbody>                   
                     @foreach($product as $item)
                     <tr>
                         <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
@@ -68,17 +67,15 @@
                         <td><p class="text-ellipsis">{{$item->count_sold}}</p></td>
                         <td><span class="text-ellipsis">{{ $item->exp }}</span></td>
                         <td>
-                        <a title="click to edit" href="" ><i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                        <a title="click to edit" href="{{route('edit_product',$item->id)}}" ><i class="fa fa-pencil-square-o text-success text-active"></i></a>
                         <a title="click to delete" onclick="return confirm('Are you sure?')" href="{{route('delete_product',$item->id)}}"><i class="fa fa-times text-danger text"></i></a>
                         </td>
                     </tr>
-                    @endforeach
-            
+                    @endforeach        
         </tbody>
       </table>
     </div>
-    
-    
+    <div class="text-center">{{ $product->links() }}</div> 
   </div>
 </div>
 

@@ -153,7 +153,7 @@
         </div>
     </div>
     <div class="row d-inline">
-        <div class="col-4">
+        <div class="col-6">
             <div class="list-group d-flex" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list"
                     href="#list-home" role="tab" aria-controls="list-home">Mô tả</a>
@@ -161,10 +161,13 @@
                     href="#list-profile" role="tab" aria-controls="list-profile">Bình luận</a>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-12">
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                    <?php echo htmlspecialchars_decode($item->description); ?>
+                <div class="tab-pane fade show active text-center" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                    <div class="text-center">
+                        <?php echo htmlspecialchars_decode($item->description); ?>
+                    </div>
+                    
                 </div>
                 <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
                     <!-- start comment -->
@@ -218,6 +221,7 @@
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 function show_comment() {
     var id_product = $('#id-product-hidden').val()
@@ -354,4 +358,37 @@ function rep(id_comment) {
     }
         show_cart_menu()
         hover_cart_menu()
+</script>
+<script>
+$(document).ready(function(){
+    $('.add-to-cart').click(function(e){       
+        var id = $(this).data('id_product');
+        var cart_product_id = $('.cart_product_id_' + id).val();
+        var cart_product_name = $('.cart_product_name_' + id).val();
+        var cart_product_image = $('.cart_product_image_' + id).val();
+        var cart_product_price = $('.cart_product_price_' + id).val();
+        var cart_product_qty = $('.cart_product_qty_' + id).val();
+        var _token = $('input[name="_token"]').val();
+        var info_product={cart_product_id:cart_product_id,cart_product_name:cart_product_name,cart_product_image:cart_product_image,cart_product_price:cart_product_price,cart_product_qty:cart_product_qty,_token:_token};
+        $.ajax({
+            url: "{{route('add-cart-by-ajax')}}",
+            method: 'POST',
+            data:info_product,
+            success:function(){
+                swal({
+                    title: "Thêm thành công",
+                    text: "Sản phẩm đã được thêm vào giỏ hàng",
+                    icon: "success",
+                    button: false,
+                    timer:2000
+                });
+                show_cart_menu()
+                hover_cart_menu()
+            },
+            error:function(xhr){
+                console.log(xhr.responseText);
+            }
+        });
+    });
+});
 </script>
