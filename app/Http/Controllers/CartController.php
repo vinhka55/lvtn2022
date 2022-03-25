@@ -93,19 +93,21 @@ class CartController extends Controller
         if(Session::has('user_id')){
             if(!Session::has('added_cart')){
                 $cart=C::where('user_id',Session::get('user_id'))->first();
-                $old_cart=json_decode($cart->values_cart);
-                foreach ($old_cart as $key => $value) {
-                    $product_name = $value->name;
-                    $product_id = $value->product;
-                    $product_image = $value->thumb;
-                    $product_qty = $value->qty;
-                    $product_price = $value->price;
-        
-                    Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
-                    Session::put('added_cart','ok');
+                if($cart){
+                    $old_cart=json_decode($cart->values_cart);
+                    foreach ($old_cart as $key => $value) {
+                        $product_name = $value->name;
+                        $product_id = $value->product;
+                        $product_image = $value->thumb;
+                        $product_qty = $value->qty;
+                        $product_price = $value->price;
+            
+                        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
+                        Session::put('added_cart','ok');
+                        }
                     }
-                }
-                echo Cart::count();
+                    echo Cart::count();
+                }             
         }
     }
     public function hover_cart_menu()
@@ -113,31 +115,34 @@ class CartController extends Controller
         if(Session::has('user_id')){
             if(!Session::has('added_cart')){
                 $cart=C::where('user_id',Session::get('user_id'))->first();
-                $old_cart=json_decode($cart->values_cart);
-                foreach ($old_cart as $key => $value) {
-                    $product_name = $value->name;
-                    $product_id = $value->product;
-                    $product_image = $value->thumb;
-                    $product_qty = $value->qty;
-                    $product_price = $value->price;
-                    Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
+                if($cart){
+                    $old_cart=json_decode($cart->values_cart);
+                    foreach ($old_cart as $key => $value) {
+                        $product_name = $value->name;
+                        $product_id = $value->product;
+                        $product_image = $value->thumb;
+                        $product_qty = $value->qty;
+                        $product_price = $value->price;
+                        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
+                        }
                     }
-                }
-                $content=Cart::items()->original;
-                $output='';
-                if(count($content)>0){
-                    $output.= '<ul>';
-                    foreach ($content as $key => $value) {
-                        $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
+                    $content=Cart::items()->original;
+                    $output='';
+                    if(count($content)>0){
+                        $output.= '<ul>';
+                        foreach ($content as $key => $value) {
+                            $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
+                        }
+                        $output.= '</ul>';
+                        $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';
+            
                     }
-                    $output.= '</ul>';
-                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';
-        
-                }
-                else{
-                    $output.="<p class='text-center'>empty cart</p>";
-                }
-                return $output;
+                    else{
+                        $output.="<p class='text-center'>empty cart</p>";
+                    }
+                    return $output;
+                
+            }
         }
     }
 }
