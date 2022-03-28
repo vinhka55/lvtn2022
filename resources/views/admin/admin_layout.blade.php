@@ -198,19 +198,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{url('/')}}/public/backend/js/jquery.min.js"></script>	
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!-- <script>
-    ClassicEditor
-	.create( document.querySelector( '#description-by-ckeditor' ), {
-		ckfinder: {
-			uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-		},
-		toolbar: [ 'ckfinder', 'imageUpload', '|', 'heading', '|', 'bold', 'italic', '|', 'undo', 'redo' ]
-	} )
-	.catch( error => {
-		console.error( error );
-	} );
-</script> -->
-
 <script>
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE
@@ -475,7 +462,11 @@ $('.delete-user').click(function(e) {
                 }
         })
     }
-
 </script>
+<script>
+$('#search-with-status').change(function() {
+    window.location.href=this.value
+})
+    </script>
 </body>
 </html>

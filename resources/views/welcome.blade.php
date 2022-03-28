@@ -238,8 +238,9 @@ $(document).ready(function(){
             var address_re=$('#address-re').val()
             var notes=$('#notes').val()
             var _token = $('input[name="_token"]').val()
+            var order_code=$('#order_code').val()
             var pay=$('input[name="pay"]:checked','#pay_online_method').val()
-            var data={name:name,email:email,phone:phone,address_re:address_re,notes:notes,_token:_token,pay:pay}
+            var data={name:name,email:email,phone:phone,address_re:address_re,notes:notes,_token:_token,pay:pay,order_code:order_code}
          
             swal({
             title: "Bạn chắc chắn đặt hàng?",
@@ -264,7 +265,7 @@ $(document).ready(function(){
                 swal("Cảm ơn bạn đã mua hàng!", {
                 icon: "success",
                 });
-                location.href = "{{url('/')}}/don-hang-cua-toi";
+                window.location.href = "{{url('/')}}/don-hang-cua-toi";
                 }
             });          
         }    
@@ -273,9 +274,10 @@ $(document).ready(function(){
 </script>
 <script>
 $('#pay_online_method input').on('change', function() {
+    var order_code=$('#order_code').val()
     $( ".id-bank" ).remove();
    if($('input[name=pay]:checked', '#pay_online_method').val()=='atm'){
-    $('#pay_online_method').append('<div class="id-bank border border-primary p-3"><p>Chủ tài khoản: Lê Hữu Vinh STK: 189200331 Ngân hàng: VPBANK </p><p>Chủ tài khoản: Lê Hữu Vinh STK: 123456778 Ngân hàng: VIETCOMBANK </p><p class="text-danger h4">Nội dung chuyển khoản là mã đơn hàng của bạn</p></div>')
+    $('#pay_online_method').append('<div class="id-bank border border-primary p-3"><p>Chủ tài khoản: Lê Hữu Vinh STK: 189200331 Ngân hàng: VPBANK </p><p>Chủ tài khoản: Lê Hữu Vinh STK: 123456778 Ngân hàng: VIETCOMBANK </p><p class="text-danger h4">Nội dung chuyển khoản là mã đơn hàng của bạn: '+order_code+'</p></div>')
    }
 });
 </script>

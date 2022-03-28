@@ -132,7 +132,7 @@
                                 @foreach($data as $item)
                                 <tr>
                                     <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-                                    <td><p class="text-ellipsis name"><?php echo 'ORDER'.$item->id ?></p></td>
+                                    <td><p class="text-ellipsis name">{{$item->order_code}}</p></td>
                                     <td><p class="text-ellipsis name">{{number_format($item->total_money)}} VND</p></td>                       
                                     <td>{{date('d-m-Y h:i:s', strtotime($item->created_at))}}</td>
                                     <td><p <?php 

@@ -47,10 +47,10 @@ class OrderController extends Controller
         $shipping_id=DB::table('shipping')->insertGetId($data_shipping);
         Session::put('shipping_id',$shipping_id);
 
-        //echo $data_shipping;
-
         //insert đơn hàng
         $data_order=[];
+        
+        $data_order['order_code']=$req->order_code;
         $data_order['customer_id']=Session::get('user_id');
         $data_order['shipping_id']=Session::get('shipping_id');
         $data_order['payment']=$req->pay;
@@ -209,5 +209,38 @@ class OrderController extends Controller
             $product_cancel->count=$product_cancel->count+$value->product_quantyti;
             DB::table('product')->where('id',$value->product_id)->update(['count' => $product_cancel->count]);
         }
+    }
+    public function search_in_order(Request $request)
+    {
+        $key_search=$request->key;
+        $order=Order::where('payment','LIKE','%'.$key_search.'%')->orWhere('status','LIKE','%'.$key_search.'%')
+        ->orWhere('reason','LIKE','%'.$key_search.'%')->orWhere('order_code','LIKE','%'.$key_search.'%')->get();
+        return view('admin.order.search_with_keyword',compact('order'));
+    }
+    public function down_price_order(Request $request)
+    {   
+        $order=Order::orderBy('total_money','desc')->get();
+        return view('admin.order.search_down_price',compact('order'));
+    }
+    public function up_price_order(Request $request)
+    {       
+        $order=Order::orderBy('total_money','asc')->get();
+        return view('admin.order.search_up_price',compact('order'));
+    }
+    public function search_with_status($status)
+    {
+        if($status=='dang-cho-xu-ly'){
+            $order=Order::where('status','Đang chờ xử lý')->get();
+        }
+        else if($status=='da-xu-ly'){
+            $order=Order::where('status','Đã xử lý')->get();
+        }
+        else if($status=='da-thanh-toan-cho-nhan-hang'){
+            $order=Order::where('status','Đã thanh toán-chờ nhận hàng')->get();
+        }
+        else{
+            $order=Order::where('status','Đơn đã hủy')->get();
+        }
+        return view('admin.order.search_with_status',compact('order'));
     }
 }

@@ -86,7 +86,12 @@
 									<label for="cash"> Tiền mặt</label><br>
 									<input type="radio" id="atm" name="pay" value="atm">
 									<label for="atm"> ATM</label><br>
-																	
+									<?php
+										//đoạn code tạo unique mã đơn hàng lấy trên mạng
+										$stamp = strtotime("now");
+										$order_code = 'order_'.$stamp;
+									?>	 
+									<input type="hidden" value="{{$order_code}}" id="order_code">							 
 								</form>			
 								<p><small id="error-pay-null" class="text-danger"></small></p>			
                             </ul>  

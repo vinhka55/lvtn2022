@@ -65,6 +65,10 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
     Route::get('danh-sach-don-hang','App\Http\Controllers\OrderController@list_order')->name('list_order');
     Route::get('xoa-don-hang/{orderId}','App\Http\Controllers\OrderController@delete_order')->name('delete_order');
     Route::get('chi-tiet-don-hang/{orderId}','App\Http\Controllers\OrderController@detail_order')->name('detail_order');
+    Route::get('tim-kiem-don-hang-theo-keyword','App\Http\Controllers\OrderController@search_in_order')->name('search_in_order');
+    Route::get('tim-kiem-don-hang-to-den-nho','App\Http\Controllers\OrderController@down_price_order')->name('down_price_order');
+    Route::get('tim-kiem-don-hang-nho-den-to','App\Http\Controllers\OrderController@up_price_order')->name('up_price_order');
+    Route::get('tim-kiem-don-hang-theo-status/{status}','App\Http\Controllers\OrderController@search_with_status')->name('search_with_status');
 });
 Route::post('dat-hang','App\Http\Controllers\OrderController@order_place')->name('order_place');
 Route::post('cap-nhat-trang-thai-san-pham-cua-don-hang','App\Http\Controllers\OrderController@update_status_of_product')->name('update_status_of_product_in_order');
