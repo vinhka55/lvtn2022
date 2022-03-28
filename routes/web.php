@@ -59,7 +59,7 @@ Route::get('hover-san-pham-trong-cart-menu','App\Http\Controllers\CartController
 Route::get('thanh-toan','App\Http\Controllers\CheckoutController@pay')->name('pay_product');
 Route::post('phuong-thuc-thanh-toan','App\Http\Controllers\CheckoutController@payment_method')->name('payment_method');
 
-//order
+//order 
 Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
 {
     Route::get('danh-sach-don-hang','App\Http\Controllers\OrderController@list_order')->name('list_order');

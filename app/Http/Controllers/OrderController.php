@@ -62,6 +62,7 @@ class OrderController extends Controller
         }
         $data_order['status']="Đang chờ xử lý";
         $order_id=DB::table('order')->insertGetId($data_order);
+        $order_code=$req->order_code;
 
         //insert chi tiết đơn hàng      
         $content=Cart::items()->original;
@@ -82,7 +83,7 @@ class OrderController extends Controller
 
         //send mail to customer
         Session::put('dmm',$req->email);
-        Mail::send('emails.confirm_checkout',compact('data_shipping','data_order','content','order_id'),function ($email)
+        Mail::send('emails.confirm_checkout',compact('data_shipping','data_order','content','order_id','order_code'),function ($email)
         {           
             $email->from('noreply@gmail.com', 'Công ty TNHH thực phẩm sạch Thiên An Phú');
             $email->to(Session::get('dmm'),Session::get('name_user'))->subject('Đơn hàng của bạn!');
@@ -132,7 +133,7 @@ class OrderController extends Controller
         $data=$req->all();
         $order=Order::find($data['order_id']);
         $order->status=$data['order_status'];
-        $order->save();
+        
         if($data['order_status']=="Đã xử lý" || $data['order_status']=="Đã thanh toán-chờ nhận hàng" ){
             for($i=0;$i<count($data['order_product_id']);$i++){
                 $product=Product::find($data['order_product_id'][$i]);
@@ -153,6 +154,7 @@ class OrderController extends Controller
                 $coupon->amount=$coupon->amount+1;
                 $coupon->save();
             }
+            $order->reason="Admin hủy";
         }
         else{
             for($i=0;$i<count($data['order_product_id']);$i++){
@@ -162,6 +164,7 @@ class OrderController extends Controller
                 $product->save();
             }
         }
+        $order->save();
     }
     public function delete_product_in_order($id)
     {

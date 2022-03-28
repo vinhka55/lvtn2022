@@ -11,7 +11,7 @@
     <div class="container">
         <div class="header">
             <p class="">Đơn vị: <b>Công ty TNHH Thiên An Phú</b></p>
-            <p >Mã đơn hàng: <b>ORDER {{$order_id}}</b></p>
+            <p >Mã đơn hàng: <b> {{$order_code}}</b></p>
             <p class="">Địa chỉ: <b>Số 9, Nam Hòa, Phước Long A, Quận 9, Hồ Chí Minh</b></p>
             <p class="">Mã số thuế: <b>032441200</b></p>
             

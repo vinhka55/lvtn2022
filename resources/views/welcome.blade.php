@@ -265,7 +265,7 @@ $(document).ready(function(){
                 swal("Cảm ơn bạn đã mua hàng!", {
                 icon: "success",
                 });
-                window.location.href = "{{url('/')}}/don-hang-cua-toi";
+                //window.location.href = "{{url('/')}}/don-hang-cua-toi";
                 }
             });          
         }    

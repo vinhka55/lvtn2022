@@ -25,7 +25,7 @@
         <p class="text-center" style="font-size:20px;">Công ty TNHH thực phẩm sạch Thiên An Phú</p>
         <p class="text-center" style="font-size:20px;">ĐƠN HÀNG ĐÃ MUA</p>
     </div>
-    
+    <p><b style="font-size:23px;">Mã đơn hàng: {{$order_code}}</b></p>
     <!-- Thông tin giao hàng -->
 <div class="container">
     <div class="table-agile-info">
@@ -37,7 +37,6 @@
         <table class="table table-striped b-t b-light">
             <thead>
             <tr>
-
                 <th>Tên khách hàng</td>
                 <th>Số điện thoại</th>
                 <th>Email</th>      
@@ -86,7 +85,7 @@
             <tbody>     
                         <?php $total_money=0; ?>            
                         @foreach($info_product as $item)
-                        <?php $order_id=$item->order_id ?>
+                        <?php $order_z=$item->order_id ?>
                         <tr>                            
                             <td><p class="text-ellipsis name">{{$item->product_name}}</p></td>
                             <td><p class="text-ellipsis name">{{number_format($item->product_price)}}</p></td>                     
