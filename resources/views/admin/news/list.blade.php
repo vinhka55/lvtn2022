@@ -34,8 +34,8 @@
               </label>
             </th>
             <th>Hình ảnh</td>
-            <th>Tiêu đề</th>
-            <th>Nội dung</th>           
+            
+            <th>Tiêu đề</th>        
             <th>Miêu tả</th>
             <th>Từ khóa</th>
             <th>Trạng thái</th>
@@ -47,8 +47,8 @@
                     <tr>
                         <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                         <td><p class="text-ellipsis name"><img width="35%" src="{{url('/')}}/public/uploads/news/{{$item->image}}" alt="image news"></p></td>
-                        <td><p class="text-ellipsis name">{{$item->title}}</p></td>
-                        <td><p class="text-ellipsis name">{!!$item->content!!}</p></td>                       
+                        
+                        <td><p class="text-ellipsis name">{{$item->title}}</p></td>                    
                         <td><p class="text-ellipsis name">{!!$item->description!!}</p></td>                       
                         <td><p class="text-ellipsis name">{{$item->meta_keyword}}</p></td>                                                                      
                         <td><span class="text-ellipsis desc">

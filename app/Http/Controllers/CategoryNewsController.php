@@ -15,9 +15,6 @@ class CategoryNewsController extends Controller
     }
     public function handle_add_category(Request $req)
     {
-        // $category_news=new CategoryNews();
-        // $category_news->name=$req->name;
-        // $category_news->description=$req->desc_category;
         $slug = SlugService::createSlug(CategoryNews::class, 'slug', $req->name);
         $category_news = CategoryNews::create([
             'name'=> $req->name,

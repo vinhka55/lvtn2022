@@ -34,6 +34,7 @@
               </label>
             </th>
             <th>Hình ảnh</td>
+            <th>Thêm ảnh</td>
             <th>Tên sản phẩm</th>
             <th>Giá</th>           
             <th>Trạng thái</th>
@@ -49,6 +50,7 @@
                     <tr>
                         <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
                         <td><p class="text-ellipsis name"><img width="35%" src="{{url('/')}}/public/uploads/product/{{$item->image}}" alt="product"></p></td>
+                        <td><a href="{{route('add_gallery',$item->id)}}">Thêm ảnh</a></td>
                         <td><p class="text-ellipsis name">{{$item->name}}</p></td>
                         <td><p class="text-ellipsis name">{{number_format((int)$item->price)}}</p></td>                       
                         <td><span class="text-ellipsis desc">

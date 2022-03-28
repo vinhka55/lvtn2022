@@ -7,7 +7,7 @@
                     <h3 class="p-3 bg-success text-white m-0">DANH MỤC SẢN PHẨM</h3>
                     <ul class="p-3 bg-white text-dark">
                         @foreach ($category as $cate)
-                        <a href="{{route('danh_muc_san_pham',$cate->id)}}"><li>{{$cate->name}}</li></a>
+                        <a href="{{route('show_product_with_category',$cate->slug)}}"><li>{{$cate->name}}</li></a>
                         @endforeach
                     </ul>
                 </div>

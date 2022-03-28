@@ -4,25 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Models\CategoryProduct;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class CategoryController extends Controller
 {
-    public function index($id)        
-    {   
-        $name=DB::table('category')->where('id',$id)->value('name');
-        $product=DB::table('product')->where('category_id',$id)->get();
-        return view('page.show_product_with_category',['name'=>$name,'product'=>$product]);
-    }
+    // public function index($slug)        
+    // {   
+    //     $name=DB::table('category')->where('slug',$slug)->value('name');
+    //     $product=DB::table('product')->where('slug',$slug)->get();
+    //     return view('page.product.show_product_with_category',['name'=>$name,'product'=>$product]);
+    // }
     public function add_category()
     {
         return view('admin.category.add_category');
     }
     public function handle_add(Request $req)
     {
+        $slug = SlugService::createSlug(CategoryProduct::class, 'slug', $req->name);
         $data['name']=$req->name;
         $data['status']=$req->status;
+        $data['slug']=$slug;
         if(DB::table('category')->insert($data)){
-            return redirect('/danh-sach-danh-muc');
+            return redirect('admin/danh-sach-danh-muc');
         }
         else{
             echo 'that bai';

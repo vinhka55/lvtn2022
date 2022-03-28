@@ -7,9 +7,12 @@ use DB;
 use Auth;
 use App\Models\Product;
 use App\Models\Comment;
+use App\Models\CategoryProduct;
+use App\Models\Gallery;
 use Illuminate\Support\Facades\Storage;
 use Image;
 use Session;
+use File;
 
 class ProductController extends Controller
 {
@@ -87,7 +90,7 @@ class ProductController extends Controller
         $my_avatar=DB::table('user')->where('id',Session::get('user_id'))->value('avatar');
 
         $product=DB::table('product')->where('id',$id)->get();
-        echo view('page.check_product',['product'=>$product,'my_avatar'=>$my_avatar]);
+        echo view('page.product.check_product',['product'=>$product,'my_avatar'=>$my_avatar]);
     }
     public function edit($id)
     {
@@ -112,9 +115,6 @@ class ProductController extends Controller
         $product->note=$req->note;
         //echo $req->file("image");return;
         if($product->image!=null){
-            // echo "<pre>";
-            // var_dump($product->image);
-            // return;
             $name_image= $product->image->getClientOriginalName();
             $product->image->move("public/uploads/product",$name_image);
             $product->image=$name_image;
@@ -124,5 +124,97 @@ class ProductController extends Controller
         $product->image=$req->old_image;
         $product->save();
         return redirect('admin/danh-sach-san-pham');
+    }
+    public function show_product_with_category($slug)
+    {
+        $id=CategoryProduct::where('slug',$slug)->value('id');
+        $product=Product::where('category_id',$id)->get();
+        return view('page.product.show_product_with_category',compact('product'));
+    }
+    public function add_gallery($id)
+    {
+        $product_id=$id;
+        return view('admin.product.add_gallery',compact('product_id'));
+    }
+    public function select_gallery(Request $req)
+    {
+        $gallery=Gallery::where('product_id',$req->product_id)->get();
+        $output='';
+        $output.= '<form enctype="multipart/form-data" id="formID">
+                    '.csrf_field().'
+                    <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">Stt</th>
+                        <th scope="col">Ảnh</th>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ';
+        foreach($gallery as $item){
+            $output.='<tr>
+                <th scope="row">1</th>
+                <td>'.'<img width="25%" src="'.url('public/uploads/gallery').'/'.$item->image.'">
+                <input accept="image/*" name="image'.$item->id.'" onchange="change_image_gallery('.$item->id.')" type="file" id="file-gallery-'.$item->id.'"></td>
+                <td>'.$item->product->name.'</td>
+                <td><button onclick="delete_gallery('.$item->id.')" class="btn btn-danger" data-gallery_image="'.$item->image.'" type="button">Xóa</button></td>
+            </tr>';
+        }       
+        $output.='</tbody>
+        </table></form>';
+        return $output;
+    }
+    public function handle_add_image_gallery(Request $req)
+    {       
+        $get_image=$req->file('image');
+        if($get_image){
+            foreach ($get_image as $key => $value) {             
+                $name_image= $value->getClientOriginalName();
+                $name_image=current(explode(".",$name_image));
+                $new_name_image=$name_image.rand(0,9999).'.'.$value->getClientOriginalExtension();//tránh trùng tên ảnh
+                $value->move("public/uploads/gallery",$new_name_image);
+                $gallery=new Gallery();
+                $gallery->image=$new_name_image;
+                $gallery->product_id=$req->product_id;
+                $gallery->save();
+            }
+            return redirect()->back();
+        }
+        else{
+            echo 'not ok';
+        }
+    }
+    public function delete_gallery(Request $req)
+    {
+        $gallery=Gallery::where('id',$req->id_gallery)->first();
+        $gallery->delete();
+        //xóa ảnh trong thư mục luôn
+        $image_path = public_path().'/uploads/gallery'.'/'.$gallery->image; 
+        if (File::exists($image_path)) {
+            @unlink($image_path);
+        }
+    }
+    public function change_image_gallery(Request $req)
+    {
+        echo $req->id_gallery;
+        $get_image=$req->file('image'.$req->id_gallery);     
+        if($get_image){
+            $name_image= $get_image->getClientOriginalName();
+            $name_image=current(explode(".",$name_image));
+            $new_name_image=$name_image.rand(0,9999).'.'.$get_image->getClientOriginalExtension();//tránh trùng tên ảnh
+            $get_image->move("public/uploads/gallery",$new_name_image);
+            $gallery=Gallery::where('id',$req->id_gallery)->first();
+            $image_path = public_path().'/uploads/gallery'.'/'.$gallery->image; 
+            if (File::exists($image_path)) {
+                @unlink($image_path);
+            }
+            $gallery->image=$new_name_image;
+            $gallery->save();
+        }
+        else{
+            echo 'not ok';
+        }
     }
 }

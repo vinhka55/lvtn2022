@@ -167,7 +167,7 @@
                                                 </div>
                                                 
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                                     <button type="submit" class="btn btn-primary" onclick="cancel_order({{$item->id}})">Gửi</button>             
                                                 </div>
                                                 </div>

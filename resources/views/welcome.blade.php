@@ -32,11 +32,21 @@
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="">Giới thiệu</a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item item-products">
                     <a class="nav-link active" aria-current="page" href="#">Sản phẩm</a>
+                    <ul class="list-category-product">
+                        @foreach($category as $cate_nav)
+                        <a href="{{route('show_product_with_category',$cate_nav->slug)}}"><li>{{$cate_nav->name}}</li></a>
+                        @endforeach
+                    </ul> 
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item item-news">
                     <a class="nav-link active" aria-current="page" href="#">Tin tức</a>
+                    <ul class="list-category-news">
+                        @foreach($category_news as $cate_news)
+                        <a href="{{route('show_news_with_category',$cate_news->slug)}}"><li>{{$cate_news->name}}</li></a>
+                        @endforeach
+                    </ul> 
                   </li>
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Dịch vụ</a>

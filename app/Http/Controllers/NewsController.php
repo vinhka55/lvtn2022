@@ -90,4 +90,15 @@ class NewsController extends Controller
         $news->save();
         return redirect()->back();
     }
+    public function show_news_with_category($slug)
+    {
+        $category_news_id=CategoryNews::where('slug',$slug)->value('id');
+        $news=News::where('category_news_id',$category_news_id)->get();
+        return view('page.news.show_news_with_category',compact('news'));
+    }
+    public function detail_news($slug)
+    {
+        $news=News::where('slug',$slug)->get();
+        return view('page.news.detail',compact('news'));
+    }
 }

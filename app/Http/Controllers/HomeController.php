@@ -23,6 +23,6 @@ class HomeController extends Controller
     public function search(Request $req)
     {
         $data=DB::table('product')->where('name','like','%'.$req->search.'%')->get();
-        return view('page.search_product',['data'=>$data]);
+        return view('page.product.search_product',['data'=>$data]);
     }
 }

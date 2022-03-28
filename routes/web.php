@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','App\Http\Controllers\HomeController@index');
 
 //hiển thị sản phẩm theo danh mục
-Route::get('danh-muc/{id_danh_muc}','App\Http\Controllers\CategoryController@index')->name('danh_muc_san_pham');
+//Route::get('danh-muc-san-pham/{slug}','App\Http\Controllers\CategoryController@index')->name('danh_muc_san_pham');
 
 //trang chủ admin page
 Route::get('admin','App\Http\Controllers\AdminController@index')->name('admin')->middleware('auth.AdminAndAuthor');
@@ -36,6 +36,12 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
     Route::post('xu-ly-sua-san-pham','App\Http\Controllers\ProductController@handle_edit')->name('handle_edit_product');
 });
 Route::get('san-pham/{id}','App\Http\Controllers\ProductController@detail')->name('detail_product');
+Route::get('danh-muc-san-pham/{slug}','App\Http\Controllers\ProductController@show_product_with_category')->name('show_product_with_category');
+Route::get('them-gallery/{id}','App\Http\Controllers\ProductController@add_gallery')->name('add_gallery');
+Route::post('select-gallery','App\Http\Controllers\ProductController@select_gallery')->name('select_gallery');
+Route::post('xu-ly-them-gallery','App\Http\Controllers\ProductController@handle_add_image_gallery')->name('handle_add_image_gallery');
+Route::post('xoa-gallery','App\Http\Controllers\ProductController@delete_gallery')->name('delete_gallery');
+Route::post('thay-doi-anh-gallery','App\Http\Controllers\ProductController@change_image_gallery')->name('change_image_gallery');
 
 
 //cart 
@@ -157,3 +163,5 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
     Route::post('xu-ly-sua-danh-sach-tin-tuc','App\Http\Controllers\NewsController@handle_edit')->name('handle_edit_news');
     Route::get('sua-trang-thai-tin-tuc/{id}','App\Http\Controllers\NewsController@edit_status')->name('edit_status_news');
 });
+Route::get('danh-muc-tin-tuc/{slug}','App\Http\Controllers\NewsController@show_news_with_category')->name('show_news_with_category');
+Route::get('noi-dung-tin-tuc/{slug}','App\Http\Controllers\NewsController@detail_news')->name('detail_news');

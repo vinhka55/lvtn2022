@@ -2619,3 +2619,39 @@ form.d-flex {
 span.relative.z-0.inline-flex.shadow-sm.rounded-md {
   visibility: hidden;
 }
+
+.item-news:hover .list-category-news{
+  max-height: inherit;
+  opacity: 1;
+}
+
+.list-category-news{
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  max-height: 0px;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 300ms ease;
+  position: absolute;
+  color: white;
+  font-size: 15px;
+}
+
+.item-products:hover .list-category-product{
+  max-height: inherit;
+  opacity: 1;
+}
+
+.list-category-product{
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  max-height: 0px;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 300ms ease;
+  position: absolute;
+  color: white !important;
+  font-size: 15px;
+}

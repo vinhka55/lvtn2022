@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link href="{{url('/')}}/public/frontend/css/lightslider.min.css">
+    <!-- <link href="{{url('/')}}/public/frontend/css/prettify.css"> -->
     <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -42,7 +43,7 @@
               <div class="collapse navbar-collapse " id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="">Giới thiệu</a>
+                    <a class="nav-link active" aria-current="page" href="{{url('/')}}">Giới thiệu</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Sản phẩm</a>
@@ -59,7 +60,7 @@
                 </ul>
                             
               </div>
-              <form class="d-flex" action="{{route('search_product')}}" method="post">
+                <form class="d-flex" action="{{route('search_product')}}" method="post">
                     @csrf
                     <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
                     <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>              
@@ -222,6 +223,11 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{url('/')}}/public/frontend/js/lightslider.js"></script>
+<script src="{{url('/')}}/public/frontend/js/prettify.js"></script>
+<!-- <script src="{{url('/')}}/public/frontend/js/jquery.sharrre.min.js"></script> -->
+<script src='https://s0.pstatp.com/cdn/expire-1-M/jquery/1.11.1/jquery.min.js'></script>
+
 <script>
 function show_comment() {
     var id_product = $('#id-product-hidden').val()
@@ -392,3 +398,93 @@ $(document).ready(function(){
     });
 });
 </script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#lightSlider").lightSlider(); 
+  });
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#lightSlider").lightSlider({
+        item: 3,
+        autoWidth: false,
+        slideMove: 1, // slidemove will be 1 if loop is true
+        slideMargin: 10,
+ 
+        addClass: '',
+        mode: "slide",
+        useCSS: true,
+        cssEasing: 'ease', //'cubic-bezier(0.25, 0, 0.25, 1)',//
+        easing: 'linear', //'for jquery animation',////
+ 
+        speed: 400, //ms'
+        auto: false,
+        loop: false,
+        slideEndAnimation: true,
+        pause: 2000,
+ 
+        keyPress: false,
+        controls: true,
+        prevHtml: '',
+        nextHtml: '',
+ 
+        rtl:false,
+        adaptiveHeight:false,
+ 
+        vertical:false,
+        verticalHeight:500,
+        vThumbWidth:100,
+ 
+        thumbItem:10,
+        pager: true,
+        gallery: false,
+        galleryMargin: 5,
+        thumbMargin: 5,
+        currentPagerPosition: 'middle',
+ 
+        enableTouch:true,
+        enableDrag:true,
+        freeMove:true,
+        swipeThreshold: 40,
+ 
+        responsive : [],
+ 
+        onBeforeStart: function (el) {},
+        onSliderLoad: function (el) {},
+        onBeforeSlide: function (el) {},
+        onAfterSlide: function (el) {},
+        onBeforeNextSlide: function (el) {},
+        onBeforePrevSlide: function (el) {}
+    });
+});
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var slider = $("#lightSlider").lightSlider();
+    slider.goToSlide(3);
+    slider.goToPrevSlide();
+    slider.goToNextSlide();
+    slider.getCurrentSlideCount();
+    slider.refresh();
+    slider.play(); 
+    slider.pause();    
+  });
+</script>
+<script>
+
+$(document).ready(function() {
+ 
+ $('#imageGallery').lightSlider({
+
+   gallery:true,
+
+   minSlide:1,
+
+   maxSlide:1,
+
+   currentPagerPosition:'left'  
+
+ });  
+
+});
+    </script>

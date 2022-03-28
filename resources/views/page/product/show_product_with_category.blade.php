@@ -3,7 +3,6 @@
 <div class="container-fluid body-content">
     <div class="row m-0 p-0 mt-5 pt-5">
         <div class="col-12 col-md-8 p-2">
-            <h2 class="title-category-product p-2 bg-success text-white m-0">{{$name}}</h2>
             <div class="row m-0 p-2">
                 @foreach($product as $item)
                     <div class="col-12 col-md-3">

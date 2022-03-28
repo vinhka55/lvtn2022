@@ -13,6 +13,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="{{url('/')}}/public/backend/css/bootstrap.min.css" >
 <!-- //bootstrap-css -->
@@ -373,7 +374,7 @@ $('.delete-user').click(function(e) {
     e.preventDefault()
     var id_remove=$(this).data('id_remove')
     var id_login=$(this).data('id_login')
-    var route_del="http://localhost/lvtn2022/".concat(id_remove.toString())
+    var route_del="http://localhost/test/".concat(id_remove.toString())
     if(id_remove==id_login){
         swal({
             icon: "warning",
@@ -418,6 +419,63 @@ $('.delete-user').click(function(e) {
             "<textarea class='txtarea-content-admin-rep' placeholder='Admin trả lời'></textarea><button onclick='ok("+id_comment+")' data-id_send='"+id_comment+"' class='btn-xs btn-info send-reply-comment'>Gửi</button>"
         )      
     })
+</script>
+<script type="text/javascript">
+    function select_gallery() {
+        var product_id=$('#product_id').val()
+        var _token = $('input[name="_token"]').val()
+        $.ajax({
+        url : "{{route('select_gallery')}}",
+            method: 'post',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:{product_id:product_id},
+            success:function(data){
+                $('#select-gallery').html(data)
+            }, 
+            error: (xhr) => {
+                console.log(xhr.responseText); 
+                }
+        })
+    }
+    select_gallery()
+    function delete_gallery(id_gallery) {
+        $.ajax({
+        url : "{{route('delete_gallery')}}",
+            method: 'post',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:{id_gallery:id_gallery},
+            success:function(data){
+                select_gallery()
+            }, 
+            error: (xhr) => {
+                console.log(xhr.responseText); 
+                }
+        })
+    }
+    function change_image_gallery(id_gallery) {
+        var image_data= $('#file-gallery-'+id_gallery).val()
+        var form_data=new FormData(document.getElementById('formID'))
+        form_data.append('image'+id_gallery,$('#file-gallery-'+id_gallery).val())
+        form_data.append('id_gallery',id_gallery)
+        console.log(form_data)
+        $.ajax({
+        url : "{{route('change_image_gallery')}}",
+            method: 'post',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data:form_data,
+            contentType: false,
+            cache : false,
+            processData: false,
+            success:function(data){
+                alert(data)
+                select_gallery()
+            }, 
+            error: (xhr) => {
+                console.log(xhr.responseText); 
+                }
+        })
+    }
+
 </script>
 </body>
 </html>

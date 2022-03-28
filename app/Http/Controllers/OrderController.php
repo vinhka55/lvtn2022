@@ -120,7 +120,7 @@ class OrderController extends Controller
     public function delete_order($orderId)
     {
         if(DB::table('order')->where('id',$orderId)->delete()){
-            return redirect('/danh-sach-don-hang');
+            return redirect('admin/danh-sach-don-hang');
         }
         else{
             echo 'Xóa không thành công, vui lòng thử lại';
