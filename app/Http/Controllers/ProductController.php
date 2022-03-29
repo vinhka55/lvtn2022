@@ -85,19 +85,14 @@ class ProductController extends Controller
     }
     public function detail($id)
     {
-        //load avatar
-        
+        //load avatar to comment
         $my_avatar=DB::table('user')->where('id',Session::get('user_id'))->value('avatar');
-
-        $product=DB::table('product')->where('id',$id)->get();
+        $product=Product::with('category')->where('id',$id)->get();
         echo view('page.product.check_product',['product'=>$product,'my_avatar'=>$my_avatar]);
     }
     public function edit($id)
     {
         $product=Product::where('id',$id)->get();
-        // echo "<pre>";
-        // var_dump($product);
-        // return;
         return view('admin.product.edit',compact('product'));
     }
     public function handle_edit(Request $req)

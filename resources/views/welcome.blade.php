@@ -10,6 +10,7 @@
     <link href="{{url('/')}}/public/frontend/css/prettyPhoto.css" rel="stylesheet">
     <link href="{{url('/')}}/public/frontend/css/price-range.css" rel="stylesheet">
     <link href="{{url('/')}}/public/frontend/css/animate.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <link href="{{url('/')}}/public/frontend/css/responsive.css" rel="stylesheet">
     <link rel="stylesheet" href="{{url('/')}}/public/frontend/css/app.css">
@@ -60,6 +61,7 @@
               <form class="d-flex" action="{{route('search_product')}}" method="post">
                     @csrf
                     <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
+                    <div id="return-result-search"></div>
                     <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>              
                 </form> 
 
@@ -209,75 +211,98 @@
   });
 </script>
 <script type="text/javascript">
-$(document).ready(function(){
-    $('.checkout-now').click(function(){ 
-        $("#error-name-null").html("")
-        $("#error-phone-null").html("")
-        $("#error-email-null").html("")
-        $("#error-address-null").html("")
-        $("#error-pay-null").html("")
-        if($('#name').val()==""){
-            $("#error-name-null").html("Tên không được bỏ trống")    
-        }
-        else if($('#phone').val()==""){
-            $("#error-phone-null").html("Sô điện thoại không được bỏ trống")
-        }
-        else if($('#email').val()==""){
-            $("#error-email-null").html("Email không được bỏ trống")
-        }
-        else if($('#address-re').val()==""){
-            $("#error-address-null").html("Địa chỉ không được bỏ trống")
-        }
-        else if($('input[name="pay"]:checked','#pay_online_method').val()==undefined){
-            $("#error-pay-null").html("Chọn 1 phương thức thanh toán")
-        }
-        else{
-            var name=$('#name').val()
-            var phone=$('#phone').val()
-            var email=$('#email').val()
-            var address_re=$('#address-re').val()
-            var notes=$('#notes').val()
-            var _token = $('input[name="_token"]').val()
-            var order_code=$('#order_code').val()
-            var pay=$('input[name="pay"]:checked','#pay_online_method').val()
-            var data={name:name,email:email,phone:phone,address_re:address_re,notes:notes,_token:_token,pay:pay,order_code:order_code}
-         
-            swal({
-            title: "Bạn chắc chắn đặt hàng?",
-            text: "Bấm OK để xác nhận đặt hàng, nếu chưa chắc chắn hãy bấm Cancel",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            })
-            .then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: "{{route('order_place')}}",
-                    method: 'POST',
-                    data:data,
-                    success:function(data){
-                        console.log("ok")
-                    },
-                    error:function(xhr){
-                        console.log(xhr.responseText);
+    $(document).ready(function(){
+        $('.checkout-now').click(function(){ 
+            $("#error-name-null").html("")
+            $("#error-phone-null").html("")
+            $("#error-email-null").html("")
+            $("#error-address-null").html("")
+            $("#error-pay-null").html("")
+            if($('#name').val()==""){
+                $("#error-name-null").html("Tên không được bỏ trống")    
+            }
+            else if($('#phone').val()==""){
+                $("#error-phone-null").html("Sô điện thoại không được bỏ trống")
+            }
+            else if($('#email').val()==""){
+                $("#error-email-null").html("Email không được bỏ trống")
+            }
+            else if($('#address-re').val()==""){
+                $("#error-address-null").html("Địa chỉ không được bỏ trống")
+            }
+            else if($('input[name="pay"]:checked','#pay_online_method').val()==undefined){
+                $("#error-pay-null").html("Chọn 1 phương thức thanh toán")
+            }
+            else{
+                var name=$('#name').val()
+                var phone=$('#phone').val()
+                var email=$('#email').val()
+                var address_re=$('#address-re').val()
+                var notes=$('#notes').val()
+                var _token = $('input[name="_token"]').val()
+                var order_code=$('#order_code').val()
+                var pay=$('input[name="pay"]:checked','#pay_online_method').val()
+                var data={name:name,email:email,phone:phone,address_re:address_re,notes:notes,_token:_token,pay:pay,order_code:order_code}
+            
+                swal({
+                title: "Bạn chắc chắn đặt hàng?",
+                text: "Bấm OK để xác nhận đặt hàng, nếu chưa chắc chắn hãy bấm Cancel",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "{{route('order_place')}}",
+                        method: 'POST',
+                        data:data,
+                        success:function(data){
+                            console.log("ok")
+                        },
+                        error:function(xhr){
+                            console.log(xhr.responseText);
+                        }
+                    });
+                    swal("Cảm ơn bạn đã mua hàng!", {
+                    icon: "success",
+                    });
+                    //window.location.href = "{{url('/')}}/don-hang-cua-toi";
                     }
-                });
-                swal("Cảm ơn bạn đã mua hàng!", {
-                icon: "success",
-                });
-                //window.location.href = "{{url('/')}}/don-hang-cua-toi";
-                }
-            });          
-        }    
+                });          
+            }    
+        })
     })
-})
 </script>
 <script>
-$('#pay_online_method input').on('change', function() {
-    var order_code=$('#order_code').val()
-    $( ".id-bank" ).remove();
-   if($('input[name=pay]:checked', '#pay_online_method').val()=='atm'){
-    $('#pay_online_method').append('<div class="id-bank border border-primary p-3"><p>Chủ tài khoản: Lê Hữu Vinh STK: 189200331 Ngân hàng: VPBANK </p><p>Chủ tài khoản: Lê Hữu Vinh STK: 123456778 Ngân hàng: VIETCOMBANK </p><p class="text-danger h4">Nội dung chuyển khoản là mã đơn hàng của bạn: '+order_code+'</p></div>')
-   }
-});
+    $('#pay_online_method input').on('change', function() {
+        var order_code=$('#order_code').val()
+        $( ".id-bank" ).remove();
+    if($('input[name=pay]:checked', '#pay_online_method').val()=='atm'){
+        $('#pay_online_method').append('<div class="id-bank border border-primary p-3"><p>Chủ tài khoản: Lê Hữu Vinh STK: 189200331 Ngân hàng: VPBANK </p><p>Chủ tài khoản: Lê Hữu Vinh STK: 123456778 Ngân hàng: VIETCOMBANK </p><p class="text-danger h4">Nội dung chuyển khoản là mã đơn hàng của bạn: '+order_code+'</p></div>')
+    }
+    });
+</script>
+<script>
+    $('#search-product').keyup(function() {
+        var content_search=$(this).val()
+        if(content_search!=''){
+                $.ajax({
+                url: "{{route('autocomplete_search')}}",                
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{content_search:content_search},
+                success:function(data){
+                    $('#return-result-search').fadeIn();
+                    $('#return-result-search').html(data)
+                },
+                error:function(xhr){
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+        else{
+            $('#return-result-search').fadeOut();
+        }
+    })
 </script>

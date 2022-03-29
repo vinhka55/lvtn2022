@@ -104,6 +104,14 @@
         <div class="product-details row p-0 m-0">
             <!--product-details-->
             @foreach($product as $item)
+            <!-- breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url('/')}}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('show_product_with_category',$item->category->slug)}}">{{$item->category->name}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{$item->name}}</li>
+                </ol>
+            </nav>
             <div class="col-12 col-md-5">
                 <div class="view-product">
                     <img src="{{url('/')}}/public/uploads/product/{{$item->image}}" alt="image" width="100%" />

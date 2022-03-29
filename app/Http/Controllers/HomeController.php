@@ -23,6 +23,28 @@ class HomeController extends Controller
     public function search(Request $req)
     {
         $data=DB::table('product')->where('name','like','%'.$req->search.'%')->get();
-        return view('page.product.search_product',['data'=>$data]);
+        echo "<pre>";
+        var_dump($data);
+        //return view('page.product.search_product',['data'=>$data]);
+    }
+    public function autocomplete_search(Request $req)
+    {
+        $check_has_product=0;
+        $output='';
+        if($req->content_search!=''){
+            $product=Product::where('status','1')->where('name','like','%'.$req->content_search.'%')->get();
+           
+                $output.='<ul class="dropdown-menu" style="display:block;position:absolute;margin-left:510px;">';
+                foreach ($product as $key => $value) {
+                    $output.='<li><a href="'.route("detail_product",$value->id).'">'.$value->name.'</a></li>';
+                    $check_has_product=$check_has_product+1;
+                }
+                $output.='</ul>';
+            
+                if($check_has_product==0)
+                return '<ul class="dropdown-menu" style="display:block;position:absolute;margin-left:510px;"><li>Không có sản phẩm phù hợp</li></ul>';
+            
+        }
+        return $output;
     }
 }

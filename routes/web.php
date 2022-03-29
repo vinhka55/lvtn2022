@@ -85,6 +85,8 @@ Route::get('thong-tin-tai-khoan','App\Http\Controllers\InfoUserController@show_i
 
 //search product
 Route::post('tim-kiem-san-pham','App\Http\Controllers\HomeController@search')->name('search_product');
+Route::post('tim-kiem-san-pham-autocomplete','App\Http\Controllers\HomeController@autocomplete_search')->name('autocomplete_search');
+
 
 //coupon
 Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function()
