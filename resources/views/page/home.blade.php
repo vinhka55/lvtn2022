@@ -15,6 +15,36 @@
                           <h3 class="card-text name-product">{{$hot_pro->name}}</h3>
                           <p class="price-product">{{number_format($hot_pro->price)}} VND</p>
                           <a href="{{route('detail_product',$hot_pro->id)}}">Chi tiết</a>
+                          <!-- icon eyes trigger modal -->                         
+                            <i type="button" class="fas fa-eye ms-3" data-bs-toggle="modal" data-bs-target="#quickview-{{$hot_pro->id}}"></i>
+                            <!-- Modal -->
+                            <div class="modal fade" id="quickview-{{$hot_pro->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog container">
+                                    <div class="modal-content">
+                                        <img width="100%" src="{{url('/')}}/public/uploads/product/{{$hot_pro->image}}" alt="hot product">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Tên sản phẩm: {{$hot_pro->name}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Giá: <?php echo number_format($hot_pro->price) ?> VND
+                                        </div>
+                                        <div class="modal-body">
+                                            Xuất xứ: {{$hot_pro->origin}}
+                                        </div>
+                                        <div class="modal-body">
+                                            Hạn dùng: {{ \Carbon\Carbon::parse($hot_pro->exp)->format('d/m/Y')}}
+                                        </div>
+                                        <div class="modal-body">
+                                            Đã bán: {{$hot_pro->count_sold}}
+                                        </div>  
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary"><a class="text-white" href="{{route('detail_product',$hot_pro->id)}}">Xem nhiều hơn</a></button>
+                                        </div>     
+                                    </div>                                                                                              
+                                </div>
+                            </div>
                           <!-- add to cart by ajax -->
                           <form>
                                 @csrf

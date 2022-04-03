@@ -77,7 +77,7 @@
     </div>
     
     <div class="form-group">
-        <button type="submit" class="btn btn-info">Thêm sản phẩm</button>
+        <button type="submit" class="btn btn-info">Sửa sản phẩm</button>
     </div>
     @endforeach
 </form>

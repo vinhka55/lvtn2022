@@ -76,7 +76,7 @@
                         </div>                            
                     </td>                     
                     <td><p class="text-ellipsis name">{{$item->user_id}}</p></td>
-                    <td><p class="text-ellipsis name">{{$item->product->name}}</p></td>                                      
+                    <td><p class="text-ellipsis name">{{$item->product->name}}</p></td>                                       
                 </tr>
             @endforeach                        
         </tbody>

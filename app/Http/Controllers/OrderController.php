@@ -48,7 +48,7 @@ class OrderController extends Controller
         Session::put('shipping_id',$shipping_id);
 
         //insert đơn hàng
-        $data_order=[];
+        $data_order=[]; 
         
         $data_order['order_code']=$req->order_code;
         $data_order['customer_id']=Session::get('user_id');
@@ -168,8 +168,11 @@ class OrderController extends Controller
     }
     public function delete_product_in_order($id)
     {
-        $product = OrderDetails::find($id);
-        $product->delete();
+        $order_detail = OrderDetails::find($id);
+        $order=Order::find($order_detail->order_id);
+        $order->total_money=$order->total_money-$order_detail->product_price;
+        $order->save();// update price of order
+        $order_detail->delete();
         return redirect()->back();
     }
     public function update_qty_product_in_order(Request $req)
@@ -177,6 +180,15 @@ class OrderController extends Controller
         $data=$req->all();
         $product_in_order=OrderDetails::find($data['id_detail']);
         $product_in_order->product_quantyti=$data['order_product_qty'];
+        if($data['order_product_qty']>$data['initial_value']){
+            $product=Product::find($product_in_order->product_id);
+            $product->count=$product->count-($data['order_product_qty']-$data['initial_value']);
+            $product->save();
+        }else{
+            $product=Product::find($product_in_order->product_id);
+            $product->count=$product->count+($data['initial_value']-$data['order_product_qty']);
+            $product->save();
+        }
         $product_in_order->save();
     }
     public function my_order(Request $req)

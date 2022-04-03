@@ -5,30 +5,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{url('/')}}/public/frontend/css/lightslider.min.css">
-    <!-- <link href="{{url('/')}}/public/frontend/css/prettify.css"> -->
-    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Document</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"/>
+    <title>Chi tiết sản phẩm</title>
     <style>
-    .list-group {
-        flex-direction: row;
-
-    }
-
-    .list-group {
-        -webkit-box-sizing: inherit;
-        -moz-box-sizing: inherit;
-        box-sizing: inherit;
-    }
-
-    .list-group:before,
-    .list-group:after {
-        -webkit-box-sizing: inherit;
-        -moz-box-sizing: inherit;
-        box-sizing: inherit;
-    }
+        .hover-cart {
+            border-radius: 8%;
+            margin-top: 4px;
+            width: 126px;
+            background-color: greenyellow;
+            position: absolute;
+            display: none;
+        }
+        .content-cart-menu:hover .hover-cart{
+        display: inherit;
+        }
+        button.btn.btn-primary.send-comment {
+            margin-bottom: 10px;
+            background-color: #0d6efd;
+            border-radius: 45%;
+        }
+        input#your_comment {
+            width: 50%;
+        }
+        @media only screen and (min-width: 1300px) {
+        .d-flex.flex-start.mt-3.ms-5 {
+            padding-left: 275px;
+            } 
+        }
     </style>
 </head>
 
@@ -60,10 +67,11 @@
                 </ul>
                             
               </div>
-                <form class="d-flex" action="{{route('search_product')}}" method="post">
+              <form class="d-flex mx-2" action="{{route('search_product')}}" method="post">
                     @csrf
                     <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
-                    <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>              
+                    <div id="return-result-search"></div>
+                    <button class="btn btn-outline-light" type="submit">Search</button>              
                 </form> 
 
               <?php 
@@ -84,7 +92,7 @@
               if(Session::get('user_id')){
                 ?>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                     {{Session::get('name_user')}}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -176,7 +184,6 @@
                     <div class="text-center">
                         <?php echo htmlspecialchars_decode($item->description); ?>
                     </div>
-                    
                 </div>
                 <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
                     <!-- start comment -->
@@ -195,11 +202,9 @@
                                     </p>
                                 </div>
                                 
-                                <input class="rounded-pill w-100" type="text" id="your_comment" placeholder="Điền bình luận của bạn">
+                                <input class="rounded-pill w-90" type="text" id="your_comment" placeholder="Điền bình luận của bạn">
                                 <button type="button" class="btn btn-primary send-comment">Gửi</button>
-                                <p class="text-danger" id="empty_comment"></p>
-                                
-                        
+                                <p class="text-danger" id="empty_comment"></p>                       
                             </div>
                             <!-- end comment -->
                         </div>
@@ -218,23 +223,9 @@
 
 </html>
 
-<script src="{{url('/')}}/public/jquery/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/4e34373e01.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="{{url('/')}}/public/frontend/js/lightslider.js"></script>
-<script src="{{url('/')}}/public/frontend/js/prettify.js"></script>
-<!-- <script src="{{url('/')}}/public/frontend/js/jquery.sharrre.min.js"></script> -->
-<script src='https://s0.pstatp.com/cdn/expire-1-M/jquery/1.11.1/jquery.min.js'></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <script>
 function show_comment() {
@@ -406,93 +397,26 @@ $(document).ready(function(){
     });
 });
 </script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("#lightSlider").lightSlider(); 
-  });
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $("#lightSlider").lightSlider({
-        item: 3,
-        autoWidth: false,
-        slideMove: 1, // slidemove will be 1 if loop is true
-        slideMargin: 10,
- 
-        addClass: '',
-        mode: "slide",
-        useCSS: true,
-        cssEasing: 'ease', //'cubic-bezier(0.25, 0, 0.25, 1)',//
-        easing: 'linear', //'for jquery animation',////
- 
-        speed: 400, //ms'
-        auto: false,
-        loop: false,
-        slideEndAnimation: true,
-        pause: 2000,
- 
-        keyPress: false,
-        controls: true,
-        prevHtml: '',
-        nextHtml: '',
- 
-        rtl:false,
-        adaptiveHeight:false,
- 
-        vertical:false,
-        verticalHeight:500,
-        vThumbWidth:100,
- 
-        thumbItem:10,
-        pager: true,
-        gallery: false,
-        galleryMargin: 5,
-        thumbMargin: 5,
-        currentPagerPosition: 'middle',
- 
-        enableTouch:true,
-        enableDrag:true,
-        freeMove:true,
-        swipeThreshold: 40,
- 
-        responsive : [],
- 
-        onBeforeStart: function (el) {},
-        onSliderLoad: function (el) {},
-        onBeforeSlide: function (el) {},
-        onAfterSlide: function (el) {},
-        onBeforeNextSlide: function (el) {},
-        onBeforePrevSlide: function (el) {}
-    });
-});
-</script>
-<script type="text/javascript">
-  $(document).ready(function() {
-    var slider = $("#lightSlider").lightSlider();
-    slider.goToSlide(3);
-    slider.goToPrevSlide();
-    slider.goToNextSlide();
-    slider.getCurrentSlideCount();
-    slider.refresh();
-    slider.play(); 
-    slider.pause();    
-  });
-</script>
 <script>
-
-$(document).ready(function() {
- 
- $('#imageGallery').lightSlider({
-
-   gallery:true,
-
-   minSlide:1,
-
-   maxSlide:1,
-
-   currentPagerPosition:'left'  
-
- });  
-
-});
-    </script>
+    $('#search-product').keyup(function() {
+        var content_search=$(this).val()
+        if(content_search!=''){
+                $.ajax({
+                url: "{{route('autocomplete_search')}}",                
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{content_search:content_search},
+                success:function(data){
+                    $('#return-result-search').fadeIn();
+                    $('#return-result-search').html(data)
+                },
+                error:function(xhr){
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+        else{
+            $('#return-result-search').fadeOut();
+        }
+    })
+</script>

@@ -77,7 +77,7 @@ Route::post('cap-nhat-so-luong-san-pham-trong-don-hang','App\Http\Controllers\Or
 Route::get('don-hang-cua-toi','App\Http\Controllers\OrderController@my_order')->name('my_order');
 Route::get('chi-tiet-don-hang-cua-toi/{id}','App\Http\Controllers\OrderController@detail_my_order')->name('detail_my_order');
 Route::post('huy-don-hang','App\Http\Controllers\OrderController@customer_cancel_order')->name('customer_cancel_order');
-
+ 
 
 
 //user người mua hàng

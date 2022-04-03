@@ -5,10 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"/>
     <title>Lịch sử đơn hàng</title>
+    <style>
+        .hover-cart {
+            border-radius: 8%;
+            margin-top: 4px;
+            width: 126px;
+            background-color: greenyellow;
+            position: absolute;
+            display: none;
+        }
+        .content-cart-menu:hover .hover-cart{
+        display: inherit;
+        }
+    </style>
 </head>
 <body>
 <div class="header">
@@ -38,10 +52,11 @@
                 </ul>
                             
               </div>
-              <form class="d-flex" action="{{route('search_product')}}" method="post">
+              <form class="d-flex mx-2" action="{{route('search_product')}}" method="post">
                     @csrf
                     <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
-                    <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>              
+                    <div id="return-result-search"></div>
+                    <button class="btn btn-outline-light" type="submit">Search</button>              
                 </form> 
 
               <?php 
@@ -88,28 +103,10 @@
     <div class="container">
         <div class="table-agile-info">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading text-center h3">
                 Lịch sử đơn hàng
                 </div>
-                <div class="row w3-res-tb">
-                    <div class="col-sm-5 m-b-xs">
-                        <select class="input-sm form-control w-sm inline v-middle">
-                        <option value="trang-thai">Trạng thái</option>
-                        <option value="sort-a-to-z">Tên a->z</option>
-                        </select>
-                        <a href="" class="btn btn-sm btn-default">Chọn</a>                
-                    </div>
-                    <div class="col-sm-4">
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
-                        <span class="input-group-btn">
-                            <button class="btn btn-sm btn-default" type="button">Tìm kiếm</button>
-                        </span>
-                        </div>
-                    </div>
-                </div>
+
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
                     <thead>
@@ -176,8 +173,7 @@
                                     </td>
                                     @endif
                                 </tr>
-                                @endforeach
-                        
+                                @endforeach                    
                     </tbody>
                 </table>
             </div>
@@ -188,20 +184,10 @@
     </div>
     @endif   
     </div>
-</body>
-</html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-    integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-</script>
-<script src="{{url('/')}}/public/jquery/jquery-3.6.0.min.js"></script>
-<script src="https://kit.fontawesome.com/4e34373e01.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script type="text/javascript">
     function cancel_order(order_id) {
         var reason_cancel_order=$('.reason-cancel-area-'+order_id).val();
@@ -250,4 +236,29 @@
     }
         show_cart_menu()
         hover_cart_menu()
-</script>
+    </script>
+    <script>
+        $('#search-product').keyup(function() {
+            var content_search=$(this).val()
+            if(content_search!=''){
+                    $.ajax({
+                    url: "{{route('autocomplete_search')}}",                
+                    method: 'POST',
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data:{content_search:content_search},
+                    success:function(data){
+                        $('#return-result-search').fadeIn();
+                        $('#return-result-search').html(data)
+                    },
+                    error:function(xhr){
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+            else{
+                $('#return-result-search').fadeOut();
+            }
+        })
+    </script>
+</body>
+</html>

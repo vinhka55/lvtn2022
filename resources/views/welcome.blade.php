@@ -4,18 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="{{url('/')}}/public/frontend/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{url('/')}}/public/frontend/css/font-awesome.min.css" rel="stylesheet">
-    <link href="{{url('/')}}/public/frontend/css/prettyPhoto.css" rel="stylesheet">
-    <link href="{{url('/')}}/public/frontend/css/price-range.css" rel="stylesheet">
-    <link href="{{url('/')}}/public/frontend/css/animate.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
-    <link href="{{url('/')}}/public/frontend/css/responsive.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{url('/')}}/public/frontend/css/app.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="{{url('/')}}/public/frontend/css/sweetalert.css" rel="stylesheet">
-    <link href="{{url('/')}}/public/frontend/css/main.css" rel="stylesheet">
+    <link href="{{url('/')}}/public/frontend/css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <title>THỰC PHẨM HỮU NGHỊ| Cung Cấp Thực Phẩm Sỉ Lẻ Uy Tín</title>
 </head>
@@ -58,32 +50,32 @@
                 </ul>
                             
               </div>
-              <form class="d-flex" action="{{route('search_product')}}" method="post">
-                    @csrf
-                    <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Tìm sản phẩm" aria-label="Search">
-                    <div id="return-result-search"></div>
-                    <button class="btn btn-outline-warning" type="submit">Tìm kiếm</button>              
-                </form> 
-
-              <?php 
+              <!-- tim kiem san pham -->
+            <form class="d-flex mx-2" action="{{route('search_product')}}" method="post">
+                @csrf
+                <input class="form-control me-2" name="search" id="search-product" type="search" placeholder="Search" aria-label="Search">
+                <div id="return-result-search"></div>
+                <button class="btn btn-outline-light" type="submit">Search</button>             
+            </form>
+            <!-- giỏ hàng -->
+            <?php 
               if(Session::get('user_id')){
                 ?>
                 <div class="content-cart-menu">
                     <a href="{{route('shopping_cart')}}" class='btn btn-info me-2'><i class='fa fa-shopping-cart'></i>Giỏ hàng <span id="count-cart"></span></a>   
-                    <div class="hover-cart bg-white p-5 m-0">
-                        
+                    <div class="hover-cart bg-white p-5 m-0">                    
                     </div>  
                 </div>                      
               <?php }
               else { ?>
                 <a href="{{route('login')}}" class="btn btn-info me-2"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
               <?php } ?>
-
-              <?php 
+            <!-- user -->
+            <?php 
               if(Session::get('user_id')){
                 ?>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
                     {{Session::get('name_user')}}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">

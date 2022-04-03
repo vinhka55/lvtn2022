@@ -337,13 +337,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 $('.update-amount-product-in-order').click(function(e) {
     e.preventDefault()
     var id_detail=$(this).data('id_detail')
+    var initial_value=$(this).data('initial_value')
     var order_product_qty=$('.order_product_qty_'+id_detail).val()
     var _token = $('input[name="_token"]').val();
 
     $.ajax({
         url : "{{route('update_qty_product_in_order')}}",
             method: 'POST',
-            data:{_token:_token, id_detail:id_detail ,order_product_qty:order_product_qty},
+            data:{_token:_token, id_detail:id_detail ,order_product_qty:order_product_qty,initial_value:initial_value},
             success:function(data){
                 alert('Cập nhật số lượng thành công');
                 location.reload();

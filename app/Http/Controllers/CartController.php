@@ -8,7 +8,6 @@ use Cart;
 use Session;
 use App\Models\Coupon;
 use App\Models\Cart as C;
-//use Munna\ShoppingCart\Cart;
 
 class CartController extends Controller
 {
@@ -22,10 +21,12 @@ class CartController extends Controller
             $id_coupon=Session::get('id_coupon');
             $coupon=DB::table('coupon')->where('id',$id_coupon)->get();
             return view('page.cart.show_cart',['coupon'=>$coupon,'cart'=>$cart]);
+            //return view('page.cart.test',['coupon'=>$coupon,'cart'=>$cart]);
         }
         else{
             $coupon=array();
             return view('page.cart.show_cart',['coupon'=>$coupon,'cart'=>$cart]);
+            //return view('page.cart.test',['coupon'=>$coupon,'cart'=>$cart]);
         }
         
     }
@@ -58,9 +59,6 @@ class CartController extends Controller
     public function update(Request $req)
     {
         $data=$req->all();
-        // echo "<pre>";
-        // var_dump($data['quantity']);
-        // echo "</pre>";
         foreach($data['quantity'] as $key=>$val){
             Cart::update($key, $val);
         }
@@ -73,8 +71,6 @@ class CartController extends Controller
     public function add_cart_ajax(Request $req)
     {
         $data= $req->all();
-        //$session_id = substr(md5(microtime()),rand(0,26),5);
-        //$cart = Session::get('cart');
         $product_name = $data['cart_product_name'];
         $product_id = $data['cart_product_id'];
         $product_image = $data['cart_product_image'];
@@ -104,9 +100,9 @@ class CartController extends Controller
             
                         Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
                         Session::put('added_cart','ok');
-                        }
                     }
-                    echo Cart::count();
+                }
+                echo Cart::count();
             } 
             else{
                 echo Cart::count();  
@@ -116,7 +112,7 @@ class CartController extends Controller
     }
     public function hover_cart_menu()
     {
-        if(Session::has('user_id')){
+        if(Session::has('user_id')){  
             if(!Session::has('added_cart')){
                 $cart=C::where('user_id',Session::get('user_id'))->first();
                 if($cart){
@@ -127,43 +123,44 @@ class CartController extends Controller
                         $product_image = $value->thumb;
                         $product_qty = $value->qty;
                         $product_price = $value->price;
-                        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
-                        }
-                    }
-                    $content=Cart::items()->original;
-                    $output='';
-                    if(count($content)>0){
-                        $output.= '<ul>';
-                        foreach ($content as $key => $value) {
-                            $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
-                        }
-                        $output.= '</ul>';
-                        $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';
             
+                        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
+                        //Session::put('added_cart_hover','ok');
                     }
-                    else{
-                        $output.="<p class='text-center'>empty cart</p>";
+                }
+                $content=Cart::items()->original;
+                $output='';
+                if(count($content)>0){
+                    $output.= '<ul>';
+                    foreach ($content as $key => $value) {
+                        $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
                     }
-                    return $output;
-                
+                    $output.= '</ul>';
+                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';
+        
+                }
+                else{
+                    $output.="<p class='text-center'>Không có sản phẩm nào</p>";
+                }
+                return $output; 
             }
             else{
                 $content=Cart::items()->original;
-                    $output='';
-                    if(count($content)>0){
-                        $output.= '<ul>';
-                        foreach ($content as $key => $value) {
-                            $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
-                        }
-                        $output.= '</ul>';
-                        $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';
-            
+                $output='';
+                if(count($content)>0){
+                    $output.= '<ul>';
+                    foreach ($content as $key => $value) {
+                        $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
                     }
-                    else{
-                        $output.="<p class='text-center'>empty cart</p>";
-                    }
-                    return $output;
-            }
+                    $output.= '</ul>';
+                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';
+        
+                }
+                else{
+                    $output.="<p class='text-center'>Không có sản phẩm nào</p>";
+                }
+                return $output; 
+            }           
         }
     }
 }

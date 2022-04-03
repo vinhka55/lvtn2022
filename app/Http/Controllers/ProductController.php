@@ -123,8 +123,9 @@ class ProductController extends Controller
     public function show_product_with_category($slug)
     {
         $id=CategoryProduct::where('slug',$slug)->value('id');
+        $name_category=CategoryProduct::where('slug',$slug)->value('name');
         $product=Product::where('category_id',$id)->get();
-        return view('page.product.show_product_with_category',compact('product'));
+        return view('page.product.show_product_with_category',compact('product','name_category'));
     }
     public function add_gallery($id)
     {

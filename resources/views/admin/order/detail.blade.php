@@ -178,7 +178,7 @@
                                     <input type="number" <?php if($order_status!="Đang chờ xử lý") echo "disabled" ?> class="order_product_qty_{{$item->id}}" name="product_sales_quantity" value="{{$item->product_quantyti}}" min="1">
                                     <input type="hidden" name="order_product_id" class="order_product_id" value="{{$item->product_id}}">
                                     @if($order_status=='Đang chờ xử lý')
-                                    <button class="btn btn-default update-amount-product-in-order" data-id_detail="{{$item->id}}">Cập nhật số lượng</button>
+                                    <button class="btn btn-default update-amount-product-in-order" data-id_detail="{{$item->id}}" data-initial_value="{{$item->product_quantyti}}">Cập nhật số lượng</button>
                                     @endif
                                 </form>
                             </td>
@@ -189,7 +189,7 @@
                             </td>        
                             <?php $total_money=$total_money+$item->product_price*$item->product_quantyti;?>                
                         </tr>
-                        @endforeach
+                        @endforeach 
                         
             </tbody>
             <tr>

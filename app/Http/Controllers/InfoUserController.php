@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Session;
+use App\Models\Order;
 
 class InfoUserController extends Controller
 {
@@ -12,6 +13,7 @@ class InfoUserController extends Controller
     {
         $id=Session::get('user_id');
         $data=DB::table('user')->where('id',$id)->get();
-        return view('page.user.show_info',['info'=>$data]);
+        $order=Order::where('customer_id',$id)->orderBy('id','desc')->get();
+        return view('page.user.show_info',['info'=>$data,'order'=>$order]);
     }
 }

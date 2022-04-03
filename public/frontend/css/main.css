@@ -2520,11 +2520,6 @@ h2.title {
   color: #FE980F;
 }
 
-span#count-cart {
-  background: deeppink;
-  padding: 8px;
-  border-radius: 37%;
-}
 .fixed-nav-bar{
   position: fixed;
   top: 0;
@@ -2654,4 +2649,17 @@ span.relative.z-0.inline-flex.shadow-sm.rounded-md {
   position: absolute;
   color: white !important;
   font-size: 15px;
+}
+button.btn.btn-primary.send-comment {
+  margin-bottom: 20px;
+  background-color: #0d6efd;
+  border-radius: 45%;
+}
+input#your_comment {
+  width: 50%;
+}
+@media only screen and (min-width: 1300px) {
+  .d-flex.flex-start.mt-3.ms-5 {
+    padding-left: 275px;
+  } 
 }
