@@ -97,10 +97,9 @@ class CartController extends Controller
                         $product_image = $value->thumb;
                         $product_qty = $value->qty;
                         $product_price = $value->price;
-            
-                        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
-                        Session::put('added_cart','ok');
+                        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);                     
                     }
+                    Session::put('added_cart','ok');
                 }
                 echo Cart::count();
             } 
@@ -122,11 +121,10 @@ class CartController extends Controller
                         $product_id = $value->product;
                         $product_image = $value->thumb;
                         $product_qty = $value->qty;
-                        $product_price = $value->price;
-            
-                        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);
-                        //Session::put('added_cart_hover','ok');
+                        $product_price = $value->price;           
+                        Cart::add($product_id, $product_name, $product_qty, $product_price,0,$product_image);                       
                     }
+                    //Session::put('added_cart_hover','ok');
                 }
                 $content=Cart::items()->original;
                 $output='';
