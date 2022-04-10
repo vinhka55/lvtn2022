@@ -129,12 +129,12 @@ class CartController extends Controller
                 $content=Cart::items()->original;
                 $output='';
                 if(count($content)>0){
-                    $output.= '<ul>';
+                    //$output.= '<ul>';
                     foreach ($content as $key => $value) {
-                        $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
+                        $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">'.$value['name'].'</a></li>';
                     }
-                    $output.= '</ul>';
-                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';
+                    //$output.= '</ul>';
+                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem tất cả</a></li>';
         
                 }
                 else{
@@ -146,12 +146,12 @@ class CartController extends Controller
                 $content=Cart::items()->original;
                 $output='';
                 if(count($content)>0){
-                    $output.= '<ul>';
+                    //$output.= '<ul>';
                     foreach ($content as $key => $value) {
-                        $output.='<li><a href="http://localhost/test/gio-hang">'.'<p>'.$value['name'].'</p></a></li><hr>';
+                        $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">'.$value['name'].'</a></li>';
                     }
-                    $output.= '</ul>';
-                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem all</a></li>';
+                    //$output.= '</ul>';
+                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem tất cả</a></li>';
         
                 }
                 else{

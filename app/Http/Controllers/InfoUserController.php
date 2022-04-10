@@ -13,7 +13,7 @@ class InfoUserController extends Controller
     {
         $id=Session::get('user_id');
         $data=DB::table('user')->where('id',$id)->get();
-        $order=Order::where('customer_id',$id)->orderBy('id','desc')->get();
+        $order=Order::where('customer_id',$id)->orderBy('id','desc')->take(5)->get();
         return view('page.user.show_info',['info'=>$data,'order'=>$order]);
     }
 }

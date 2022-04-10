@@ -12,6 +12,7 @@ use App\Models\OrderDetails;
 use App\Models\Product;
 use Carbon\Carbon;
 use Mail;
+use App\Events\InboxPusherEvent;
 
 class OrderController extends Controller
 {
@@ -63,6 +64,10 @@ class OrderController extends Controller
         $data_order['status']="Đang chờ xử lý";
         $order_id=DB::table('order')->insertGetId($data_order);
         $order_code=$req->order_code;
+        
+        $messege="Cảm ơn bạn đã mua hàng, mã đơn hàng là: ".$data_order['order_code'];
+        echo $messege;
+        event(new InboxPusherEvent($messege));
 
         //insert chi tiết đơn hàng      
         $content=Cart::items()->original;
@@ -93,6 +98,7 @@ class OrderController extends Controller
         Session::forget('discount');
         Session::forget('id_coupon');
         Cart::clear();
+
     }
     public function list_order()
     {
@@ -120,7 +126,10 @@ class OrderController extends Controller
     }
     public function delete_order($orderId)
     {
+        $order_code=DB::table('order')->where('id',$orderId)->value('order_code');
         if(DB::table('order')->where('id',$orderId)->delete()){
+            $messege="Đơn hàng của bạn (".$order_code.") đã xóa";
+            event(new InboxPusherEvent($messege));
             return redirect('admin/danh-sach-don-hang');
         }
         else{
@@ -166,14 +175,15 @@ class OrderController extends Controller
         }
         $order->save();
     }
-    public function delete_product_in_order($id)
+    public function delete_product_in_order($id,$quantyti)
     {
-        $order_detail = OrderDetails::find($id);
-        $order=Order::find($order_detail->order_id);
-        $order->total_money=$order->total_money-$order_detail->product_price;
-        $order->save();// update price of order
-        $order_detail->delete();
-        return redirect()->back();
+        // $order_detail = OrderDetails::find($id);
+        // $order=Order::find($order_detail->order_id);
+        // $order->total_money=$order->total_money-$order_detail->product_price*$quantyti;
+        // $order->save();// update price of order
+        // $order_detail->delete();
+        event(new InboxPusherEvent("Yêu cầu hủy sản phẩm thành công"));
+        //return redirect()->back();
     }
     public function update_qty_product_in_order(Request $req)
     {

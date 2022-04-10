@@ -72,7 +72,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
 });
 Route::post('dat-hang','App\Http\Controllers\OrderController@order_place')->name('order_place');
 Route::post('cap-nhat-trang-thai-san-pham-cua-don-hang','App\Http\Controllers\OrderController@update_status_of_product')->name('update_status_of_product_in_order');
-Route::get('xoa-san-pham-trong-don-hang/{id}','App\Http\Controllers\OrderController@delete_product_in_order')->name('delete_product_in_order');
+Route::get('xoa-san-pham-trong-don-hang/{id}/{quantyti}','App\Http\Controllers\OrderController@delete_product_in_order')->name('delete_product_in_order');
 Route::post('cap-nhat-so-luong-san-pham-trong-don-hang','App\Http\Controllers\OrderController@update_qty_product_in_order')->name('update_qty_product_in_order');
 Route::get('don-hang-cua-toi','App\Http\Controllers\OrderController@my_order')->name('my_order');
 Route::get('chi-tiet-don-hang-cua-toi/{id}','App\Http\Controllers\OrderController@detail_my_order')->name('detail_my_order');
@@ -171,3 +171,12 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
 });
 Route::get('danh-muc-tin-tuc/{slug}','App\Http\Controllers\NewsController@show_news_with_category')->name('show_news_with_category');
 Route::get('noi-dung-tin-tuc/{slug}','App\Http\Controllers\NewsController@detail_news')->name('detail_news');
+
+//Notifications realtime
+// gọi ra trang view demo-pusher.blade.php
+//Route::get('demo-pusher','App\Http\Controllers\InboxController@getPusher');
+// truyển message lên server Pusher
+//Route::get('fire-event','App\Http\Controllers\InboxController@fireEvent');
+Route::post('insert-notification','App\Http\Controllers\NotificationsController@insert_notification')->name('insert_notification');
+Route::get('count-notification','App\Http\Controllers\NotificationsController@count_notifications')->name('count_notifications');
+Route::get('handle-show-notifications','App\Http\Controllers\NotificationsController@show_notifications')->name('show_notifications');

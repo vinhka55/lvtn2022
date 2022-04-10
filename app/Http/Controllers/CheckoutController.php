@@ -20,7 +20,7 @@ class CheckoutController extends Controller
         $id_customer=Session::get('user_id');
         $data=DB::table('user')->where('id',$id_customer)->get();
         //return view('page.checkout.show_checkout',['info'=>$data]);
-        return view('page.checkout.show_checkout_cong_hoa',['info'=>$data]);
+        return view('page.checkout.show_checkout',['info'=>$data]);
     }
     public function payment_method(Request $req)
     {

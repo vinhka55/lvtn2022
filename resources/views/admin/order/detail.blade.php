@@ -184,7 +184,7 @@
                             </td>
                             <td>
                                 @if($order_status=='Đang chờ xử lý')
-                                <p class="text-ellipsis name"><a href="{{route('delete_product_in_order',$item->id)}}"><i class="fa fa-trash" aria-hidden="true"></i></a></p>
+                                <p class="text-ellipsis name"><a href="{{route('delete_product_in_order',[$item->id,$item->product_quantyti])}}"><i class="fa fa-trash" aria-hidden="true"></i></a></p>
                                 @endif
                             </td>        
                             <?php $total_money=$total_money+$item->product_price*$item->product_quantyti;?>                
