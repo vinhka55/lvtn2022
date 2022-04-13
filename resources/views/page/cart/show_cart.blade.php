@@ -107,6 +107,11 @@
                         <p class="text-danger">{{Session::get('incorrect_coupon')}}</p>
                         {{Session::put('incorrect_coupon',null)}}
                         @endif
+                        <ul style="padding-left: 0">
+                            @foreach ($errors->all() as $error)
+                                <li style="color: red;">{{ $error }}</li>
+                            @endforeach
+                        </ul>
                         <input type="text" name="code_coupon" class="form-control" placeholder="Nhập Mã Khuyến Mãi">
                         <button class="btn btn-danger text-light" type="submit" id="button-addon2">Áp Dụng</button>
                     </form>

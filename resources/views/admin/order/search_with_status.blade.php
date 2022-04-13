@@ -62,7 +62,7 @@
                                     {{$item->status}}
                                 </p>
                             </td>   
-                            <td>{{$item->reason}}</td>                     
+                            <td>{{$item->reason}}</td>
                             <td>
                             <a title="click to edit" href=""><i class="fa fa-pencil-square-o text-success text-active"></i></a>
                             <a title="click to delete" onclick="return confirm('Are you sure?')" href="{{route('delete_order',$item->id)}}"><i class="fa fa-times text-danger text"></i></a>

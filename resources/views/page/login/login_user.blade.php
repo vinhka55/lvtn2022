@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"/>
 
-    <title>Giỏ hàng của bạn</title>
+    <title>Đăng nhập</title>
 
 	<style>
 		.or{
@@ -113,6 +113,13 @@
 							<input class="form-control mt-1" type="password" name='password' placeholder="Password"/>
                             <input class="form-control mt-1" type="password" name='repassword' placeholder="Retype Password"/>
                             <input class="form-control mt-1" type="text" name='phone' placeholder="Phone"/>
+                            <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+                            <br/>
+                            @if($errors->has('g-recaptcha-response'))
+                            <span class="invalid-feedback mt-1" style="display:block;">
+                                <strong>{{$errors->first('g-recaptcha-response')}}</strong>
+                            </span>
+                            @endif
 							<button type="submit" class="btn btn-primary mt-1">Signup</button>
 						</form>
 					</div><!--/sign up form-->
@@ -154,4 +161,5 @@
 	  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </html>

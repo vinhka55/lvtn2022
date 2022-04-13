@@ -32,6 +32,13 @@ class CouponController extends Controller
     }
     public function discount(Request $req)
     {
+        $this->validate($req,
+        [
+            'code_coupon'=>'required'    
+        ],
+        [
+            'code_coupon.required'=>'Điền một mã giảm giá'
+        ]);
         $data = $req->all();
         $now=date("Y/m/d h:i:s");
         $duration=Coupon::where('code',$data['code_coupon'])->value('duration');

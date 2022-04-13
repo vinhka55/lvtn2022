@@ -1,3 +1,6 @@
 .ck-editor__editable {
     min-height: 300px !important;
 }
+.table-visitors thead tr th, .table-visitors thead tr td {
+    color: black;
+}

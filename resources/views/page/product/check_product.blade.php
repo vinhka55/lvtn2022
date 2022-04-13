@@ -1,6 +1,8 @@
 @extends("welcome")
 @section("content")
 @include("page.header.header")
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v13.0" nonce="HPaXPNLU"></script>
 <div class="container-fluid p-2">
     <div class="product-details row p-0 m-0">
         <!--product-details-->
@@ -15,8 +17,18 @@
         </nav>
         <div class="col-12 col-md-5">
             <div class="view-product">
-                <img src="{{url('/')}}/public/uploads/product/{{$item->image}}" alt="image" width="100%" />
+                <ul id="lightSlider">
+                    <li data-thumb="{{url('/')}}/public/uploads/product/{{$item->image}}">
+                        <img src="{{url('/')}}/public/uploads/product/{{$item->image}}" width="100%"/>
+                    </li>
+                    @foreach($gallerys as $gallery)
+                    <li data-thumb="{{url('/')}}/public/uploads/gallery/{{$gallery->image}}">               
+                        <img src="{{url('/')}}/public/uploads/gallery/{{$gallery->image}}" width="100%"/>               
+                    </li>
+                    @endforeach        
+                </ul>
             </div>
+
         </div>
         <div class="col-12 col-md-7">
             <div class="product-information">
@@ -56,6 +68,15 @@
                         </form>
                         <!-- end add to cart by ajax -->
                     </form>
+                    <br>
+                    <div class="handle-social">
+                        <div class="fb-like" data-href="{{url()->current()}}" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="false"></div>
+                        <div class="fb-share-button" data-href="{{url()->current()}}" data-layout="button_count" data-size="small">
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
+                                Chia sẻ
+                            </a>
+                        </div>
+                    </div>
                 </span>
             </div>
             <!--/product-information-->

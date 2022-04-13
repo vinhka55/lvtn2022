@@ -102,6 +102,7 @@ width: 50%;
     position: absolute;
     top: 47px;
 }
+
 @media only screen and (min-width: 1300px) {
 .d-flex.flex-start.mt-3.ms-5 {
     padding-left: 275px;
@@ -134,6 +135,7 @@ ul.status-order {
     width: 250px;
     animation: fadeInOpacity 0.5s linear;
     padding: 0;
+    box-shadow: 2px 2px 5px gray;
 }
 ul.status-order li{
     color: #333;
@@ -190,3 +192,31 @@ ul.status-order li{
     }
 }
 
+.sort{
+    display: flex;
+}
+.sort-sold{
+    margin-left: 15px;
+}
+
+
+.view-product {
+    width:270px;
+    margin-top: 5px;
+}
+.view-product ul {
+    list-style: none outside none;
+    padding-left: 0;
+    margin-bottom:0;
+}
+.view-product ul li {
+    /* display: block; */
+    float: left;
+    margin-right: 6px;
+    cursor:pointer;
+}
+.view-product ul img {
+    /* display: block; */
+    height: auto;
+    max-width: 100%;
+}

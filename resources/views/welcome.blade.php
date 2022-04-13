@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="description" content="THỰC PHẨM HỮU NGHỊ chuyên cung cấp thịt đông lạnh nhập khẩu, thịt tươi sạch chất lượng, uy tín, giá rẻ. Tất cả các sản phẩm đều qua kiểm dịch."/>
+    <meta name="keywords" content="thưc phẩm, thức ăn, tươi sạch, food"/>
+    <meta name="robots" content="INDEX,FOLLOW"/>
+    <meta name="title" content="THỰC PHẨM HỮU NGHỊ | Cung Cấp Thực Phẩm Nhập Khẩu Ngon Và Sạch"/>
+
+    <meta property="og:image" content="https://baoquocte.vn/stores/news_dataimages/phamthuan/022022/26/16/lo-ngai-it-co-co-hoi-gianh-danh-hieu-ronaldo-co-kha-nang-roi-man-utd.jpg?rt=20220226165204" >
+    <meta property="og:site_name" content="lvtnhoa.com" >
+    <meta property="og:description" content="Sản phẩm này đảm bảo an toàn vệ sinh thực phẩm được chứng nhận an toàn vệ sinh thực phẩm ISO-2000, được người tiêu dùng lựa chọn nhiều nhất" >
+    <meta property="og:title" content="Thực Phẩm Nhập Khẩu Tươi Ngon Và Sạch" >
+    <meta property="og:url" content="{{url()->current()}}" >
+    <meta property="og:type" content="website" >
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+    <link rel="stylesheet" href="{{url('/')}}/public/frontend/css/lightSlider.css">
+    <link rel="stylesheet" href="{{url('/')}}/public/frontend/css/prettify.css">
+
+    <script src="{{url('/')}}/public/frontend/js/jquery.js"></script>
+    <script src="{{url('/')}}/public/frontend/js/lightslider.js"></script>
+    <script src="{{url('/')}}/public/frontend/js/prettify.js"></script>
+
+    <link  rel="canonical" href="{{url()->current()}}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="{{url('/')}}/public/frontend/css/sweetalert.css" rel="stylesheet">
     <link href="{{url('/')}}/public/frontend/css/app.css" rel="stylesheet">
@@ -167,15 +188,16 @@
 </body>
 </html>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<script src="{{url('/')}}/public/frontend/js/jquery.js"></script>
-<script src="{{url('/')}}/public/frontend/js/bootstrap.min.js"></script>
+
+{{-- <script src="{{url('/')}}/public/frontend/js/bootstrap.min.js"></script> --}}
 <script src="{{url('/')}}/public/frontend/js/jquery.scrollUp.min.js"></script>
 <script src="{{url('/')}}/public/frontend/js/price-range.js"></script>
 <script src="{{url('/')}}/public/frontend/js/jquery.prettyPhoto.js"></script>
 <script src="{{url('/')}}/public/frontend/js/main.js"></script>
 <script src="{{url('/')}}/public/frontend/js/sweetalert.min.js"></script>
+
 
 
 <script type="text/javascript">
@@ -599,9 +621,20 @@
                                 console.log(xhr.responseText);
                             }
                         });
-                        swal("Cảm ơn bạn đã mua hàng!", {
-                        icon: "success",
-                        });
+                        swal({
+                            title: "Cảm ơn bạn đã mua hàng",
+                            icon: "success",
+                            buttons: ["Tiếp tục mua", "Lịch sử mua"],
+                            dangerMode: true,
+                            
+                            })
+                            .then((willDelete) => {
+                            if (willDelete) {
+                                window.location.href = "{{url('/')}}/don-hang-cua-toi"
+                            } else {
+                                window.location.href = "{{url('/')}}"
+                            }
+                            });
                         //window.location.href = "{{url('/')}}/don-hang-cua-toi";
                         }
                     });          
@@ -609,3 +642,17 @@
             })
         })
     </script>
+    <script>
+  $(document).ready(function() {
+ 
+    $('#lightSlider').lightSlider({
+    gallery: true,
+    item: 1,
+    loop:true,
+    slideMargin: 0,
+    thumbItem: 9
+}); 
+ 
+  });
+  </script>
+  

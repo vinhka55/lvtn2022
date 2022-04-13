@@ -88,7 +88,8 @@ class ProductController extends Controller
         //load avatar to comment
         $my_avatar=DB::table('user')->where('id',Session::get('user_id'))->value('avatar');
         $product=Product::with('category')->where('id',$id)->get();
-        echo view('page.product.check_product',['product'=>$product,'my_avatar'=>$my_avatar]);
+        $gallerys=Gallery::where('product_id',$id)->get();
+        echo view('page.product.check_product',['product'=>$product,'my_avatar'=>$my_avatar,'gallerys'=>$gallerys]);
     }
     public function edit($id)
     {
@@ -125,7 +126,7 @@ class ProductController extends Controller
         $id=CategoryProduct::where('slug',$slug)->value('id');
         $name_category=CategoryProduct::where('slug',$slug)->value('name');
         $product=Product::where('category_id',$id)->get();
-        return view('page.product.show_product_with_category',compact('product','name_category'));
+        return view('page.product.show_product_with_category',compact('product','name_category','slug'));
     }
     public function add_gallery($id)
     {
@@ -212,5 +213,29 @@ class ProductController extends Controller
         else{
             echo 'not ok';
         }
+    }
+    public function search_product_with_price($type,$slug)
+    {
+        $category_id=CategoryProduct::where('slug',$slug)->value('id');
+        $name_category=CategoryProduct::where('slug',$slug)->value('name');
+        if($type=='up'){
+            $product=Product::where('category_id',$category_id)->orderBy('price','asc')->get();          
+        }
+        else{
+            $product=Product::where('category_id',$category_id)->orderBy('price','desc')->get();
+        }
+        return view('page.product.show_product_sort',compact('product','slug','name_category'));
+    }
+    public function search_product_with_sold($type,$slug)
+    {
+        $category_id=CategoryProduct::where('slug',$slug)->value('id');
+        $name_category=CategoryProduct::where('slug',$slug)->value('name');
+        if($type=='up'){
+            $product=Product::where('category_id',$category_id)->orderBy('count_sold','asc')->get();          
+        }
+        else{
+            $product=Product::where('category_id',$category_id)->orderBy('count_sold','desc')->get();
+        }
+        return view('page.product.show_product_sort',compact('product','slug','name_category'));
     }
 }

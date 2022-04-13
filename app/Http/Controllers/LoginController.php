@@ -11,6 +11,7 @@ use App\Models\Cart as C;
 use Session;
 use DB;
 use Cart;
+use App\Rules\CaptchaRegister;
 
 class LoginController extends Controller
 {
@@ -97,19 +98,20 @@ class LoginController extends Controller
     }
     public function register(Request $req)
     {
-        $this->validate($req,[
+        $data=$req->validate([
             'name'=>"required",
             'email'=>"required|email",
             'password'=>'min:6|required|same:repassword',
             'repassword'=>'min:6',
             'phone'=>"required",
+            'g-recaptcha-response'=>'required',
         ]);
-        $data=[];
-        $data['name']=$req->name;
-        $data['email']=$req->email;
-        $data['password']=$req->password;
-        $data['phone']=$req->phone;
-        $user_id=DB::table('user')->insertGetId($data);
+        $new_user=[];
+        $new_user['name']=$req->name;
+        $new_user['email']=$req->email;
+        $new_user['password']=$req->password;
+        $new_user['phone']=$req->phone;
+        $user_id=DB::table('user')->insertGetId($new_user);
         Session::put('user_id',$user_id);
         Session::put('name_user',$req->name);
         return redirect('/');

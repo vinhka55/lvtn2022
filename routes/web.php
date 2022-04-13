@@ -42,6 +42,8 @@ Route::post('select-gallery','App\Http\Controllers\ProductController@select_gall
 Route::post('xu-ly-them-gallery','App\Http\Controllers\ProductController@handle_add_image_gallery')->name('handle_add_image_gallery');
 Route::post('xoa-gallery','App\Http\Controllers\ProductController@delete_gallery')->name('delete_gallery');
 Route::post('thay-doi-anh-gallery','App\Http\Controllers\ProductController@change_image_gallery')->name('change_image_gallery');
+Route::get('tim-kiem-san-pham-theo-gia/{type}/{slug}','App\Http\Controllers\ProductController@search_product_with_price')->name('search_product_with_price');
+Route::get('tim-kiem-san-pham-theo-so-luong-da-ban/{type}/{slug}','App\Http\Controllers\ProductController@search_product_with_sold')->name('search_product_with_sold');
 
 
 //cart 
@@ -180,3 +182,9 @@ Route::get('noi-dung-tin-tuc/{slug}','App\Http\Controllers\NewsController@detail
 Route::post('insert-notification','App\Http\Controllers\NotificationsController@insert_notification')->name('insert_notification');
 Route::get('count-notification','App\Http\Controllers\NotificationsController@count_notifications')->name('count_notifications');
 Route::get('handle-show-notifications','App\Http\Controllers\NotificationsController@show_notifications')->name('show_notifications');
+
+
+//Statistic
+Route::post('loc-doanh-thu-theo-thoi-gian','App\Http\Controllers\StatisticController@filter_turnover')->name('filter_turnover');
+Route::get('doanh-thu-30-ngay','App\Http\Controllers\StatisticController@get_statistic_30days')->name('get_statistic_30days');
+Route::post('doanh-thu-theo-khoang-thoi-gian','App\Http\Controllers\StatisticController@get_statistic_with_time')->name('get_statistic_with_time');

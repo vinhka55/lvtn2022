@@ -82,7 +82,9 @@ class NotificationsController extends Controller
     {
 
         $notifications=Notifications::where('user_id',Session::get('user_id'))->orderBy('id','desc')->take(3)->get();
+ 
         $output='<ul class="status-order" style="position:absolute;">';
+        $output.='<li><b>Thông báo</b><br>--------------------------------</li>';
         foreach ($notifications as $key => $value) {
             if($value->watched==false){
                 $output.='<li style="background-color:#e7dada;">';

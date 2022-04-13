@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\Product;
+use Carbon\Carbon;
+use App\Models\Visitors;
+
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
         $ga_dong_lanh=DB::table('product')->where('category_id',1)->limit(6)->get();
         $ga_tuoi_sach=DB::table('product')->where('category_id',2)->limit(6)->get();
@@ -18,6 +21,17 @@ class HomeController extends Controller
         $gao_sach=DB::table('product')->where('category_id',7)->limit(6)->get();  
         $gia_vi=DB::table('product')->where('category_id',8)->limit(6)->get();
         $hot_product=Product::limit(6)->get();
+
+        //count visitor
+        $check_visitor=Visitors::where('ip_address',$req->ip());
+        if($check_visitor->count()<1){
+            $now=Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+            $visitor=new Visitors();
+            $visitor->ip_address=$req->ip();
+            $visitor->date_vistior=$now;
+            $visitor->save();
+        }
+
         return view('page.home',['ga_dong_lanh'=>$ga_dong_lanh,'ga_tuoi_sach'=>$ga_tuoi_sach,'bo_uc_my'=>$bo_uc_my,'thit_heo'=>$thit_heo,'trau_an_do'=>$trau_an_do,'hai_san'=>$hai_san,'gao_sach'=>$gao_sach,'gia_vi'=>$gia_vi,'hot_product'=>$hot_product]);
     }
     public function search(Request $req)

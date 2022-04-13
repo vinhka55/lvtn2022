@@ -11,7 +11,7 @@
                 @foreach($hot_product as $hot_pro)
                 <div class="col-12 col-md-2 my-2 ok">
                     <div class="card">
-                        <a href="{{route('detail_product',$hot_pro->id)}}"><img height="220px" src="{{url('/')}}/public/uploads/product/{{$hot_pro->image}}" alt="error" width="100%"></a>
+                        <a class="img-product-home" href="{{route('detail_product',$hot_pro->id)}}"><img height="220px" src="{{url('/')}}/public/uploads/product/{{$hot_pro->image}}" alt="error" width="100%"></a>
                         <div class="card-body">
                           <h3 class="card-text name-product">{{$hot_pro->name}}</h3>
                           <p class="price-product">{{number_format($hot_pro->price)}} VND</p>
