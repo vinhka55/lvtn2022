@@ -220,3 +220,15 @@ ul.status-order li{
     height: auto;
     max-width: 100%;
 }
+.or{
+    background: #198754;
+    border-radius: 40px;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 5px;
+    text-align: center;
+    width: 50px;
+}

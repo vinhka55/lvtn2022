@@ -28,7 +28,7 @@ class HomeController extends Controller
             $now=Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
             $visitor=new Visitors();
             $visitor->ip_address=$req->ip();
-            $visitor->date_vistior=$now;
+            $visitor->date_visitor=$now;
             $visitor->save();
         }
 

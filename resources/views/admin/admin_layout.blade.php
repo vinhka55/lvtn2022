@@ -231,8 +231,8 @@ $('.update-amount-product-in-order').click(function(e) {
                 alert('Cập nhật số lượng thành công');
                 location.reload();
             },
-            error: (error) => {
-                console.log(JSON.stringify(error)); 
+            error: (xhr) => {
+                console.log(xhr.responseText); 
             }
     });
 

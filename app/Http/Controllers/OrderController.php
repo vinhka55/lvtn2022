@@ -55,7 +55,7 @@ class OrderController extends Controller
         $data_order['customer_id']=Session::get('user_id');
         $data_order['shipping_id']=Session::get('shipping_id');
         $data_order['payment']=$req->pay;
-        $data_order['total_money']=Cart::total();
+        $data_order['total_money']=Cart::total()+Cart::total()*0.1;
         if(Session::has('discount')){
             $data_order['discount']=Session::get('discount');
         }else{
@@ -65,8 +65,7 @@ class OrderController extends Controller
         $order_id=DB::table('order')->insertGetId($data_order);
         $order_code=$req->order_code;
         
-        $messege="Cảm ơn bạn đã mua hàng, mã đơn hàng là: ".$data_order['order_code'];
-        echo $messege;
+        $messege="Cảm ơn bạn đã mua hàng, mã đơn hàng là: <b>".$data_order['order_code']."</b>";
         event(new InboxPusherEvent($messege));
 
         //insert chi tiết đơn hàng      
@@ -128,7 +127,7 @@ class OrderController extends Controller
     {
         $order_code=DB::table('order')->where('id',$orderId)->value('order_code');
         if(DB::table('order')->where('id',$orderId)->delete()){
-            $messege="Đơn hàng của bạn (".$order_code.") đã xóa";
+            $messege="Đơn hàng của bạn: <b>".$order_code."</b> đã hủy";
             event(new InboxPusherEvent($messege));
             return redirect('admin/danh-sach-don-hang');
         }
@@ -177,29 +176,46 @@ class OrderController extends Controller
     }
     public function delete_product_in_order($id,$quantyti)
     {
-        // $order_detail = OrderDetails::find($id);
-        // $order=Order::find($order_detail->order_id);
-        // $order->total_money=$order->total_money-$order_detail->product_price*$quantyti;
-        // $order->save();// update price of order
-        // $order_detail->delete();
-        event(new InboxPusherEvent("Yêu cầu hủy sản phẩm thành công"));
-        //return redirect()->back();
+        $order_detail = OrderDetails::find($id);
+        $order=Order::find($order_detail->order_id);
+        $order->total_money=$order->total_money-$order_detail->product_price*$quantyti-($order_detail->product_price*$quantyti)*0.1;
+        $order->save();// update price of order
+        $order_detail->delete();
+        event(new InboxPusherEvent("Sản phẩm <b>".$order_detail->product_name."</b> thuộc đơn hàng <b>".$order->order_code."</b> đã được xóa"));
+        return redirect()->back();
     }
     public function update_qty_product_in_order(Request $req)
     {
         $data=$req->all();
         $product_in_order=OrderDetails::find($data['id_detail']);
+
+        $order_id=OrderDetails::where('id',$data['id_detail'])->value('order_id');
+        $order=Order::find($order_id);
+
         $product_in_order->product_quantyti=$data['order_product_qty'];
         if($data['order_product_qty']>$data['initial_value']){
+            //cập nhật lại tổng sản phẩm còn lại trong kho
             $product=Product::find($product_in_order->product_id);
             $product->count=$product->count-($data['order_product_qty']-$data['initial_value']);
+            //cập nhật lại giá tiền đơn hàng
+            $money_extra=($data['order_product_qty']-$data['initial_value'])*$product->price;
+            $order->total_money=$order->total_money + $money_extra + 0.1*$money_extra;
             $product->save();
         }else{
+            //cập nhật lại tổng sản phẩm còn lại trong kho
             $product=Product::find($product_in_order->product_id);
             $product->count=$product->count+($data['initial_value']-$data['order_product_qty']);
+            //cập nhật lại giá tiền đơn hàng
+            $money_extra=($data['initial_value']-$data['order_product_qty'])*$product->price;
+            $order->total_money=$order->total_money - $money_extra - 0.1*$money_extra;
             $product->save();
         }
         $product_in_order->save();
+        $order->save();
+
+        //xuất thông báo ra UI người dùng
+        event(new InboxPusherEvent("Đơn hàng: <b>".$order->order_code."</b> có sự thay đổi. Số lượng sản phẩm <b>".$product_in_order->product_name."</b> được cập nhật bằng: <b class='text-danger'>".$data['order_product_qty']."</b>" ));
+        
     }
     public function my_order(Request $req)
     {
