@@ -220,3 +220,6 @@ ul.status-order li{
     height: auto;
     max-width: 100%;
 }
+.list-group{
+    flex-direction: row !important;
+}

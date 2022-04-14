@@ -47,6 +47,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{url('/')}}/public/backend/js/raphael-min.js"></script> --}}
 
 <link rel="stylesheet" href="{{url('/')}}/public/backend/css/admin.css">
+<style>
+    .sub {display: none;}
+</style>
 
 </head>
 <body>
@@ -107,7 +110,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fa fa-book"></i>
                         <span>Danh mục sản phẩm</span>
                     </a>
@@ -117,7 +120,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Sản phẩm</span>
                     </a>
@@ -127,7 +130,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Mã giảm giá</span>
                     </a>
@@ -137,7 +140,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Quản lý đơn hàng</span>
                     </a>
@@ -147,7 +150,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>  
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Quản lý bình luận</span>
                     </a>
@@ -158,7 +161,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li> 
                 
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Quản lý tin tức</span>
                     </a>
@@ -171,7 +174,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li> 
                 @hasrole('admin')
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Quản lý user</span>
                     </a>
@@ -351,5 +354,21 @@ $('#search-with-status').change(function() {
     window.location.href=this.value
 })
     </script>
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var sub = this.nextElementSibling;
+    if (sub.style.display === "block") {
+        sub.style.display = "none";
+    } else {
+        sub.style.display = "block";
+    }
+  });
+}
+</script>
 </body>
 </html>
