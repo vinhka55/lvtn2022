@@ -88,6 +88,10 @@ class ProductController extends Controller
         //load avatar to comment
         $my_avatar=DB::table('user')->where('id',Session::get('user_id'))->value('avatar');
         $product=Product::with('category')->where('id',$id)->get();
+        foreach ($product as $key => $value) {
+            $value->view=$value->view+1;
+            $value->save();
+        }
         $gallerys=Gallery::where('product_id',$id)->get();
         echo view('page.product.check_product',['product'=>$product,'my_avatar'=>$my_avatar,'gallerys'=>$gallerys]);
     }

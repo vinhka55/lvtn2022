@@ -188,3 +188,6 @@ Route::get('handle-show-notifications','App\Http\Controllers\NotificationsContro
 Route::post('loc-doanh-thu-theo-thoi-gian','App\Http\Controllers\StatisticController@filter_turnover')->name('filter_turnover');
 Route::get('doanh-thu-30-ngay','App\Http\Controllers\StatisticController@get_statistic_30days')->name('get_statistic_30days');
 Route::post('doanh-thu-theo-khoang-thoi-gian','App\Http\Controllers\StatisticController@get_statistic_with_time')->name('get_statistic_with_time');
+
+
+Route::get('/status', 'App\Http\Controllers\UserController@userOnlineStatus');

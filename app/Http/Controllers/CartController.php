@@ -8,6 +8,7 @@ use Cart;
 use Session;
 use App\Models\Coupon;
 use App\Models\Cart as C;
+use Auth;
 
 class CartController extends Controller
 {

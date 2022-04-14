@@ -68,7 +68,6 @@ class LoginController extends Controller
         ]);
         $data=DB::table('user')->where('email',$req->email)->where('password',$req->password)->get();
         if(count($data)!=0){
-            
                 foreach($data as $item){
                 Session::put('user_id',$item->id);
                 Session::put('name_user',$item->name);
@@ -111,6 +110,7 @@ class LoginController extends Controller
         $new_user['email']=$req->email;
         $new_user['password']=$req->password;
         $new_user['phone']=$req->phone;
+        $new_user['ip_address']=$req->ip();
         $user_id=DB::table('user')->insertGetId($new_user);
         Session::put('user_id',$user_id);
         Session::put('name_user',$req->name);

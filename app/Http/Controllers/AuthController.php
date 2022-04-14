@@ -40,8 +40,6 @@ class AuthController extends Controller
         $data=$req->all();
 
         if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-                // echo Auth::id();
-                // return;
             return redirect('/admin');
         }
         else{

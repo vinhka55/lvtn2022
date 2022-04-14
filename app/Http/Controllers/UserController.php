@@ -7,6 +7,8 @@ use App\Models\Admin;
 use App\Models\User;
 use App\Models\Roles;
 use Auth;
+use Cache;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -52,5 +54,15 @@ class UserController extends Controller
             $user->save();        
         }
         return redirect('/thong-tin-tai-khoan');
+    }
+    public function userOnlineStatus()
+    {
+        $users = User::all();
+        foreach ($users as $user) {
+            if (Cache::has('user-is-online-' . $user->id))
+                echo $user->name . " is online. Last seen: " . Carbon::parse($user->last_seen)->diffForHumans() . " <br>";
+            else
+                echo $user->name . " is offline. Last seen: " . Carbon::parse($user->last_seen)->diffForHumans() . " <br>";
+        }
     }
 }

@@ -6,6 +6,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Visitors;
 use Carbon\Carbon;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\News;
 
 class AdminController extends Controller
 {
@@ -28,6 +31,21 @@ class AdminController extends Controller
         $visitors_all=Visitors::all();
         $visitors_all_count=$visitors_all->count();
 
-        return view('admin.dashboard',compact('visitor_this_month_count','visitor_last_month_count','visitor_one_year_count','visitors_all_count'));
+        $all_product=Product::all();
+        $all_product_count=$all_product->count();
+
+        $all_order=Order::all();
+        $all_order_count=$all_order->count();
+
+        $all_news=News::all();
+        $all_news_count=$all_news->count();
+
+        //sản phẩm dc xem nhiều
+        $product_many_view=Product::orderBy('view','desc')->take(10)->get();
+
+        //bài viết được xem nhiều
+        $news_many_view=News::orderBy('view','desc')->take(10)->get();
+
+        return view('admin.dashboard',compact('visitor_this_month_count','visitor_last_month_count','visitor_one_year_count','visitors_all_count','all_product_count','all_order_count','all_news_count','product_many_view','news_many_view'));
     }
 }
