@@ -41,7 +41,7 @@
                                     <td>{{date('d-m-Y h:i:s', strtotime($item->created_at))}}</td>
                                     <td><p <?php 
                                     if($item->status=="Đã xử lý")echo "class='text-success'";
-                                    else if($item->status=="Đang chờ xử lý")echo "class='text-warning'";
+                                    else if($item->status=="Đang chờ xử lý")echo "class='text-warning wait-status-".$item->id."'";
                                     else if($item->status=="Đã thanh toán-chờ nhận hàng")echo "class='text-info'";
                                     else if($item->status=="Đơn đã hủy")echo "class='text-danger'";
                                     ?>>{{$item->status}}</p></td>                      
@@ -50,7 +50,7 @@
                                     <!-- <td><button class="btn btn-danger cancel-order">Hủy đơn</button></td> -->
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$item->id}}">
+                                        <button  type="button" class="btn btn-danger btn-cancel-{{$item->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$item->id}}">
                                         Hủy đơn hàng
                                         </button>
 
@@ -72,7 +72,7 @@
                                                 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                    <button type="submit" class="btn btn-primary" onclick="cancel_order({{$item->id}})">Gửi</button>             
+                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="cancel_order({{$item->id}})">Gửi</button>             
                                                 </div>
                                                 </div>
                                             </div>

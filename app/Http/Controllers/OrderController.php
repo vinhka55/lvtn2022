@@ -215,7 +215,6 @@ class OrderController extends Controller
 
         //xuất thông báo ra UI người dùng
         event(new InboxPusherEvent("Đơn hàng: <b>".$order->order_code."</b> có sự thay đổi. Số lượng sản phẩm <b>".$product_in_order->product_name."</b> được cập nhật bằng: <b class='text-danger'>".$data['order_product_qty']."</b>" ));
-        
     }
     public function my_order(Request $req)
     {

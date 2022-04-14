@@ -13,6 +13,7 @@ use DB;
 use Cart;
 use App\Rules\CaptchaRegister;
 use App\Events\InboxPusherEvent;
+use Toastr;
 
 class LoginController extends Controller
 {
@@ -76,6 +77,7 @@ class LoginController extends Controller
                 foreach($data as $item){
                 Session::put('user_id',$item->id);
                 Session::put('name_user',$item->name);
+                Toastr::success('Đăng nhập thành công', 'Thành công');
                 return redirect('/');
                 }
         }else{

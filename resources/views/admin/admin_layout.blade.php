@@ -46,7 +46,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 {{-- <script src="{{url('/')}}/public/backend/js/jquery2.0.3.min.js"></script>
 <script src="{{url('/')}}/public/backend/js/raphael-min.js"></script> --}}
 
+<link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
 <link rel="stylesheet" href="{{url('/')}}/public/backend/css/admin.css">
+<style>
+    .sub {display: none;}
+</style>
 
 </head>
 <body>
@@ -107,7 +112,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                 
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fa fa-book"></i>
                         <span>Danh mục sản phẩm</span>
                     </a>
@@ -117,7 +122,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Sản phẩm</span>
                     </a>
@@ -127,7 +132,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Mã giảm giá</span>
                     </a>
@@ -137,7 +142,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Quản lý đơn hàng</span>
                     </a>
@@ -147,7 +152,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>  
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Quản lý bình luận</span>
                     </a>
@@ -158,7 +163,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li> 
                 
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Quản lý tin tức</span>
                     </a>
@@ -171,7 +176,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li> 
                 @hasrole('admin')
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
                         <span>Quản lý user</span>
                     </a>
@@ -213,8 +218,56 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 {{-- <script src="{{url('/')}}/public/backend/js/jquery.min.js"></script>	 --}}
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+{!! Toastr::message() !!}
 
-
+<script type="text/javascript">
+    $('.order_details').change(function(){
+        var order_status = $(this).val();
+        var order_id = $(this).children(":selected").attr("id");
+        var _token = $('input[name="_token"]').val();
+        //lay ra so luong
+        quantity = [];
+        $("input[name='product_sales_quantity']").each(function(){
+            quantity.push($(this).val());
+        });
+        //lay ra product id
+        order_product_id = [];
+        $("input[name='order_product_id']").each(function(){
+            order_product_id.push($(this).val());
+        });
+        j = 0;
+        // for(i=0;i<order_product_id.length;i++){
+        //     //so luong khach dat
+        //     var order_qty = $('.order_qty_' + order_product_id[i]).val();
+        //     //so luong ton kho
+        //     var order_qty_storage = $('.order_qty_storage_' + order_product_id[i]).val();
+        //     if(parseInt(order_qty)>parseInt(order_qty_storage)){
+        //         j = j + 1;
+        //         if(j==1){
+        //             alert('Số lượng bán trong kho không đủ');
+        //         }
+        //         $('.color_qty_'+order_product_id[i]).css('background','#000');
+        //     }
+        // }
+        if(j==0){
+        
+                $.ajax({
+                        url : "{{route('update_status_of_product_in_order')}}",
+                            method: 'POST',
+                            data:{_token:_token, order_status:order_status ,order_id:order_id ,quantity:quantity, order_product_id:order_product_id},
+                            success:function(data){
+                                alert('Thay đổi tình trạng đơn hàng thành công');
+                                location.reload();
+                            },
+                            error: (error) => {
+                                console.log(JSON.stringify(error));
+                            }
+                });           
+        }
+    });
+</script>
 <script type="text/javascript">
 $('.update-amount-product-in-order').click(function(e) {
     e.preventDefault()
@@ -228,15 +281,15 @@ $('.update-amount-product-in-order').click(function(e) {
             method: 'POST',
             data:{_token:_token, id_detail:id_detail ,order_product_qty:order_product_qty,initial_value:initial_value},
             success:function(data){
-                alert('Cập nhật số lượng thành công');
-                location.reload();
+                toastr.success('Cập nhật thành công', 'Thành công');
+                //location.reload();
             },
             error: (xhr) => {
                 console.log(xhr.responseText); 
             }
-    });
+        });
 
-})
+    })
 </script>
 
 <script type="text/javascript">
@@ -347,9 +400,26 @@ $('.delete-user').click(function(e) {
     }
 </script>
 <script>
-$('#search-with-status').change(function() {
-    window.location.href=this.value
-})
+    $('#search-with-status').change(function() {
+        window.location.href=this.value
+    })
     </script>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var sub = this.nextElementSibling;
+        if (sub.style.display === "block") {
+            sub.style.display = "none";
+        } else {
+            sub.style.display = "block";
+        }
+    });
+    }
+</script>
+
 </body>
 </html>

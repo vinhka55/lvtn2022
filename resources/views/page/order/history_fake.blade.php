@@ -147,7 +147,7 @@
                                     <!-- <td><button class="btn btn-danger cancel-order">Hủy đơn</button></td> -->
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$item->id}}">
+                                        <button  type="button" class="btn btn-danger btn-cancel-{{$item->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$item->id}}">
                                         Hủy đơn hàng
                                         </button>
 
@@ -169,7 +169,7 @@
                                                 
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                    <button type="submit" class="btn btn-primary" onclick="cancel_order({{$item->id}})">Gửi</button>             
+                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="cancel_order({{$item->id}})">Gửi</button>             
                                                 </div>
                                                 </div>
                                             </div>

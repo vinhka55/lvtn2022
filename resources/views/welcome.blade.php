@@ -25,6 +25,8 @@
     <script src="{{url('/')}}/public/frontend/js/lightslider.js"></script>
     <script src="{{url('/')}}/public/frontend/js/prettify.js"></script>
 
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
     <link  rel="canonical" href="{{url()->current()}}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="{{url('/')}}/public/frontend/css/sweetalert.css" rel="stylesheet">
@@ -544,10 +546,14 @@
             data:{reason_cancel_order:reason_cancel_order,order_id:order_id,},
             
             success:function(){
-                location.reload()
+                    //location.reload()
+                    toastr.success('Hủy đơn hàng thành công', 'Thành công');
+                    $('.btn-cancel-'+order_id).hide()
+                    $('.wait-status-'+order_id).html('<p class="text-danger">Đơn đã hủy</p>')
+                    // $('#exampleModal-'+order_id).hide()
                 },
             error:function(xhr){
-                console.log(xhr.responseText);
+                    console.log(xhr.responseText);
                 }
             });
         }
@@ -655,4 +661,7 @@
  
   });
   </script>
+  <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+  <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+  {!! Toastr::message() !!}
   
