@@ -176,11 +176,18 @@ class OrderController extends Controller
     }
     public function delete_product_in_order($id,$quantyti)
     {
+        //Cập nhật lại số lương sản phẩm còn trong kho
+        $product_id=OrderDetails::where('id',$id)->value('product_id');
+        $product=Product::find($product_id);
+        $product->count=$product->count+$quantyti;
+        $product->save();
+        
         $order_detail = OrderDetails::find($id);
         $order=Order::find($order_detail->order_id);
         $order->total_money=$order->total_money-$order_detail->product_price*$quantyti-($order_detail->product_price*$quantyti)*0.1;
         $order->save();// update price of order
         $order_detail->delete();
+
         event(new InboxPusherEvent("Sản phẩm <b>".$order_detail->product_name."</b> thuộc đơn hàng <b>".$order->order_code."</b> đã được xóa"));
         return redirect()->back();
     }

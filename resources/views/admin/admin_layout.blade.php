@@ -224,6 +224,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <script type="text/javascript">
     $('.order_details').change(function(){
+        $(this).prop('disabled', true);
         var order_status = $(this).val();
         var order_id = $(this).children(":selected").attr("id");
         var _token = $('input[name="_token"]').val();
@@ -258,8 +259,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             method: 'POST',
                             data:{_token:_token, order_status:order_status ,order_id:order_id ,quantity:quantity, order_product_id:order_product_id},
                             success:function(data){
-                                alert('Thay đổi tình trạng đơn hàng thành công');
-                                location.reload();
+                                
+                                //alert('Thay đổi tình trạng đơn hàng thành công');
+                                $('.action-delete-product').hide()
+                                $('.update-amount-product-in-order').hide()
+                                $('.qty-product-detail-order').addClass('disable-input')
+                                
+                                
+                                
+                                toastr.success('Thay đổi tình trạng đơn hàng thành công', 'Thành công');
+                                //location.reload();
                             },
                             error: (error) => {
                                 console.log(JSON.stringify(error));
@@ -272,7 +281,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 $('.update-amount-product-in-order').click(function(e) {
     e.preventDefault()
     var id_detail=$(this).data('id_detail')
+    var id_product=$(this).data('id_product')
+    var count_product=$(this).data('count_product')
     var initial_value=$(this).data('initial_value')
+    var price_product=$(this).data('price_product')
     var order_product_qty=$('.order_product_qty_'+id_detail).val()
     var _token = $('input[name="_token"]').val();
 
@@ -282,13 +294,25 @@ $('.update-amount-product-in-order').click(function(e) {
             data:{_token:_token, id_detail:id_detail ,order_product_qty:order_product_qty,initial_value:initial_value},
             success:function(data){
                 toastr.success('Cập nhật thành công', 'Thành công');
-                //location.reload();
+                if(order_product_qty>initial_value){
+                    qty=count_product-(order_product_qty-initial_value)
+                    $('.amount-product-'+id_product).html(qty)
+                }
+                else{
+                    qty=count_product+(initial_value-order_product_qty)
+                    $('.amount-product-'+id_product).html(qty)
+                }
+                total_money=price_product*order_product_qty
+                vat=0.1*total_money
+                all=total_money+vat
+                $('.total-money-order').text(total_money+' VND')
+                $('.vat-order').text(vat+ ' VND')
+                $('.all-this-order').text(all+' VND')
             },
             error: (xhr) => {
                 console.log(xhr.responseText); 
             }
         });
-
     })
 </script>
 
