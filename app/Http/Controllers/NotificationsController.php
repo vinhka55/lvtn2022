@@ -35,8 +35,7 @@ class NotificationsController extends Controller
         $count_notifications=Notifications::where('user_id',Session::get('user_id'))->where('watched',false)->get();
         return count($count_notifications);
     }
-    public function timeDiff($firstTime)
-    {
+    public function timeDiff($firstTime){
         date_default_timezone_set("Asia/Ho_Chi_Minh");
         $now=date("Y-m-d H:i:s");
 

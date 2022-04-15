@@ -26,11 +26,8 @@
         <table class="table table-striped b-t b-light" id="myTable">
             <thead>
             <tr>
-                <th style="width:20px;">
-                <label class="i-checks m-b-none">
-                    <input type="checkbox"><i></i>
-                </label>
-                </th>
+                
+                <th>Thời gian</th>
                 <th>Mã đơn hàng</td>
                 <th>Tổng giá tiền <a href="{{route('down_price_order')}}"><i class="fas fa-arrow-down"></i></a> <a href="{{route('up_price_order')}}"><i class="fas fa-arrow-up"></i></a></th>
                 <th>Tình trạng <select id="search-with-status" width="20%" class="form-select form-select-sm" aria-label=".form-select-sm example">
@@ -48,8 +45,59 @@
             <tbody>
                         
                         @foreach($data as $item)
-                        <tr>
-                            <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <tr>                                                
+                            <td>
+                                @php   
+                                    
+                                    date_default_timezone_set("Asia/Ho_Chi_Minh");
+                                    $now=date("Y-m-d H:i:s");
+
+                                    $firstTime = strtotime($item->updated_at);
+                                    $lastTime = strtotime($now);
+
+                                    $difference = $lastTime - $firstTime;
+
+                                    $data['years'] = abs(floor($difference / 31556926));
+                                    $data['month'] = abs(floor($difference / 2629743));
+                                    $data['days'] = abs(floor($difference / 86400));
+                                    $data['hours'] = abs(floor($difference / 3600));
+                                    $data['minutes'] = abs(floor($difference / 60));
+                                    $data['seconds']=$difference;
+                                    $timeString = '';
+
+                                    if ($data['years'] > 0) {
+                                        $timeString .= $data['years'] . " năm trước ";
+                                        echo $timeString;
+                                    }
+                                    else if ($data['month'] > 0) {
+                                        $timeString .= $data['month'] . " tháng trước ";
+                                        echo $timeString;
+                                    }
+                                    else if ($data['days'] > 0) {
+                                        if($data['days']<2){
+                                            echo "Hôm qua";
+                                        }
+                                        else{
+                                            $timeString .= $data['days'] . " ngày trước ";
+                                            echo $timeString;
+                                        }                   
+                                    }
+
+                                    else if ($data['hours'] > 0) {
+                                        $timeString .= $data['hours'] . " giờ trước ";
+                                        echo $timeString;
+                                    }
+
+                                    else if ($data['minutes'] > 0) {
+                                        $timeString .= $data['minutes'] . " phút trước";
+                                        echo $timeString;
+                                    }
+                                    else{
+                                        echo $difference. " giây trước";  
+                                    }             
+                                    
+                                @endphp
+                            </td>
                             <td><p class="text-ellipsis name">{{$item->order_code}}</p></td>
                             <td><p class="text-ellipsis name">{{number_format($item->total_money)}} VND</p></td>                       
                             <td><p 

@@ -99,10 +99,12 @@ class OrderController extends Controller
         Cart::clear();
 
     }
+    
     public function list_order()
     {
+        
         $data=DB::table('order')->join('user','order.customer_id','=','user.id')->select('order.*','user.name')->orderby('order.id','desc')->get();
-        return view('admin.order.list',['data'=>$data]);
+        return view('admin.order.list',compact('data'));
     }
     public function detail_order($orderId)
     {
