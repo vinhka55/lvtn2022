@@ -165,6 +165,8 @@ class OrderController extends Controller
                 $coupon->save();
             }
             $order->reason="Admin hủy";
+            //realtime notification change status order
+            event(new InboxPusherEvent("Đơn hàng <b>".$order->order_code."</b> của bạn đã hủy"));
         }
         else{
             for($i=0;$i<count($data['order_product_id']);$i++){
@@ -175,6 +177,9 @@ class OrderController extends Controller
             }
         }
         $order->save();
+
+        
+
     }
     public function delete_product_in_order($id,$quantyti)
     {

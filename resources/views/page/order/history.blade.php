@@ -31,8 +31,7 @@
                         <th></th>
                     </tr>
                     </thead>
-                    <tbody>
-                                
+                    <tbody>                            
                                 @foreach($data as $item)
                                 <tr>
                                     <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
@@ -83,11 +82,11 @@
                                 @endforeach                    
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                    {{ $data->render("pagination::bootstrap-4") }}
+                </div>
             </div>
-        </div>
-        
-                    {{$data->links()}}
-
+        </div>                  
     </div>
     @endif 
 @stop

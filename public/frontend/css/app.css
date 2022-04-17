@@ -129,25 +129,25 @@ i.fas.fa-bell {
 }
 ul.status-order {
     right: 5px;
-    border-radius: 10px;
     background-color: white;
     margin-top: 15px;
-    width: 250px;
-    animation: fadeInOpacity 0.5s linear;
+    width: 400px;
+    animation: fadeInOpacity 0.2s linear;
     padding: 0;
     box-shadow: 2px 2px 5px gray;
 }
 ul.status-order li{
-    color: #333;
+    color: #333333;
     line-height: 18px;
-    font-size: 17px;
-    padding: 10px;
+    font-size: 14px;
+    padding: 5px;
     border-radius: 7px;
 }
 .time-notification{
     color: red;
     font-weight: 500;
     margin-top: 6px;
+    margin-bottom: 0;
 }
 @keyframes fadeInOpacity {
     from{

@@ -98,7 +98,7 @@ class NotificationsController extends Controller
                 $output.='<p class="time-notification">'.$this->timeDiff($value->time).'</p>';
                 $output.='</li>';           
             }        
-            $output.='<hr>';
+            // $output.='<hr>';
         }
         $output.='</ul>';
         $notification=Notifications::where('watched',false)->get();
