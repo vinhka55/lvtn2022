@@ -4,6 +4,68 @@
 <div class="container-fluid p-3">
 <div class="content-page">  
         <div class="body-content">
+             <!-- Sản phẩm dành cho bạn -->
+            
+             <div class="cool-chicken product row m-0 p-0 m-0 p-0">
+                    <h1 class="title-hot-product p-2 m-0 bg-success text-white">SẢN PHẨM DÀNH CHO BẠN</h1>    
+                    <div class="test-reponsive">                    
+                    @foreach($ga_dong_lanh as $ga1)
+                    <div class="col-12 col-md-2 my-2 ok">                                              
+                        <div class="card">
+                            <a href="{{route('detail_product',$ga1->id)}}"><img height="220px" src="{{url('/')}}/public/uploads/product/{{$ga1->image}}" alt="error" width="100%"></a>
+                            <div class="card-body">
+                            <h3 class="card-text name-product">{{$ga1->name}}</h3>
+                            <p class="price-product">Giá: {{number_format($ga1->price)}} VND</p>
+                            <a href="{{route('detail_product',$ga1->id)}}">Chi tiết</a>
+                            <!-- icon eyes trigger modal -->                         
+                            <i type="button" class="fas fa-eye ms-3" data-bs-toggle="modal" data-bs-target="#quickview-{{$ga1->id}}"></i>
+                            <!-- Modal -->
+                            <div class="modal fade" id="quickview-{{$ga1->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog container">
+                                    <div class="modal-content">
+                                        <img width="100%" src="{{url('/')}}/public/uploads/product/{{$ga1->image}}" alt="hot product">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Tên sản phẩm: {{$ga1->name}}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Giá: <?php echo number_format($ga1->price) ?> VND
+                                        </div>
+                                        <div class="modal-body">
+                                            Xuất xứ: {{$ga1->origin}}
+                                        </div>
+                                        <div class="modal-body">
+                                            Hạn dùng: {{ \Carbon\Carbon::parse($ga1->exp)->format('d/m/Y')}}
+                                        </div>
+                                        <div class="modal-body">
+                                            Đã bán: {{$ga1->count_sold}}
+                                        </div>  
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary"><a class="text-white" href="{{route('detail_product',$ga1->id)}}">Xem nhiều hơn</a></button>
+                                        </div>     
+                                    </div>                                                                                              
+                                </div>
+                            </div>
+                            <!-- add to cart by ajax -->
+                            <form>
+                                @csrf
+                                <input type="hidden" value="{{$ga1->id}}" class="cart_product_id_{{$ga1->id}}">
+                                <input type="hidden" value="{{$ga1->name}}" class="cart_product_name_{{$ga1->id}}">
+                                <input type="hidden" value="{{$ga1->image}}" class="cart_product_image_{{$ga1->id}}">
+                                <input type="hidden" value="{{$ga1->price}}" class="cart_product_price_{{$ga1->id}}">
+                                <input type="hidden" value="1" class="cart_product_qty_{{$ga1->id}}">
+                                <button type="button" name="add-to-cart" class="btn btn-primary add-to-cart" data-id_product="{{$ga1->id}}"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</button>
+                            </form>
+                            <!-- end add to cart by ajax -->
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach  
+                    </div>                                                                 
+                </div>
+            
+
             <!-- sản phẩm hot -->
             <div class="hot-product product row m-0 p-0 m-0 p-0">
                 <h1 class="title-hot-product p-2 m-0 bg-success text-white">SẢN PHẨM HOT</h1>
