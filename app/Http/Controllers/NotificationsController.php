@@ -14,12 +14,12 @@ class NotificationsController extends Controller
     public function getPusher(){
         // gọi ra trang view demo-pusher.blade.php
         return view("page.realtime.notification");
-    }
-    public function fireEvent(){
-        // Truyền message lên server Pusher
-        event(new InboxPusherEvent("Thông báo: Yêu cầu hủy sản phẩm thành công"));
-        return "Message has been sent.";
-    }
+    } 
+    // public function fireEvent(){
+    //     // Truyền message lên server Pusher
+    //     event(new InboxPusherEvent("Thông báo: Yêu cầu hủy sản phẩm thành công"));
+    //     return "Message has been sent.";
+    // }
     public function insert_notification(Request $req)
     {
         $notification=new Notifications();

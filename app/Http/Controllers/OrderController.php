@@ -255,7 +255,8 @@ class OrderController extends Controller
         $order->reason=$req->reason_cancel_order;
         $order->status="Đơn đã hủy";
         $order->save();
-
+        $messege="Bạn đã hủy đơn hàng mã: <b>".$order['order_code']."</b>";
+        event(new InboxPusherEvent($messege));
         //Cập nhật lại số lượng sản phẩm
         $product=OrderDetails::where('order_id',$req->order_id)->get();
         foreach ($product as $key => $value) {

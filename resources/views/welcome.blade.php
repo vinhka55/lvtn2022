@@ -155,7 +155,7 @@
             </div>
         </div>
         <div class="container-fluid text-center bg-dark text-white border-top">
-            <div id="copyright">© Copyright 2022 lvtn2022-levinhit</div>
+            <div id="copyright">© Copyright 2023 lvtn2023-levinhit</div>
         </div>
     </div>
     <!-- Messenger Plugin chat Code -->
@@ -230,10 +230,7 @@
             url:"{{route('count_notifications')}}",
             method:'get',
             success:function(data){
-                
-                    $('#count-notifications').html(data)
-                
-               
+                    $('#count-notifications').html(data)           
             }
         })
     }
@@ -383,20 +380,22 @@
     });
     //function add message
     function addMessage(data) {
-    $.ajax({
-            url: "{{route('insert_notification')}}",                
-            method: 'POST',
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            data:{content:data.message},
-            success:function(data){
-                $('#count-notifications').html(data)
-                
-            },
-            error:function(xhr){
-                console.log(xhr.responseText);
-            }
-        });
-    }window.count_click_notification = 1
+        console.log(123)
+        $.ajax({
+                url: "{{route('insert_notification')}}",                
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{content:data.message},
+                success:function(data){
+                    console.log(456)
+                    $('#count-notifications').html(data)
+                    
+                },
+                error:function(xhr){
+                    console.log(xhr.responseText);
+                }
+            });
+    }   window.count_click_notification = 1
 </script>
 <script> 
     $('.show-notifications').click(function() {
@@ -546,7 +545,7 @@
             data:{reason_cancel_order:reason_cancel_order,order_id:order_id,},
             
             success:function(){
-                    //location.reload()
+                    // addMessage({message:"Bạn đã hủy đơn hàng "})
                     toastr.success('Hủy đơn hàng thành công', 'Thành công');
                     $('.btn-cancel-'+order_id).hide()
                     $('.wait-status-'+order_id).html('<p class="text-danger">Đơn đã hủy</p>')
