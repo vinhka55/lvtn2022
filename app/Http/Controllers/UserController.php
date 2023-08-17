@@ -55,6 +55,15 @@ class UserController extends Controller
         }
         return redirect('/thong-tin-tai-khoan');
     }
+    public function user_change_information(Request $req)
+    {
+        $user=User::find($req->hidden_id_user);
+        $user->name = $req->name;
+        $user->phone = $req->phone;
+        $user->email = $req->email;
+        $user->save();
+        return redirect('/thong-tin-tai-khoan');
+    }
     public function userOnlineStatus()
     {
         $users = User::all();

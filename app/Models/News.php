@@ -12,7 +12,7 @@ class News extends Model
     use Sluggable;
     public $timestamps=false;
     protected $fillable=[
-        "title","slug","content","description","meta_desc","meta_keyword","status","image","category_news_id",
+        "title","slug","content","description","meta_desc","meta_keyword","status","image","category_news_id","view",
     ];
     protected $table="news";
     public function sluggable(): array

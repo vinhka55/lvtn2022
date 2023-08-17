@@ -18,7 +18,7 @@ class CommentController extends Controller
         $name_user=Session::get('name_user');
         $avatar_of_new_comment=DB::table('user')->where('id',Session::get('user_id'))->value('avatar');
         $comment=Comment::where('product_id',$req->id_product)->orderBy('id','desc')->where("status",true)->get();
-        $all_rep_comment=ReplyComment::orderBy('id','desc')->get();
+        $all_rep_comment=ReplyComment::orderBy('id','asc')->get();
         $output='';
         foreach ($comment as $key => $value) {
             $avatar=DB::table('user')->where('id',$value->user_id)->value('avatar');
@@ -121,7 +121,7 @@ class CommentController extends Controller
     public function list_comment()
     {
         $all_comment=Comment::with("product")->orderBy("id","desc")->get();
-        $all_reply_comment=ReplyComment::all();
+        $all_reply_comment=ReplyComment::get();
         return view('admin.comment.list',compact('all_comment','all_reply_comment'));
     }
     public function change_status_comment(Request $req)

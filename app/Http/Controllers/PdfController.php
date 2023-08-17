@@ -22,5 +22,5 @@ class PdfController extends Controller
         $pdf = PDF::loadView('page.order.print', compact('info_shipping','info_product','order_code'));       
         return $pdf->download('order.pdf'); 
     }
-    
+
 }

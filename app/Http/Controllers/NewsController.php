@@ -99,6 +99,10 @@ class NewsController extends Controller
     public function detail_news($slug)
     {
         $news=News::where('slug',$slug)->get();
+        foreach ($news as $key => $value) {
+            $value->view=$value->view+1;
+            $value->save();
+        }
         return view('page.news.detail',compact('news'));
     }
 }

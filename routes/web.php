@@ -118,6 +118,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
     Route::get('delete-user/{id}','App\Http\Controllers\UserController@delete')->name('delete_user');
 });
 Route::post('thay-doi-avatar','App\Http\Controllers\UserController@user_change_avatar')->name('user_change_avatar');
+Route::post('thay-doi-thong-tin-ca-nhan','App\Http\Controllers\UserController@user_change_information')->name('user_change_information');
 
 
 //print pdf file
@@ -157,7 +158,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
     Route::get('xoa-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@delete')->name('delete_category_news');
     Route::get('sua-danh-muc-tin-tuc/{id}','App\Http\Controllers\CategoryNewsController@edit_category_news')->name('edit_category_news');
     Route::post('xu-ly-sua-danh-muc-tin-tuc','App\Http\Controllers\CategoryNewsController@handle_edit_category_news')->name('handle_edit_category_news');
-});
+}); 
 
 //news
 Route::get('/them-tin-tuc','App\Http\Controllers\NewsController@insert')->name('add_news')->middleware('auth.AdminAndAuthor');

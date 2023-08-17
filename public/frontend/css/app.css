@@ -241,3 +241,8 @@ ul.status-order li{
     background-color: #a83275;
 }
 
+/* css for page information user */
+.modal-infor-user{
+    width: auto;
+    min-width: 100px;
+}

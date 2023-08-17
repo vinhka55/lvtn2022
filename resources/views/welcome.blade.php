@@ -126,7 +126,7 @@
             <div class="row">
                 <div class="col-md-3 col-6 border-right">
                     <h4 class="font-weight-bold">LIÊN HỆ</h4>
-                    <h5>CÔNG TY TNHH XUẤT NHẬP KHẨU THỰC PHẨM HỮU NGHỊ</h5>
+                    <h5>CÔNG TY TNHH XUẤT NHẬP KHẨU THỰC PHẨM VINH-HOA</h5>
                     <p>Địa Chỉ: 9C10 KDC Nam Long, Hà Huy Giáp, KP3, p. Thạch Lộc, Q.12</p>
                     <p>Hotline: 0901 892 899  - MST : 031 333 6061</p>
                     <p>Email : nghivan86@gmail.com</p>
@@ -135,10 +135,10 @@
                     <h4 class="font-weight-bold">ĐĂNG KÝ NHẬN EMAIL</h4>
                     <p>Đăng ký nhận email để nhận tin tức và thông tin khuyến mãi sớm nhất.</p>
                     <form class="form-inline">
-                    <div class="form-group mb-2">
-                        <input type="password" class="form-control" id="inputPassword2" placeholder="Email">
-                    </div>
-                    <button type="submit" class="btn btn-primary mb-2">Đăng ký</button>
+                        <div class="form-group mb-2">
+                            <input type="email" class="form-control" id="inputPassword2" placeholder="Email">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Đăng ký</button>
                     </form>
                 </div>
                 <div class="col-md-3 col-6 border-right">

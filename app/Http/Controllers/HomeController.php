@@ -20,7 +20,7 @@ class HomeController extends Controller
         $hai_san=DB::table('product')->where('category_id',6)->limit(6)->get();
         $gao_sach=DB::table('product')->where('category_id',7)->limit(6)->get();  
         $gia_vi=DB::table('product')->where('category_id',8)->limit(6)->get();
-        $hot_product=Product::limit(6)->get();
+        $hot_product=Product::limit(6)->orderBy('count_sold','desc')->get();
 
         //count visitor
         $check_visitor=Visitors::where('ip_address',$req->ip());

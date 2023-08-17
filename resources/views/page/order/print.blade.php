@@ -22,7 +22,7 @@
     </div>
     
     <div class="mt-5">
-        <p class="text-center" style="font-size:20px;">Công ty TNHH thực phẩm sạch Thiên An Phú</p>
+        <p class="text-center" style="font-size:20px;">Công ty TNHH thực phẩm sạch VINH-HOA</p>
         <p class="text-center" style="font-size:20px;">ĐƠN HÀNG ĐÃ MUA</p>
     </div>
     <p><b style="font-size:23px;">Mã đơn hàng: {{$order_code}}</b></p>
@@ -87,15 +87,16 @@
                         @foreach($info_product as $item)
                         <?php $order_z=$item->order_id ?>
                         <tr>                            
-                            <td><p class="text-ellipsis name">{{$item->product_name}}</p></td>
-                            <td><p class="text-ellipsis name">{{number_format($item->product_price)}}</p></td>                     
-                            <td>      
-                                <input type="number" disabled class="order_product_qty_{{$item->id}}" name="product_sales_quantity" value="{{$item->product_quantyti}}">      
+                            <td><p class="text-ellipsis name text-center">{{$item->product_name}}</p></td>
+                            <td><p class="text-ellipsis name text-center">{{number_format($item->product_price)}}</p></td>                     
+                            <td>    
+                                <p class="text-ellipsis name text-center">{{$item->product_quantyti}}</p>  
+                                <!-- <input type="number" disabled class="order_product_qty_{{$item->id}}" name="product_sales_quantity" value="{{$item->product_quantyti}}">       -->
                             </td>
                             <td><?php echo number_format($item->product_price*$item->product_quantyti).' VND'; ?></td>                             
                             <?php $total_money=$total_money+$item->product_price*$item->product_quantyti;?>                
                         </tr>
-                        @endforeach
+                        @endforeach 
                         
             </tbody>
         </table>

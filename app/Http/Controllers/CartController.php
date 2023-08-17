@@ -132,10 +132,10 @@ class CartController extends Controller
                 if(count($content)>0){
                     //$output.= '<ul>';
                     foreach ($content as $key => $value) {
-                        $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">'.$value['name'].'</a></li>';
+                        $output.='<li class="text-center"><a href="http://localhost/lvtn2022/gio-hang">'.$value['name'].'</a></li>';
                     }
                     //$output.= '</ul>';
-                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem tất cả</a></li>';
+                    $output.='<li class="text-center"><a href="http://localhost/lvtn2022/gio-hang">Xem tất cả</a></li>';
         
                 }
                 else{
@@ -149,10 +149,10 @@ class CartController extends Controller
                 if(count($content)>0){
                     //$output.= '<ul>';
                     foreach ($content as $key => $value) {
-                        $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">'.$value['name'].'</a></li>';
+                        $output.='<li class="text-center"><a href="http://localhost/lvtn2022/gio-hang">'.$value['name'].'</a></li>';
                     }
                     //$output.= '</ul>';
-                    $output.='<li class="text-center"><a href="http://localhost/test/gio-hang">Xem tất cả</a></li>';
+                    $output.='<li class="text-center"><a href="http://localhost/lvtn2022/gio-hang">Xem tất cả</a></li>';
         
                 }
                 else{

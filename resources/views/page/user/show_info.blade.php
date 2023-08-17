@@ -31,8 +31,47 @@
                     </div>
                 </div>
                 <div class="px-4 mt-1" style="text-align:center;">
-                    <a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Edit profile
+</button>
+
+<!-- Modal information user -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông tin tài khoản</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+            <form method="post" action="{{route('user_change_information')}}">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" value="{{$item->id}}" name="hidden_id_user">
+                    <div class="modal-detail-information">
+                        <span class="modal-infor-user d-inline-block">Họ tên: </span>
+                        <input type="text" value="{{$item->name}}" name="name">  
+                    </div>  
+                    <div class="modal-detail-information mt-2">           
+                        <span class="modal-infor-user d-inline-block">Số điện thoai: </span>
+                        <input type="text" value="{{$item->phone}}" name="phone">  
+                    </div>  
+                    <div class="modal-detail-information mt-2">           
+                        <span class="modal-infor-user d-inline-block">Email: </span>
+                        <input type="text" value="{{$item->email}}" name="email">  
+                    </div>  
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+      
+    </div>
+  </div>
+</div>
+                </div>
+
                 <div class="py-4 px-4">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h5 class="mb-0">Đơn hàng gần đây</h5><a href="{{route('my_order')}}" class="btn btn-link text-muted">Xem tất cả</a>
