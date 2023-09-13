@@ -47,8 +47,8 @@ class CommentController extends Controller
                                   }
                                   </style>
                                       <div class="d-flex justify-content-between align-items-center">
-                                          <p class="mb-1 text-primary">@
-                                          '.$value->name_user_comment.' <span class="small"> '.Carbon::parse($value->time)->format('d-m-Y h:i:s').'</span>
+                                          <p class="mb-1 text-primary">
+                                          '.$value->name_user_comment.' <span class="small"> '.Carbon::parse($value->time)->format('d-m-Y')." Lúc " . Carbon::parse($value->time)->toTimeString().'</span>
                                           </p>
                                           <p onclick="rep('.$value->id.')" class="rep-comment-ui"
                                           ><i class="fas fa-reply fa-xs"></i
@@ -84,8 +84,8 @@ class CommentController extends Controller
                         </div>
                         <div class="flex-grow-1 flex-shrink-1 col-9">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <p class="mb-1 text-success">@
-                                    '.$name.' <span class="small"> '.Carbon::parse($rep->time)->format('d-m-Y h:i:s').'</span>
+                                    <p class="mb-1 text-success">
+                                    '.$name.' <span class="small"> '.Carbon::parse($rep->time)->format('d-m-Y')." Lúc ".Carbon::parse($rep->time)->toTimeString().'</span>
                                     </p>
                                 </div>
                                 <p class="small mb-0">
@@ -136,10 +136,16 @@ class CommentController extends Controller
         $reply_comment=new ReplyComment();
         $reply_comment->content=$req->content_reply;
         $reply_comment->id_parent_comment=$req->id_comment;
-        if(Auth::check()) $reply_comment->user_id=0;
-        else{
-            $reply_comment->user_id=Session::get('user_id');
-        }
+        // if(Auth::check()) $reply_comment->user_id=0;
+        // else{
+        //     $reply_comment->user_id=Session::get('user_id');
+        // }
+        $reply_comment->user_id=Session::get('user_id');
+        if($reply_comment->user_id==null) $reply_comment->user_id = 0;
         $reply_comment->save();
+    }
+    public function delete_sub_comment(Request $req ){
+        $reply_comment= ReplyComment::where('id',$req->id_sub_comment);
+        $reply_comment->delete();
     }
 }

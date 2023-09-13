@@ -66,9 +66,9 @@
                                 @foreach($all_reply_comment as $rep)
                                     @if($rep->id_parent_comment==$item->id)
                                         @if($rep->user_id==0)
-                                            <li>Admin: {{$rep->content}}</li>
+                                            <li id="sub-comment-{{$rep->id}}">Admin: {{$rep->content}} <i class="fas fa-trash-alt" onclick="remove_sub_comment({{$rep->id}})"></i></li>
                                         @else
-                                            <li>User: {{$rep->content}}</li>
+                                            <li>User: {{$rep->content}} <i class="fas fa-trash-alt"></i></li>
                                         @endif
                                     @endif
                                 @endforeach

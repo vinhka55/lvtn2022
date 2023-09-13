@@ -135,6 +135,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth.AdminAndAuthor']],function(
 {
     Route::get('danh-sach-binh-luan','App\Http\Controllers\CommentController@list_comment')->name('list_comment');
     Route::post('thay-doi-trang-thai-comment','App\Http\Controllers\CommentController@change_status_comment')->name('change_status_comment');
+    Route::post('xoa-sub-comment','App\Http\Controllers\CommentController@delete_sub_comment')->name('delete_sub_comment');
     
 });
 Route::post('tra-loi-comment','App\Http\Controllers\CommentController@rep_comment')->name('rep_comment');

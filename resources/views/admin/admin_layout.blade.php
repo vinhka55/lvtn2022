@@ -178,7 +178,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;" class="collapsible">
                         <i class="fas fa-book-open"></i>
-                        <span>Quản lý user</span>
+                        <span>Quản lý tài khoản admin</span>
                     </a>
                     <ul class="sub">
 						<li><a href="{{route('list_user')}}">Danh sách user</a></li>
@@ -366,13 +366,30 @@ $('.delete-user').click(function(e) {
                 }
         });
     }
-    $('.admin-reply').click(function(){
+    $('.admin-reply').click(function(){ 
         var id_comment=$(this).data('id_comment')
         $(".all-reply-comment-"+id_comment).hide()
         $(".content-reply-"+id_comment).html(
             "<textarea class='txtarea-content-admin-rep' placeholder='Admin trả lời'></textarea><button onclick='ok("+id_comment+")' data-id_send='"+id_comment+"' class='btn-xs btn-info send-reply-comment'>Gửi</button>"
         )      
     })
+</script>
+<script>
+    function remove_sub_comment(id_sub_comment) {      
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+        url : "{{route('delete_sub_comment')}}",
+            method: 'post',
+            data:{id_sub_comment:id_sub_comment,_token:_token},
+            success:function(){
+                $('#sub-comment-'+id_sub_comment).remove()
+                toastr.success('Xóa comment thành công', 'Thành công');
+            },
+            error: (xhr) => {
+                console.log(xhr.responseText); 
+                }
+        });
+    }
 </script>
 <script type="text/javascript">
     function select_gallery() {
